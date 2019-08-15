@@ -115,5 +115,5 @@ PI Web API
 Tested against Maven 3.6.1 and Java 1.8.0_212.
 
 For the general steps or switch languages see the Task  [ReadMe](../../)<br />
-For the main OMF page [ReadMe](../../../../)<br />
+For the main OMF page on master [ReadMe](https://github.com/osisoft/OSI-Samples-OMF)<br />
 For the main landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
