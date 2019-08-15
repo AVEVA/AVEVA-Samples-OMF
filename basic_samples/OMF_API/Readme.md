@@ -56,5 +56,5 @@ The samples assume Basic Authentication
 
 ----------
 
-For the main OMF page [ReadMe](../)<br />
+For the main OMF page on master [ReadMe](https://github.com/osisoft/OSI-Samples-OMF)<br />
 For the main landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

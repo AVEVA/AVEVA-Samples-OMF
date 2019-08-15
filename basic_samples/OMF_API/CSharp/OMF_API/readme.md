@@ -92,5 +92,5 @@ PI Web API
 Tested against DotNet 2.2.105.
 
 For the general steps or switch languages see the Task  [ReadMe](../../)<br />
-For the main OMF page [ReadMe](../../../../)<br />
+For the main OMF page on master [ReadMe](https://github.com/osisoft/OSI-Samples-OMF)<br />
 For the main landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
