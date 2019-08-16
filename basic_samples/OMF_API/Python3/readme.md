@@ -79,11 +79,11 @@ requests.exceptions.SSLError: HTTPSConnectionPool(host='...', port=443): Max ret
 
 -----------
 OCS
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OSIsoft_OCS_Samples-CI?branchName=master&jobName=OMF_APIPy)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4334&branchName=master)
+[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIPy?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4934&branchName=master)
 
 
 PI Web API
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OSIsoft_%20on-prem?branchName=master&jobName=OMF_APIPy)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4782&branchName=master)
+[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIPy_onprem?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4932&branchName=master)
 -----------
 
 
