@@ -8,7 +8,7 @@ Some tasks and individual language examples have labels as follows:
 
 * \* denotes that the language example uses the rest API directily instead of a library
 
-* <img src="../miscellaneous/images/ctp.png" alt="ctp icon">   This task and code uses services that are currently in preview.  If you are interested in this functionality, please contact OSISoft.  
+* <img src="./miscellaneous/images/ctp.png" alt="ctp icon">   This task and code uses services that are currently in preview.  If you are interested in this functionality, please contact OSISoft.  
 
 
 
