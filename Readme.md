@@ -72,4 +72,4 @@ If your support question or issue is related to a non-modified sample (or test) 
 
 
 
-For the main landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
+For the main samples landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
