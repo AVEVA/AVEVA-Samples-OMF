@@ -13,15 +13,15 @@ steps:
   displayName: 'make dir '
   continueOnError: true
 
-- script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-build" --dir . --no-command --fs-capture-search ../ '
+- script: '"C:\\Program Files\\Coverity\\Coverity Static Analysis\\bin\\cov-build" --dir . --no-command --fs-capture-search ../ '
   workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
   displayName: 'build '
 
-- script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-analyze" --dir . '
+- script: '"C:\\Program Files\\Coverity\\Coverity Static Analysis\\bin\\cov-analyze" --dir . '
   workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
   displayName: 'analyze '
 
-- script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-commit-defects" --stream "Engineering Incubation - OMF_APIPy" --host covertoak.osisoft.int --https-port 8443 --auth-key-file "C:\Users\dendres\Documents\coverity\keyfile.ky" --dir . '
+- script: '"C:\\Program Files\\Coverity\\Coverity Static Analysis\\bin\\cov-commit-defects" --stream "Engineering Incubation - OMF_APIPy" --host covertoak.osisoft.int --https-port 8443 --auth-key-file "C:\\Users\\dendres\\Documents\\coverity\\keyfile.ky" --dir . '
   workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
   displayName: 'upload '
 
@@ -46,6 +46,6 @@ steps:
     DetectArguments: |
      --detect.project.name="OMF_APIDotNet" 
      --detect.project.version.name="latest" 
-     --detect.source.path="$(build.sourcesDirectory)\basic_samples\OMF_API\CSharp\OMF_API"
+     --detect.source.path="$(build.sourcesDirectory)\\basic_samples\\OMF_API\\CSharp\\OMF_API"
      --detect.code.location.name="code_location_OMF_APIDotNet_latest_OMF_APIDotNet"
      --detect.bom.aggregate.name="bom_OMF_APIDotNet_latest_OMF_APIDotNet"
