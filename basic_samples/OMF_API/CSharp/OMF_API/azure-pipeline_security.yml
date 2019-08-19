@@ -20,7 +20,7 @@ jobs:
     workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
     displayName: 'analyze '
 
-  - script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-commit-defects" --stream "Engineering Incubation - OMF_APIPy" --host covertoak.osisoft.int --https-port 8443 --auth-key-file "C:\Users\dendres\Documents\coverity\keyfile.ky" --dir . '
+  - script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-commit-defects" --stream "Engineering Incubation - OMF_APIPy" --host $(coverity_server) --https-port 8443 --auth-key-file "C:\Users\dendres\Documents\coverity\keyfile.ky" --dir . '
     workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
     displayName: 'upload '
 
