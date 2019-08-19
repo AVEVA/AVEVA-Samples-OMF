@@ -7,7 +7,7 @@ jobs:
 
   pool:
     name: 00-OSIManaged-Test
-    demands: USERNAME -equals IAC8188$
+    demands: USERNAME -equals $(LocalServer)
 
   steps:
   - script: 'mkdir cov-int'
