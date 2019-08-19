@@ -1,34 +1,30 @@
 
 jobs:      
-
 - job: OMF_APIDotNet_Cov
 
-pool:
-  name: 00-OSIManaged-Test
-  demands: USERNAME -equals IAC8188$
+  pool:
+    name: 00-OSIManaged-Test
+    demands: USERNAME -equals IAC8188$
 
-steps:
-- script: 'mkdir cov-int'
-  workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/'
-  displayName: 'make dir '
-  continueOnError: true
+  steps:
+  - script: 'mkdir cov-int'
+    workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/'
+    displayName: 'make dir '
+    continueOnError: true
 
-- script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-build" --dir . --no-command --fs-capture-search ../ '
-  workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
-  displayName: 'build '
+  - script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-build" --dir . --no-command --fs-capture-search ../ '
+    workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
+    displayName: 'build '
 
-- script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-analyze" --dir . '
-  workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
-  displayName: 'analyze '
+  - script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-analyze" --dir . '
+    workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
+    displayName: 'analyze '
 
-- script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-commit-defects" --stream "Engineering Incubation - OMF_APIPy" --host covertoak.osisoft.int --https-port 8443 --auth-key-file "C:\Users\dendres\Documents\coverity\keyfile.ky" --dir . '
-  workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
-  displayName: 'upload '
+  - script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-commit-defects" --stream "Engineering Incubation - OMF_APIPy" --host covertoak.osisoft.int --https-port 8443 --auth-key-file "C:\Users\dendres\Documents\coverity\keyfile.ky" --dir . '
+    workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
+    displayName: 'upload '
 
-     
-     #Your build pipeline references an undefined variable named ‘ProductName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘ProductName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘ProductName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+     uild pipeline references an undefined variable named ‘ProductName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
 - job: OMF_APIDotNet_BD
 
