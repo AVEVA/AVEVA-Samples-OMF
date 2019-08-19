@@ -1,6 +1,9 @@
+variables:
+- group: LocalServer
 
 jobs:      
 - job: OMF_APIDotNet_Cov
+
 
   pool:
     name: 00-OSIManaged-Test
