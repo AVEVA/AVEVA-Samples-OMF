@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,6 +6,10 @@
     <Version>0.0.3</Version>
     <Company>OSISoft</Company>
     <Authors>OSIsoft</Authors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;  HIGHENTROPYVA</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
