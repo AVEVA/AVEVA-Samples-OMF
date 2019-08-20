@@ -19,21 +19,3 @@ jobs:
       displayName: 'Run BinSkim '
       inputs:
         AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
-
-  pool:
-    name: Hosted VS2017
-    demands:
-      - maven
-      - npm
-
-  steps:
-   - task: black-duck-software.detect-for-tfs.hub.detect.task.BlackDuckDetect@1
-     displayName: 'Run Black Duck Detect for OMF_APIDotNet'
-     inputs:
-        BlackDuckHubService: 'Black Duck'
-        DetectArguments: |
-           --detect.project.name="OMF_APIDotNet" 
-           --detect.project.version.name="latest" 
-           --detect.source.path="$(build.sourcesDirectory)\basic_samples\OMF_API\CSharp\OMF_API"
-           --detect.code.location.name="code_location_OMF_APIDotNet_latest_OMF_APIDotNet"
-           --detect.bom.aggregate.name="bom_OMF_APIDotNet_latest_OMF_APIDotNet"
