@@ -46,6 +46,7 @@ jobs:
       
     - script: |
         dotnet restore
+        dotnet msbuild -p:HIGHENTROPYVA=true
         dotnet test
       workingDirectory: $(Build.SourcesDirectory)/basic_samples/OMF_API/CSharp/OMF_APITests/
       displayName: 'Run Test'
