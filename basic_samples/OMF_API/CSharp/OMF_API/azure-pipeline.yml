@@ -10,7 +10,7 @@ jobs:
     # Download a secure file to a temporary location on the build or release agent
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: prod_omf_appsettings.json
+        secureFile: $(CredFileLibrary)
 
 
     # Copy Files basic_samples\OMF_API\CSharp\OMF_API
@@ -18,21 +18,22 @@ jobs:
     - task: CopyFiles@2
       inputs:
         sourceFolder: $(Agent.TempDirectory)
-        contents: prod_omf_appsettings.json
-        targetFolder: '$(Build.SourcesDirectory)/basic_samples/OMF_API/CSharp/OMF_API/'
+        contents: $(CredFileLibrary)
+        targetFolder: '$(Build.SourcesDirectory)$(path)/'
         #cleanTargetFolder: false # Optional  
         overWrite: true # Optional
         #flattenFolders: false # Optional 
       displayName: copy file
 
     - script: |
-        mv prod_omf_appsettings.json appsettings.json
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/OMF_API/CSharp/OMF_API/
+        mv $(CredFileLibrary) $(CredFile)
+      workingDirectory: $(Build.SourcesDirectory)$(path)/
       displayName: 'rename config file'     
       
     - script: |
         dotnet restore
+        dotnet msbuild -p:HIGHENTROPYVA=true
         dotnet test
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/OMF_API/CSharp/OMF_APITests/
+      workingDirectory: $(Build.SourcesDirectory)$(testpath)/
       displayName: 'Run Test'
      
