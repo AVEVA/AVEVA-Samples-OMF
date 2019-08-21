@@ -3,10 +3,9 @@ variables:
   CredFile: appsettings.json
   CredFileLibrary: prod_omf_appsettings.json
   testpath: /basic_samples/OMF_API/CSharp/OMF_API
-  job: OMF_APIDotNet
 
 jobs:      
-- job: $(job)
+- job: OMF_APIDotNet
 
   pool:
     vmImage: 'Ubuntu-16.04'
