@@ -1,5 +1,5 @@
 variables:
-  binpath: /basic_samples/OMF_API/CSharp/OMF_API
+  projpath: /basic_samples/OMF_API/CSharp/OMF_API
   CredFile: appsettings.json
   CredFileLibrary: prod_omf_appsettings.json
   testpath: /basic_samples/OMF_API/CSharp/OMF_API
@@ -24,7 +24,7 @@ jobs:
       inputs:
         sourceFolder: $(Agent.TempDirectory)
         contents: $(CredFileLibrary)
-        targetFolder: '$(Build.SourcesDirectory)$(binpath)/'
+        targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
         #cleanTargetFolder: false # Optional  
         overWrite: true # Optional
         #flattenFolders: false # Optional 
@@ -32,7 +32,7 @@ jobs:
 
     - script: |
         mv $(CredFileLibrary) $(CredFile)
-      workingDirectory: $(Build.SourcesDirectory)$(binpath)/
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
       displayName: 'rename config file'     
       
     - script: |
