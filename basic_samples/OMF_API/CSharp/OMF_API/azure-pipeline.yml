@@ -31,7 +31,6 @@ jobs:
       displayName: copy file
 
     - script: |
-        echo $(Agent.JobName)
         mv $(CredFileLibrary) $(CredFile)
       workingDirectory: $(Build.SourcesDirectory)$(binpath)/
       displayName: 'rename config file'     
