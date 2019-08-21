@@ -2,7 +2,7 @@ variables:
   binpath: /basic_samples/OMF_API/CSharp/OMF_API
   CredFile: appsettings.json
   CredFileLibrary: prod_omf_appsettings.json
-  testpath: /basic_samples/OMF_API/CSharp/OMF_API
+  testpath: /basic_samples/OMF_API/CSharp/OMF_APITests
 
 jobs:      
 - job: OMF_APIDotNet
