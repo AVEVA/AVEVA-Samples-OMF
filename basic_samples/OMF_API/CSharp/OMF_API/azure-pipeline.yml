@@ -26,6 +26,8 @@ jobs:
       displayName: copy file
 
     - script: |
+        pwd
+        dir
         mv $(CredFileLibrary) $(CredFile)
       workingDirectory: $(Build.SourcesDirectory)$(path)/
       displayName: 'rename config file'     
