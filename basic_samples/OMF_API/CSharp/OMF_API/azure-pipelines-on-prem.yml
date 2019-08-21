@@ -1,8 +1,15 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
+variables:
+- group: LocalServer
+- name: projpath
+  value: /basic_samples/OMF_API/CSharp/OMF_API/
+- name: CredFile
+  value: appsettings.json
+- name: CredFileLibrary
+  value: prod_onprem_omf_appsettings.json
+- name: testpath
+  value: /basic_samples/OMF_API/CSharp/OMF_APITests
+- name: job
+  value: OMF_APIDotNet
 
   
 jobs:      
@@ -11,14 +18,14 @@ jobs:
 - job: OMF_APIDotNet
   pool:
     name: 00-OSIManaged-Test
-    demands: USERNAME -equals IAC8188$
+    demands: USERNAME -equals $(LocalServer)
 
   steps :
     # Download Secure File
     # Download a secure file to a temporary location on the build or release agent
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: prod_onprem_omf_appsettings.json
+        secureFile: $(CredFileLibrary)
 
 
     # Copy Files basic_samples\OMF_API\CSharp\OMF_API
@@ -26,27 +33,27 @@ jobs:
     - task: CopyFiles@2
       inputs:
         sourceFolder: $(Agent.TempDirectory)
-        contents: prod_onprem_omf_appsettings.json
-        targetFolder: '$(Build.SourcesDirectory)/basic_samples/OMF_API/CSharp/OMF_API/'
+        contents:  $(CredFileLibrary)
+        targetFolder: '$(Build.SourcesDirectory)$(projpath)'
         #cleanTargetFolder: false # Optional  
         overWrite: true # Optional
         #flattenFolders: false # Optional 
       displayName: copy file
 
     - script: |
-        del appsettings.json
-      workingDirectory:  '$(Build.SourcesDirectory)/basic_samples/OMF_API/CSharp/OMF_API/'
+        del $(CredFile)
+      workingDirectory:  '$(Build.SourcesDirectory)$(projpath)'
       displayName: 'rename config file1'
 
 
     - script: |
-        rename prod_onprem_omf_appsettings.json appsettings.json
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/OMF_API/CSharp/OMF_API/
+        rename  $(CredFileLibrary)  $(CredFile)
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)
       displayName: 'rename config file'     
       
     - script: |
         dotnet restore
         dotnet test
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/OMF_API/CSharp/OMF_APITests/
+      workingDirectory: $(Build.SourcesDirectory)$(testpath)
       displayName: 'Run Test'
      
