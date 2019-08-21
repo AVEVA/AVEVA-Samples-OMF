@@ -8,8 +8,6 @@ variables:
   value: prod_onprem_omf_appsettings.json
 - name: testpath
   value: /basic_samples/OMF_API/CSharp/OMF_APITests
-- name: job
-  value: OMF_APIDotNet
 
   
 jobs:      
