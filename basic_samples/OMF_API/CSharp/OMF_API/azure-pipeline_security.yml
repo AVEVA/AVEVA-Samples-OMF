@@ -1,29 +1,44 @@
 variables:
 - group: LocalServer
+- name: projpath
+  value: /basic_samples/OMF_API/CSharp/OMF_API/
+- name: CredFile
+  value: appsettings.json
+- name: CredFileLibrary
+  value: prod_omf_appsettings.json
+- name: testpath
+  value: /basic_samples/OMF_API/CSharp/OMF_APITests
+- name: covFolder
+  value: cov-int
+- name: covPath
+  value: C:\Program Files\Coverity\Coverity Static Analysis\bin\
+- name: covAuthPath
+  value: C:\Users\dendres\Documents\coverity\keyfile.ky
+- name: job
+  value: OMF_APIDotNet
 
 jobs:      
 - job: OMF_APIDotNet_Cov
-
 
   pool:
     name: 00-OSIManaged-Test
     demands: USERNAME -equals $(LocalServer)
 
   steps:
-  - script: 'mkdir cov-int'
-    workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/'
+  - script: 'mkdir $(covFolder)'
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
     displayName: 'make dir '
     continueOnError: true
 
-  - script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-build" --dir . --no-command --fs-capture-search ../ '
-    workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
+  - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)$(covFolder)'
     displayName: 'build '
 
-  - script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-analyze" --dir . '
-    workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
+  - script: '"$(covPath)cov-analyze" --dir . '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)$(covFolder)'
     displayName: 'analyze '
 
-  - script: '"C:\Program Files\Coverity\Coverity Static Analysis\bin\cov-commit-defects" --stream "Engineering Incubation - OMF_APIDotNet" --host $(coverity_server) --https-port 8443 --auth-key-file "C:\Users\dendres\Documents\coverity\keyfile.ky" --dir . '
+  - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
     workingDirectory: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/cov-int'
     displayName: 'upload '
 
@@ -37,15 +52,15 @@ jobs:
 
   steps:
    - task: black-duck-software.detect-for-tfs.hub.detect.task.BlackDuckDetect@1
-     displayName: 'Run Black Duck Detect for OMF_APIDotNet'
+     displayName: 'Run Black Duck Detect for $(job)'
      inputs:
         BlackDuckHubService: 'Black Duck'
         DetectArguments: |
-           --detect.project.name="OMF_APIDotNet" 
+           --detect.project.name="$(job)" 
            --detect.project.version.name="latest" 
-           --detect.source.path="$(build.sourcesDirectory)\basic_samples\OMF_API\CSharp\OMF_API"
-           --detect.code.location.name="code_location_OMF_APIDotNet_latest_OMF_APIDotNet"
-           --detect.bom.aggregate.name="bom_OMF_APIDotNet_latest_OMF_APIDotNet"
+           --detect.source.path="$(build.sourcesDirectory)$(projpath)"
+           --detect.code.location.name="code_location_$(job)_latest_$(job)"
+           --detect.bom.aggregate.name="bom_$(job)_latest_$(job)"
 
 
 - job: OMF_APIDotNet_BS
@@ -58,7 +73,7 @@ jobs:
     - script: |
         dotnet restore
         dotnet msbuild -p:HIGHENTROPYVA=true
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/OMF_API/CSharp/OMF_APITests/
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)
       displayName: 'Build'
 
     - task: ms-codeanalysis.vss-microsoft-security-code-analysis.build-task-binskim.BinSkim@3
