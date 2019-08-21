@@ -19,15 +19,17 @@ jobs:
       inputs:
         sourceFolder: $(Agent.TempDirectory)
         contents: $(CredFileLibrary)
-        targetFolder: '$(Build.SourcesDirectory)$(path)/'
+        targetFolder: '$(Build.SourcesDirectory)$(binpath)/'
         #cleanTargetFolder: false # Optional  
         overWrite: true # Optional
         #flattenFolders: false # Optional 
       displayName: copy file
 
     - script: |
+        pwd
+        dir
         mv $(CredFileLibrary) $(CredFile)
-      workingDirectory: $(Build.SourcesDirectory)$(path)/
+      workingDirectory: $(Build.SourcesDirectory)$(binpath)/
       displayName: 'rename config file'     
       
     - script: |
