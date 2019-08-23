@@ -100,7 +100,7 @@ jobs:
     demands: USERNAME -equals $(LocalServer)
 
   steps:
-  - script: 'if not $(covFolder) mkdir $(covFolder)'
+  - script: 'if not exist $(covFolder) mkdir $(covFolder)'
     workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
     displayName: 'make dir '
     continueOnError: true
