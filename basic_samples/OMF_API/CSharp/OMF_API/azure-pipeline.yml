@@ -5,7 +5,7 @@ variables:
 - name: CredFile
   value: appsettings.json
 - name: CredFileLibrary
-  value: appsettings.json
+  value: prod_omf_appsettings.json
 - name: CredFileLibraryOP
   value: prod_onprem_omf_appsettings.json
 - name: testpath
