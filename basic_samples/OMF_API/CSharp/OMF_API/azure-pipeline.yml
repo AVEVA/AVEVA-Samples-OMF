@@ -5,11 +5,13 @@ variables:
 - name: CredFile
   value: appsettings.json
 - name: CredFileLibrary
-  value: prod_onprem_omf_appsettings.json
+  value: appsettings.json
 - name: CredFileLibraryOP
   value: prod_onprem_omf_appsettings.json
 - name: testpath
   value: /basic_samples/OMF_API/CSharp/OMF_APITests
+- name: job
+  value: OMF_APIDotNet
 
 jobs:      
 - job: OMF_APIDotNet
