@@ -88,7 +88,8 @@ jobs:
         dotnet test
       workingDirectory: $(Build.SourcesDirectory)$(testpath)
       displayName: 'Run Test'
-     - job: OMF_APIDotNet_Cov
+      
+- job: OMF_APIDotNet_Cov
 
   pool:
     name: 00-OSIManaged-Test
