@@ -83,7 +83,7 @@ jobs:
 
 
     - script: |
-        rename  $(CredFileLibrary)  $(CredFile)
+        rename  $(CredFileLibraryOP)  $(CredFile)
       workingDirectory: $(Build.SourcesDirectory)$(projpath)
       displayName: 'rename config file'     
       
