@@ -1,3 +1,8 @@
+variables:
+  projpath: /basic_samples/OMF_API/Java/omfapijava
+  CredFile: config.properties
+  CredFileLibrary: config.properties
+  testpath: /basic_samples/OMF_API/Java/omfapijava
 
 jobs:      
 - job: OMF_APIJava
@@ -10,15 +15,15 @@ jobs:
     # Download a secure file to a temporary location on the build or release agent
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: config.properties
+        secureFile: $(CredFileLibrary)
 
     # Copy Files
     # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
     - task: CopyFiles@2
       inputs:
         sourceFolder: $(Agent.TempDirectory)
-        contents: config.properties 
-        targetFolder: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Java/omfapijava/'
+        contents: $(CredFileLibrary)
+        targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
         #cleanTargetFolder: false # Optional
         overWrite: true # Optional
         #flattenFolders: false # Optional
@@ -26,7 +31,7 @@ jobs:
       
     - task: Maven@3
       inputs:
-        mavenPomFile: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Java/omfapijava/pom.xml'
+        mavenPomFile: '$(Build.SourcesDirectory)$(projpath)/pom.xml'
         publishJUnitResults: false
         testResultsFiles: '**/TEST-*.xml'
         goals: 'test'
