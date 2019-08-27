@@ -100,19 +100,19 @@ jobs:
 
     - script: |
         rename  $(CredFileLibraryOP)  $(CredFile)
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)
+      workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
       displayName: 'rename config file'   
             
       
     - script: |
          '$(pip_path)' install -r requirements.txt
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)
+      workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
       displayName: 'Install requirements'
       
     - script: |
         '$(python_path)' ./test.py
       displayName: 'Test with unittes'
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)
+      workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
 
 - job: OMF_APIPy_COV
 
