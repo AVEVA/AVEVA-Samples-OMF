@@ -3,9 +3,9 @@ variables:
 - name: projpath
   value: /basic_samples/OMF_API/Python3
 - name: CredFile
-  value: prod_omf_config.ini
-- name: CredFileLibrary
   value: config.ini
+- name: CredFileLibrary
+  value: prod_omf_config.ini
 - name: CredFileLibraryOP
   value: prod_onprem_omf_config.properties
 - name: testpath
