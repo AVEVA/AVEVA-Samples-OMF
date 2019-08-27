@@ -1,8 +1,18 @@
 variables:
-  projpath: /basic_samples/OMF_API/Java/omfapijava
-  CredFile: config.properties
-  CredFileLibrary: config.properties
-  testpath: /basic_samples/OMF_API/Java/omfapijava
+- group: LocalServer
+- name: projpath
+  value: /basic_samples/OMF_API/Java/omfapijava
+- name: CredFile
+  value: config.properties
+- name: CredFileLibrary
+  value: config.properties
+- name: CredFileLibraryOP
+  value: prod_onprem_omf_config.properties
+- name: testpath
+  value: /basic_samples/OMF_API/Java/omfapijava
+- name: job
+  value: OMF_APIJava
+
 
 jobs:      
 - job: OMF_APIJava
@@ -36,3 +46,86 @@ jobs:
         testResultsFiles: '**/TEST-*.xml'
         goals: 'test'
  
+- job: OMF_APIJava_PWS
+
+  pool:
+    name: 00-OSIManaged-Test
+    demands: USERNAME -equals $(LocalServer)
+  steps :
+
+    # Download Secure File
+    # Download a secure file to a temporary location on the build or release agent
+    - task: DownloadSecureFile@1
+      inputs:
+        secureFile: $(CredFileLibrary)
+
+    # Copy Files
+    # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths))
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(Agent.TempDirectory)
+        contents:  $(CredFileLibrary)
+        targetFolder: '$(Build.SourcesDirectory)$(projpath)'
+        #cleanTargetFolder: false # Optional  
+        overWrite: true # Optional
+        #flattenFolders: false # Optional 
+      displayName: copy file
+
+    - script: |
+        del $(CredFile)
+      workingDirectory:  '$(Build.SourcesDirectory)$(projpath)'
+      displayName: 'rename config file1'
+
+
+    - script: |
+        rename  $(CredFileLibrary)  $(CredFile)
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)
+      displayName: 'rename config file'     
+      
+    - script: |
+        mvn test
+      workingDirectory: $(Build.SourcesDirectory)$(testpath)
+      displayName: 'Run Test'
+ 
+- job: OMF_APIJava_COV
+
+  pool:
+    name: 00-OSIManaged-Test
+    demands: USERNAME -equals $(LocalServer)
+
+  steps:
+  - script: 'mkdir $(covFolder)'
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
+    displayName: 'make dir '
+    continueOnError: true
+
+  - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+    displayName: 'build '
+
+  - script: '"$(covPath)cov-analyze" --dir . '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+    displayName: 'analyze '
+
+  - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)
+    displayName: 'upload '
+
+- job: OMF_APIDotNet_BS
+
+  pool:
+    name: Hosted VS2017
+
+  steps:
+  
+    - script: |
+        dotnet restore
+        dotnet msbuild -p:HIGHENTROPYVA=true
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)
+      displayName: 'Build'
+
+    - task: ms-codeanalysis.vss-microsoft-security-code-analysis.build-task-binskim.BinSkim@3
+      displayName: 'Run BinSkim '
+      inputs:
+        AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
+
