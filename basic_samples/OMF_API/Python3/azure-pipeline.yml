@@ -105,12 +105,12 @@ jobs:
             
       
     - script: |
-         $(pip_path) install -r requirements.txt
+         '$(pip_path)' install -r requirements.txt
       workingDirectory: $(Build.SourcesDirectory)$(projpath)
       displayName: 'Install requirements'
       
     - script: |
-        $(python_path) ./test.py
+        '$(python_path)' ./test.py
       displayName: 'Test with unittes'
       workingDirectory: $(Build.SourcesDirectory)$(projpath)
 
@@ -137,21 +137,3 @@ jobs:
   - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
     workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
     displayName: 'upload '
-
-- job: OMF_APIPy_BS
-
-  pool:
-    name: Hosted VS2017
-
-  steps:
-  
-    - script: |
-        dotnet restore
-        dotnet msbuild -p:HIGHENTROPYVA=true
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)
-      displayName: 'Build'
-
-    - task: ms-codeanalysis.vss-microsoft-security-code-analysis.build-task-binskim.BinSkim@3
-      displayName: 'Run BinSkim '
-      inputs:
-        AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
