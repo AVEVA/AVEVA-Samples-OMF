@@ -105,12 +105,12 @@ jobs:
             
       
     - script: |
-         '$(pip_path)' install -r requirements.txt
+         "C:\Program Files (x86)\Python37-32\Scripts\pip.exe" install -r requirements.txt
       workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
       displayName: 'Install requirements'
       
     - script: |
-        '$(python_path)' ./test.py
+        "C:\Program Files (x86)\Python37-32\python.exe" ./test.py
       displayName: 'Test with unittes'
       workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
 
