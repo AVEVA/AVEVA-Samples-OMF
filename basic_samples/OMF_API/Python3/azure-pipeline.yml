@@ -1,3 +1,17 @@
+variables:
+- group: LocalServer
+- name: projpath
+  value: /basic_samples/OMF_API/Python3
+- name: CredFile
+  value: prod_omf_config.ini
+- name: CredFileLibrary
+  value: config.ini
+- name: CredFileLibraryOP
+  value: prod_onprem_omf_config.properties
+- name: testpath
+  value: /basic_samples/OMF_API/Python3
+- name: job
+  value: OMF_APIPy
 
 jobs:      
 - job: OMF_APIPy
@@ -7,14 +21,14 @@ jobs:
   steps :
     - task: UsePythonVersion@0
       inputs:
-        versionSpec: '3.6'
+        versionSpec: $(python_version)
         architecture: 'x64'
 
     # Download Secure File
     # Download a secure file to a temporary location on the build or release agent
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: prod_omf_config.ini
+        secureFile: $(CredFileLibrary)
 
 
     # Copy Files
@@ -22,18 +36,17 @@ jobs:
     - task: CopyFiles@2
       inputs:
         sourceFolder: $(Agent.TempDirectory)
-        contents: prod_omf_config.ini
-        targetFolder: '$(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/'
+        contents: $(CredFileLibrary)
+        targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
         #cleanTargetFolder: false # Optional
         overWrite: true # Optional
         #flattenFolders: false # Optional
       displayName: copy file
 
     - script: |
-        mv prod_omf_config.ini config.ini
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/
-      displayName: 'rename config file'
-      
+        mv $(CredFileLibrary) $(CredFile)
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      displayName: 'rename config file'          
 
       
     - script: |
@@ -46,12 +59,99 @@ jobs:
       
     - script: |
         pip install -r requirements.txt
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/
+      workingDirectory: $(Build.SourcesDirectory)$(testpath)/
       displayName: 'Install requirements'
       
     - script: |
         python -m pytest ./program.py
       displayName: 'Test with pytest'
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/OMF_API/Python3/
+      workingDirectory: $(Build.SourcesDirectory)$(testpath)/
 
- 
+- job: OMF_APIPy_PWS
+
+  pool:
+    name: 00-OSIManaged-Test
+    demands: USERNAME -equals $(LocalServer)
+  steps :
+    # Download Secure File
+    # Download a secure file to a temporary location on the build or release agent
+    - task: DownloadSecureFile@1
+      inputs:
+        secureFile: $(CredFileLibraryOP)
+
+
+    # Copy Files
+    # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(Agent.TempDirectory)
+        contents:  $(CredFileLibraryOP)
+        targetFolder: '$(Build.SourcesDirectory)$(projpath)'
+        #cleanTargetFolder: false # Optional
+        overWrite: true # Optional
+        #flattenFolders: false # Optional
+      displayName: copy file      
+
+    - script: |
+        del $(CredFile)
+      workingDirectory:  '$(Build.SourcesDirectory)$(projpath)'
+      displayName: 'del config file1'
+
+
+    - script: |
+        rename  $(CredFileLibraryOP)  $(CredFile)
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)
+      displayName: 'rename config file'   
+            
+      
+    - script: |
+         $(pip_path) install -r requirements.txt
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)
+      displayName: 'Install requirements'
+      
+    - script: |
+        $(python_path) ./test.py
+      displayName: 'Test with unittes'
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)
+
+- job: OMF_APIPy_COV
+
+  pool:
+    name: 00-OSIManaged-Test
+    demands: USERNAME -equals $(LocalServer)
+
+  steps:
+  - script: 'mkdir $(covFolder)'
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
+    displayName: 'make dir '
+    continueOnError: true
+
+  - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+    displayName: 'build '
+
+  - script: '"$(covPath)cov-analyze" --dir . '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+    displayName: 'analyze '
+
+  - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+    displayName: 'upload '
+
+- job: OMF_APIPy_BS
+
+  pool:
+    name: Hosted VS2017
+
+  steps:
+  
+    - script: |
+        dotnet restore
+        dotnet msbuild -p:HIGHENTROPYVA=true
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)
+      displayName: 'Build'
+
+    - task: ms-codeanalysis.vss-microsoft-security-code-analysis.build-task-binskim.BinSkim@3
+      displayName: 'Run BinSkim '
+      inputs:
+        AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'

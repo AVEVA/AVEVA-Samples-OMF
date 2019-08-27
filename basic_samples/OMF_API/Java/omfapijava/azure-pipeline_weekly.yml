@@ -1,0 +1,35 @@
+variables:
+- group: LocalServer
+- name: projpath
+  value: /basic_samples/OMF_API/Java/omfapijava
+- name: CredFile
+  value: config.properties
+- name: CredFileLibrary
+  value: config.properties
+- name: CredFileLibraryOP
+  value: prod_onprem_omf_config.properties
+- name: testpath
+  value: /basic_samples/OMF_API/Java/omfapijava
+- name: job
+  value: OMF_APIJava
+
+jobs:      
+- job: OMF_APIDotNet_BD
+
+  pool:
+    name: Hosted VS2017
+    demands:
+      - maven
+      - npm
+
+  steps:
+   - task: black-duck-software.detect-for-tfs.hub.detect.task.BlackDuckDetect@1
+     displayName: 'Run Black Duck Detect for $(job)'
+     inputs:
+        BlackDuckHubService: 'Black Duck'
+        DetectArguments: |
+           --detect.project.name="$(job)" 
+           --detect.project.version.name="latest" 
+           --detect.source.path="$(build.sourcesDirectory)$(projpath)"
+           --detect.code.location.name="code_location_$(job)_latest_$(job)"
+           --detect.bom.aggregate.name="bom_$(job)_latest_$(job)"
