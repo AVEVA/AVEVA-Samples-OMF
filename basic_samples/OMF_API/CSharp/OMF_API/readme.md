@@ -83,10 +83,10 @@ System.Net.WebException: The SSL connection could not be established, see inner 
 
 -----------
 OCS
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIDotNet?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4929&branchName=master)
+[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIDotNet?branchName=master&jobName=OMF_APIDotNet)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4929&branchName=master)
 
 PI Web API
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIDotNet_onprem?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4930&branchName=master)
+[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIDotNet?branchName=master&jobName=OMF_APIDotNet_PWS)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4929&branchName=master)
 -----------
 
 Tested against DotNet 2.2.105.
