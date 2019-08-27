@@ -7,7 +7,7 @@ variables:
 - name: CredFileLibrary
   value: prod_omf_config.ini
 - name: CredFileLibraryOP
-  value: prod_onprem_omf_config.properties
+  value: prod_onprem_omf_config.ini
 - name: testpath
   value: /basic_samples/OMF_API/Python3
 - name: job
