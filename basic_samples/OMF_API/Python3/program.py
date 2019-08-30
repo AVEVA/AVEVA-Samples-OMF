@@ -757,7 +757,7 @@ def checkDeletes():
     time.sleep(2)
 
     if(sendingToOCS):
-        time.sleep(2)
+        time.sleep(5)
         checkValueGone(checkBase + '/Streams' + '/Container1')
     else:
         json1 = checkValue(checkBase + "/dataservers?name=" + dataServerName)
