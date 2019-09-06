@@ -14,7 +14,7 @@ variables:
   value: OMF_APIJava
 
 jobs:      
-- job: OMF_APIDotNet_BD
+- job: OMF_APIJava_BD
 
   pool:
     name: Hosted VS2017
