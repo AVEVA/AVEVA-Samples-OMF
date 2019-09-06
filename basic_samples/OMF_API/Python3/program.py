@@ -285,7 +285,7 @@ def checkValue(url):
         reason=response.text
         url = response.url
         error = f"  {status}:{reason}.  URL {url}  OperationId {opId}"
-        raise Exception("OMF message was unsuccessful. {error}")
+        raise Exception(f"OMF message was unsuccessful. {error}")
     return response.text
     
 def getCurrentTime():
