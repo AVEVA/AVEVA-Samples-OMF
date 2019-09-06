@@ -241,7 +241,12 @@ def checkValueGone(url):
         response.close()
         print('Value found.  This is unexpected.  "{0}"'.format(response.status_code))
         print()
-        raise Exception("Check message was failed. {status}:{reason}".format( status=response.status_code, reason=response.text))
+        opId = response.headers["Operation-Id"]
+        status=response.status_code
+        reason=response.text
+        url = response.url
+        error = f"  {status}:{reason}.  URL {url}  OperationId {opId}"
+        raise Exception(f"Check message was failed. {error}")
     return response.text
    
 
@@ -275,7 +280,12 @@ def checkValue(url):
         response.close()
         print('Response from endpoint was bad.  "{0}"'.format(response.status_code))
         print()
-        raise Exception("OMF message was unsuccessful. {status}:{reason}".format( status=response.status_code, reason=response.text))
+        opId = response.headers["Operation-Id"]
+        status=response.status_code
+        reason=response.text
+        url = response.url
+        error = f"  {status}:{reason}.  URL {url}  OperationId {opId}"
+        raise Exception(f"OMF message was unsuccessful. {error}")
     return response.text
     
 def getCurrentTime():
@@ -757,7 +767,6 @@ def checkDeletes():
     time.sleep(2)
 
     if(sendingToOCS):
-        time.sleep(5)
         checkValueGone(checkBase + '/Streams' + '/Container1')
     else:
         json1 = checkValue(checkBase + "/dataservers?name=" + dataServerName)
