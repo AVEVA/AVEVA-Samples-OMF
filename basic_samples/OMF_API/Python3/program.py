@@ -395,6 +395,223 @@ def create_data_values_for_NonTimeStampIndexAndMultiIndex_type(NonTimeStampIndex
         }
     ]
 
+
+def oneTimeSendMessagesDelete(action = 'delete'):    
+    # Wrapper around all of the data and container messages.  
+    global omfVersion, sendingToOCS
+
+
+    send_omf_message_to_endpoint("container", [
+        {
+            "id": "Container1",
+            "typeid": "FirstDynamicType"
+        },
+        {
+            "id": "Container2",
+            "typeid": "FirstDynamicType"
+        },
+        {
+            "id": "Container3",
+            "typeid": "SecondDynamicType"
+        },
+        {
+            "id": "Container4",
+            "typeid": "ThirdDynamicType"
+        }
+    ],action)
+
+    if(sendingToOCS):
+        send_omf_message_to_endpoint("container", [
+            {
+                "id": "Container5",
+                "typeid": "NonTimeStampIndex"
+            },
+            {
+                "id": "Container6",
+                "typeid": "MultiIndex"
+            }
+        ],action)
+
+    send_omf_message_to_endpoint("type", [
+        {
+            "id": "FirstStaticType",
+            "name": "First static type",
+            "classification": "static",
+            "type": "object",
+            "description": "First static asset type",
+            "properties": {
+                "index": {
+                    "type": "string",
+                    "isindex": True,
+                    "description": "not in use"
+                },
+                "name": {
+                    "type": "string",
+                    "isname": True,
+                    "description": "not in use"
+                },
+                "StringProperty": {
+                    "type": "string",
+                    "description": "First static asset type's configuration attribute"
+                }
+            }
+        },
+        {
+            "id": "SecondStaticType",
+            "name": "Second static type",
+            "classification": "static",
+            "type": "object",
+            "description": "Second static asset type",
+            "properties": {
+                "index": {
+                    "type": "string",
+                    "isindex": True,
+                    "description": "not in use"
+                },
+                "name": {
+                    "type": "string",
+                    "isname": True,
+                    "description": "not in use"
+                },
+                "StringProperty": {
+                    "type": "string",
+                    "description": "Second static asset type's configuration attribute"
+                }
+            }
+        }
+    ],
+    action)
+
+    send_omf_message_to_endpoint("type", [
+        {
+            "id": "FirstDynamicType",
+            "name": "First dynamic type",
+            "classification": "dynamic",
+            "type": "object",
+            "description": "not in use",
+            "properties": {
+                "timestamp": {
+                    "format": "date-time",
+                    "type": "string",
+                    "isindex": True,
+                    "description": "not in use"
+                },
+                "IntegerProperty": {
+                    "type": "integer",
+                    "description": "PI point data referenced integer attribute"
+                }
+            }
+        },
+        {
+            "id": "SecondDynamicType",
+            "name": "Second dynamic type",
+            "classification": "dynamic",
+            "type": "object",
+            "description": "not in use",
+            "properties": {
+                "timestamp": {
+                    "format": "date-time",
+                    "type": "string",
+                    "isindex": True,
+                    "description": "not in use"
+                },
+                "NumberProperty1": {
+                    "type": "number",
+                    "description": "PI point data referenced number attribute 1",
+                    "format": "float64"
+                },
+                "NumberProperty2": {
+                    "type": "number",
+                    "description": "PI point data referenced number attribute 2",
+                    "format": "float64"
+                },
+                "StringEnum": {
+                    "type": "string",
+                    "enum": ["False", "True"],
+                    "description": "String enumeration to replace boolean type"
+                }
+            }
+        },
+        {
+            "id": "ThirdDynamicType",
+            "name": "Third dynamic type",
+            "classification": "dynamic",
+            "type": "object",
+            "description": "not in use",
+            "properties": {
+                "timestamp": {
+                    "format": "date-time",
+                    "type": "string",
+                    "isindex": True,
+                    "description": "not in use"
+                },
+                "IntegerEnum": {
+                    "type": "integer",
+                    "format": "int16",
+                    "enum": [0, 1],
+                    "description": "Integer enumeration to replace boolean type"
+                }
+            }
+        }
+    ],action)
+
+    if(sendingToOCS):
+        send_omf_message_to_endpoint("type", [
+            {
+                "id": "NonTimeStampIndex",
+                "name": "NonTimeStampIndex",
+                "classification": "dynamic",
+                "type": "object",
+                "description": "Integer Fun",
+                "properties": {
+                    "Value": {
+                        "type": "number",
+                        "name": "Value",
+                        "description": "This could be any value"
+                    },
+                    "Int_Key": {
+                        "type": "integer",
+                        "name": "Integer Key",
+                        "isindex": True,
+                        "description": "A non-time stamp key"
+                    }
+                }
+            },        
+            {
+                "id": "MultiIndex",
+                "name": "Multi_index",
+                "classification": "dynamic",
+                "type": "object",
+                "description": "This one has multiple indicies",
+                "properties": {
+                    "Value": {
+                        "type": "number",
+                        "name": "Value1",
+                        "description": "This could be any value"
+                    },                
+                    "Value2": {
+                        "type": "number",
+                        "name": "Value2",
+                        "description": "This could be any value too"
+                    },
+                    "IntKey": {
+                        "type": "integer key part 1",
+                        "name": "integer key part 1",
+                        "isindex": True,
+                        "description": "This could represent any integer value"
+                    },
+                    "IntKey2": {
+                        "type": "integer key part 2",
+                        "name": "integer key part 2",
+                        "isindex": True,
+                        "description": "This could represent any integer value as well"
+                    }
+                }
+            }
+        ],action)
+
+    
+
 def oneTimeSendMessages(action = 'create'):    
     # Wrapper around all of the data and container messages.  
     global omfVersion, sendingToOCS
@@ -933,7 +1150,7 @@ def main(test = False):
         print ('Deletings')
 
         # Step 10
-        oneTimeSendMessages('delete')
+        oneTimeSendMessagesDelete()
         checkDeletes()
         print 
         return success       
