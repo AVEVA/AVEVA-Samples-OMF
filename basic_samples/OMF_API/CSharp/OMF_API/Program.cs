@@ -69,6 +69,8 @@ namespace OMF_API
         static int integer_index2_2 = 0;
 
 
+        static bool success = true;
+        static Exception toThrow = null;
 
         static void Main(string[] args)
         {
@@ -84,8 +86,6 @@ namespace OMF_API
         {
 
             //hold on to these in case there is a failure in deleting
-            var success = true;
-            Exception exc = null;
 
             Console.WriteLine(" .d88888b.  888b     d888 8888888888               d8888 8888888b. 8888888 ");
             Console.WriteLine("d88P\" \"Y88b 8888b   d8888 888                     d88888 888   Y88b  888   ");
@@ -183,7 +183,7 @@ namespace OMF_API
             {
                 Console.WriteLine(ex.ToString());
 
-                exc = ex;
+                toThrow = ex;
                 success = false;
             }
             finally
@@ -198,7 +198,7 @@ namespace OMF_API
                 {
                     Console.WriteLine(ex.ToString());
 
-                    exc = ex;
+                    toThrow = ex;
                     success = false;
                 }
 
@@ -207,8 +207,8 @@ namespace OMF_API
                 Console.WriteLine("Done");
                 if (!test)
                     Console.ReadLine();
-                if (exc != null)
-                    throw exc;
+                if (toThrow != null)
+                    throw toThrow;
             }
             
             return success;
@@ -259,6 +259,29 @@ namespace OMF_API
             }
         }
 
+        
+        /// <summary>
+        /// Use this to run a method that you don't want to stop the program if there is an error
+        /// </summary>
+        /// <param name="methodToRun">The method to run.</param>
+        /// <param name="value">The value to put into the method to run</param>
+        private static void RunInTryCatch(Action<string> methodToRun, string value)
+        {
+            try
+            {
+                methodToRun(value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Got error in {methodToRun.Method.Name} with value {value} but continued on:" + ex.Message);
+                if (toThrow == null)
+                {
+                    success = false;
+                    toThrow = ex;
+                }
+            }
+        }
+
 
         /// <summary>
         /// Cehcks the last value of Container1 to see if it matches the incoming value
@@ -281,8 +304,10 @@ namespace OMF_API
                 json1 = checkValue(checkBase + $"/Streams" + $"/Container1" + $"/Data/last");
                 var valueJ = JsonConvert.DeserializeObject<List<JObject>>(value);
                 var jsonJ = JsonConvert.DeserializeObject<JObject>(json1);
-                if (valueJ[0]["values"][0]["IntegerProperty"]?.ToString() != jsonJ["IntegerProperty"]?.ToString())
-                    throw new Exception("Returned value is not expected.");
+                var valueSent  =valueJ[0]["values"][0]["IntegerProperty"]?.ToString();
+                var valueGot  =jsonJ["IntegerProperty"]?.ToString();
+                if (String.Compare(valueSent, valueGot) != 0)
+                    throw new Exception($"Returned value is not expected.  Sent {valueSent}.  Got {valueGot}.");
             }
             else
             {
@@ -470,21 +495,29 @@ namespace OMF_API
         private static void deleteTypesAndContainers(string action = "delete")
         {
             if (sendingToOCS)
-                sendContainers2(action);
+                RunInTryCatch(sendContainers2,action);
+               // sendContainers2(action);
 
-            sendContainers(action);
+            RunInTryCatch(sendContainers,action);
+           // sendContainers(action);
 
             if (sendingToOCS)
-                sendNonTimeStampTypes(action);
+                RunInTryCatch(sendNonTimeStampTypes,action);
+                //sendNonTimeStampTypes(action);
 
-            sendFirstDynamicType(action);
-            sendSecondDynamicType(action);
-            sendThirdDynamicType(action);
+            RunInTryCatch(sendFirstDynamicType,action);
+            RunInTryCatch(sendSecondDynamicType,action);
+            RunInTryCatch(sendThirdDynamicType,action);
+           // sendFirstDynamicType(action);
+          //  sendSecondDynamicType(action);
+          //  sendThirdDynamicType(action);
             
             if (!sendingToOCS)
             {
-                sendFirstStaticType(action);
-                sendSecondStaticType(action);
+                RunInTryCatch(sendFirstStaticType,action);
+                RunInTryCatch(sendSecondStaticType,action);
+               // sendFirstStaticType(action);
+               // sendSecondStaticType(action);
             }            
         }
         /// <summary>
