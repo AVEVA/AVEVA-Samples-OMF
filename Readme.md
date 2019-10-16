@@ -8,13 +8,12 @@ Some tasks and individual language examples have labels as follows:
 
 * \* denotes that the language example uses the rest API directily instead of a library
 
-* <img src="./miscellaneous/images/ctp.png" alt="ctp icon">   This task and code uses services that are currently in preview.  If you are interested in this functionality, please contact OSISoft.  
 
 
 
 The official OMF samples are divided in multiple categories depending on the scenario and problem/task, accessible through the following table:
 
-Task|Description|Languages|&nbsp;&nbsp;&nbsp;OCS&nbsp;Test&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;PI&nbsp;Test&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./miscellaneous/images/ctp.png" alt="ctp icon"> 
+Task|Description|Languages|&nbsp;&nbsp;&nbsp;OCS&nbsp;Test&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;PI&nbsp;Test&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 --------|-----------|---------|-----------|----------
  **<a href="basic_samples/OMF_API/">Basic API</a>** | These samples demonstrate sending some typical OMF messages.  The applications are configurable to both PI and OCS.  <a href="basic_samples/OMF_API">Details</a>   |  <a href="basic_samples/OMF_API/CSharp/OMF_API/">.NET*</a><br /><a href="basic_samples/OMF_API/Python3/">Python3*</a><br /><a href="basic_samples/OMF_API/Java/omfapijava">Java*</a>  | [![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIDotNet?branchName=master&jobName=OMF_APIDotNet)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4929&branchName=master) <br />[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIPy?branchName=master&jobName=OMF_APIPy)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4934&branchName=master)<br />[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIJava?branchName=master&jobName=OMF_APIJava)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4933&branchName=master)|[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIDotNet?branchName=master&jobName=OMF_APIDotNet_PWS)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4929&branchName=master)<br />[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIPy?branchName=master&jobName=OMF_APIPy_PWS)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4934&branchName=master)<br />[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIJava?branchName=master&jobName=OMF_APIJava_PWS)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4933&branchName=master)
 
@@ -33,7 +32,9 @@ Configure OMF Connection.  This can be done programmatically, but here are the g
 
 
 Sending to PI:
-PI Web API OMF accepting endpoint is not currently released.  Currently you can use the PI Connector Relay which these samples have not been tested against.
+
+Use the PI Web API OMF endpoint.  
+PI Connector Relay is currently not tested for and would require some changes to the code to get to work.
 
 
 OMF limitations on OCS and PI
