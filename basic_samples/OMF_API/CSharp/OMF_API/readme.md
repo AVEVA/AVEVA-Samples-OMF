@@ -56,7 +56,7 @@ replace the placeholders with the authentication-related values you received fro
 ```
 
 
-The PIServer uses the PI Web API as its OMF accepting endpoint.  It is currently in Beta.   To configure the sample to work against PI update the appsettings.json to have only these parameters and update that parameter values to what is being used.
+The PIServer uses the PI Web API as its OMF accepting endpoint.  To configure the sample to work against PI update the appsettings.json to have only these parameters and update that parameter values to what is being used.
 
 Note: In this sample the tenantId is used to autodetect if you are going against OCS or PI, so make sure that is removed if going against PI.
 
