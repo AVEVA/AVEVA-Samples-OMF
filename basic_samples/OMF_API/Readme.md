@@ -25,11 +25,7 @@ The samples are based on OMF v1.1.
 
 The samples are written in a way that the same sample can send to both PI and OCS.  This is controlled by either the crendential file passed in or by an override variable in the program.
 
-
-NOTE: Automated tests are currently OCS only.
-
-NOTE: The examples for PI are tested against the PI Web API OMF accepting endpoint.  The Connector Relay OMF endpoint is the only current endpoint.  These samples should generally work if you change the OMF Version Header to 1.0, but they are untested and there might be more changes required.
-
+The examples for PI are tested against the PI Web API OMF accepting endpoint. 
 
 
 
