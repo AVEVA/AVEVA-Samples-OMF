@@ -408,7 +408,7 @@ namespace OMF_API
         /// <returns></returns>
         private static string create_data_values_for_first_dynamic_type(string containerId)
         {
-            return String.Format(@"[{{""containerid"": ""{0}"",""values"": [{{""timestamp"": ""{1}"",""IntegerProperty"": {2}}}]}}]", 
+            return string.Format(@"[{{""containerid"": ""{0}"",""values"": [{{""timestamp"": ""{1}"",""IntegerProperty"": {2}}}]}}]", 
                     containerId, getCurrentTime(), rnd.Next(0,100));
         }
 
