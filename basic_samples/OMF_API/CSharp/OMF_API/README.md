@@ -1,5 +1,9 @@
 # Building a .NET sample to send OMF to PI or OCS
 
+| OCS Test Status                                                                                                                                                                                                                                                         | PI Test Status                                                                                                                                                                                                                                                          |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_API_DotNet?branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=943&branchName=master&jobName=Tests_OnPrem) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_API_DotNet?branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=943&branchName=master&jobName=Tests_OnPrem) |
+
 Developed against DotNet 2.2.300.
 
 ## Building a sample with the rest calls directly
@@ -68,14 +72,6 @@ If your client computer does not trust the PI Web API certificate you will see a
 ```
 System.Net.WebException: The SSL connection could not be established, see inner exception. The remote certificate is invalid according to the validation procedure. ---> System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception. ---> System.Security.Authentication.AuthenticationException: The remote certificate is invalid according to the validation procedure.
 ```
-
----
-
-OCS
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIDotNet?branchName=master&jobName=OMF_APIDotNet)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4929&branchName=master)
-
-PI Web API
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OMF_test/OMF_APIDotNet?branchName=master&jobName=OMF_APIDotNet_PWS)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4929&branchName=master)
 
 ---
 

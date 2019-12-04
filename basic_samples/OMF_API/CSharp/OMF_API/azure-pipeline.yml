@@ -32,14 +32,8 @@ variables:
 
 jobs:
   - job: Tests_OCS
-    strategy:
-      matrix:
-        linux:
-          imageName: 'ubuntu-16.04'
-        windows:
-          imageName: 'vs2017-win2016'
     pool:
-      vmImage: $(imageName)
+      vmImage: 'ubuntu-16.04'
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
@@ -55,14 +49,9 @@ jobs:
         displayName: 'Run tests'
 
   - job: Tests_OnPrem
-    strategy:
-      matrix:
-        linux:
-          imageName: 'ubuntu-16.04'
-        windows:
-          imageName: 'vs2017-win2016'
     pool:
-      vmImage: $(imageName)
+      name: 00-OSIManaged-Test
+      demands: USERNAME -equals $(covAgent)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
