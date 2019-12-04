@@ -1,25 +1,11 @@
-/** Program.java
- * 
- */
-
-// OMF_API_Java
-// Version 1.0.1
-// 3-21-19
-
 package com.github.osisoft.omfapi;
-
-//import com.google.gson.reflect.TypeToken;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -30,7 +16,6 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeoutException;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -38,7 +23,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 
 import java.time.*;
 
@@ -69,7 +53,7 @@ public class Program {
     static String tenantId = getConfiguration("tenantId");
     static String namespaceId = getConfiguration("namespaceId");
     static String dataServerName = getConfiguration("dataServerName");
-    
+
     static String username = getConfiguration("username");
     static String password = getConfiguration("password");
     static String omfEndPoint = "";
@@ -140,7 +124,7 @@ public class Program {
         System.out.println("                                            .d88P                                    ");
         System.out.println("                                          .d88P\"                                     ");
         System.out.println("                                         888P\"                                       ");
-        
+
         System.out.println("------------------------------------------------------------------");
 
         try {
@@ -236,12 +220,9 @@ public class Program {
         Gson gson = new Gson();
         Boolean success = false;
         if (sendToOCS) {
-            try
-            {
+            try {
                 getValue(checkBase + "/Streams" + "/Container1");
-            }
-            catch(Exception ex)
-            {
+            } catch (Exception ex) {
                 success = true;
             }
 
@@ -256,23 +237,17 @@ public class Program {
             Map<String, Object> mappy2 = (Map<String, Object>) mappy.get("Links");
 
             String pointsURL = mappy2.get("Points").toString();
-            try
-            {
+            try {
                 json1 = getValue(pointsURL + "?nameFilter=container1*");
                 Map<String, Object> mappy3 = gson.fromJson(json1, Map.class);
                 ((ArrayList<Map<String, Object>>) mappy3.get("Items")).get(0);
-            }
-            catch(Exception ex)
-            {
+            } catch (Exception ex) {
                 success = true;
             }
             if (!success)
                 throw new Exception("Container tag found");
         }
-
     }
-
-    
 
     private static void checkSends(String lastVal) throws Exception {
         System.out.println("Checks");
@@ -388,16 +363,15 @@ public class Program {
         if (sendToOCS) {
             sendOMF(getMultiIndexContainers(), "type", action);
         }
-        
+
         if (sendToOCS) {
             sendOMF(getDynamicTypeMultiIndexString(), "type", action);
         }
-        
+
         sendOMF(getDynamicTypeString(), "type", action);
-        
+
         sendOMF(getFirstandSecondStaticTypeString(), "type", action);
     }
-
 
     private static void oneTimeSendMessages(String action) throws Exception {
         // Step 3
@@ -592,8 +566,8 @@ public class Program {
         Properties props = new Properties();
 
         System.out.println(new File(".").getAbsolutePath());
-        
-        try(InputStream inputStream = new FileInputStream("config.properties")) {
+
+        try (InputStream inputStream = new FileInputStream("config.properties")) {
             props.load(inputStream);
             property = props.getProperty(propertyId);
             inputStream.close();
@@ -623,7 +597,7 @@ public class Program {
             e.printStackTrace();
             throw e;
         }
-        
+
         int httpResult = urlConnection.getResponseCode();
 
         try {
@@ -633,7 +607,8 @@ public class Program {
                 throw new Exception("get single value request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8));
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8));
 
             while ((inputLine = in.readLine()) != null) {
                 jsonResults.append(inputLine);
@@ -645,7 +620,8 @@ public class Program {
             try {
                 String inputLineError;
                 if (urlConnection.getErrorStream() != null) {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream(), StandardCharsets.UTF_8));
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(urlConnection.getErrorStream(), StandardCharsets.UTF_8));
 
                     while ((inputLineError = in.readLine()) != null) {
                         httpErrorMessage.append(inputLineError);
@@ -667,7 +643,7 @@ public class Program {
     public static void sendOMF(String messageToSend, String message_type, String action) throws Exception {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        
+
         try {
             url = new URL(omfEndPoint);
             urlConnection = getConnection(url, "POST", message_type, action);
@@ -687,7 +663,8 @@ public class Program {
                 try {
                     String inputLine;
                     if (urlConnection.getErrorStream() != null) {
-                        BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream(), StandardCharsets.UTF_8));
+                        BufferedReader in = new BufferedReader(
+                                new InputStreamReader(urlConnection.getErrorStream(), StandardCharsets.UTF_8));
 
                         while ((inputLine = in.readLine()) != null) {
                             httpErrorMessage.append(inputLine);
@@ -699,8 +676,9 @@ public class Program {
                     e.printStackTrace();
                 }
 
-                throw new Exception("Post OMF failed." + httpResult + "  " + httpMessage + " " + httpErrorMessage.toString());
-            }        
+                throw new Exception(
+                        "Post OMF failed." + httpResult + "  " + httpMessage + " " + httpErrorMessage.toString());
+            }
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
             success = false;
@@ -714,7 +692,7 @@ public class Program {
             success = false;
             e.printStackTrace();
             throw e;
-        } 
+        }
     }
 
     protected static String AcquireAuthToken() {
@@ -738,7 +716,9 @@ public class Program {
             URLConnection request = discoveryUrl.openConnection();
             request.connect();
             JsonParser jp = new JsonParser();
-            JsonObject rootObj = jp.parse(new InputStreamReader((InputStream) request.getContent(), StandardCharsets.UTF_8)).getAsJsonObject();
+            JsonObject rootObj = jp
+                    .parse(new InputStreamReader((InputStream) request.getContent(), StandardCharsets.UTF_8))
+                    .getAsJsonObject();
             String tokenUrl = rootObj.get("token_endpoint").getAsString();
 
             URL token = new URL(tokenUrl);
@@ -772,34 +752,30 @@ public class Program {
 
         return cachedAccessToken;
     }
-    
 
     public static boolean isSuccessResponseCode(int responseCode) {
         return responseCode >= 200 && responseCode < 300;
     }
-    
+
     private static String getBasicAuthenticationEncoding() {
 
         String userPassword = username + ":" + password;
         return new String(java.util.Base64.getEncoder().encodeToString(userPassword.getBytes()));
     }
-    
-   
+
     public static HttpURLConnection getConnection(URL url, String method, String message_type, String action) {
         HttpURLConnection urlConnection = null;
 
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod(method);
-            if(sendToOCS){
+            if (sendToOCS) {
                 urlConnection.setRequestProperty("Accept", "*/*; q=1");
                 urlConnection.setRequestProperty("Content-Type", "application/json");
                 String token = AcquireAuthToken();
                 urlConnection.setRequestProperty("Authorization", "Bearer " + token);
                 urlConnection.setRequestProperty("producertoken", token);
-            }
-            else
-            {
+            } else {
                 urlConnection.setRequestProperty("x-requested-with", "xmlhttprequest");
                 urlConnection.setRequestProperty("Authorization", "Basic " + getBasicAuthenticationEncoding());
             }
@@ -808,14 +784,14 @@ public class Program {
             urlConnection.setRequestProperty("action", action);
             urlConnection.setRequestProperty("omfversion", omfVersion);
             urlConnection.setRequestProperty("messageformat", "json");
-//            urlConnection.setRequestProperty("compression", compression);
+            // urlConnection.setRequestProperty("compression", compression);
             urlConnection.setUseCaches(false);
             urlConnection.setConnectTimeout(50000);
             urlConnection.setReadTimeout(50000);
-            if ("POST".equals(method) || "PUT".equals(method) ||"DELETE".equals(method)) {
+            if ("POST".equals(method) || "PUT".equals(method) || "DELETE".equals(method)) {
                 urlConnection.setDoOutput(true);
             } else if (method == "GET") {
-                //Do nothing
+                // Do nothing
             }
         } catch (SocketTimeoutException e) {
             e.printStackTrace();
