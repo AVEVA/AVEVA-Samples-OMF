@@ -24,9 +24,9 @@ variables:
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
-    value: product-readiness.omfapi_dotnet.ocs.json
+    value: product-readiness.omf_api_dotnet.ocs.json
   - name: CredFileLibraryOP
-    value: product-readiness.omfapi_dotnet.onprem.json
+    value: product-readiness.omf_api_dotnet.onprem.json
   - name: covStream
     value: OMF_APIDotNet
 
