@@ -1,23 +1,14 @@
-﻿// <copyright file="Program.cs" company="OSIsoft, LLC">
-//
-// </copyright>
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Net;
 using System.IO.Compression;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
 using System.Text;
 
 namespace OMF_API
@@ -36,9 +27,6 @@ namespace OMF_API
 
         static bool VERIFY_SSL = true;
 
-
-
-
         // The version of the OMFmessages
         static string omfVersion = "1.1"; 
 
@@ -55,7 +43,6 @@ namespace OMF_API
         static string username = "";
         static string password = "";
 
-
         // Holds the token that is used for Auth for OCS.
         static string token = null;
 
@@ -67,7 +54,6 @@ namespace OMF_API
         static int integer_index1 = 0;
         static int integer_index2_1 = 0;
         static int integer_index2_2 = 0;
-
 
         static bool success = true;
         static Exception toThrow = null;
@@ -84,8 +70,7 @@ namespace OMF_API
         /// <returns></returns>
         public static bool runMain(bool test= false)
         {
-
-            //hold on to these in case there is a failure in deleting
+            // Hold on to these in case there is a failure in deleting
 
             Console.WriteLine(" .d88888b.  888b     d888 8888888888               d8888 8888888b. 8888888 ");
             Console.WriteLine("d88P\" \"Y88b 8888b   d8888 888                     d88888 888   Y88b  888   ");
@@ -140,16 +125,16 @@ namespace OMF_API
                     omfendpoint = checkBase + $"/omf";
                 }           
 
-                if(!String.IsNullOrEmpty(verify) && verify == "false")    
+                if (!string.IsNullOrEmpty(verify) && verify == "false")    
                 {
                     VERIFY_SSL = false;
                 }
 
-                if(!VERIFY_SSL)
+                if (!VERIFY_SSL)
                 {
                     Console.WriteLine("You are not verifying the certificate of the end point.  This is not advised for any system as there are security issues with doing this.");
-                    // this turns off SSL verification
-                    //This should not be done in production.  please properly handle your certificates
+                    // This turns off SSL verification
+                    // This should not be done in production.  please properly handle your certificates
                     ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
                 }
 
@@ -174,7 +159,7 @@ namespace OMF_API
                     if (sendingToOCS)
                         sendValue("data", create_data_values_for_NonTimeStampIndexAndMultiIndex_type("Container5", "Container6"));
                     Thread.Sleep(1000);
-                    count = count + 1;
+                    count += 1;
                 }
                 CheckValues(value);
 
@@ -215,7 +200,7 @@ namespace OMF_API
         }
         
         /// <summary>
-        /// Cehcks to mkae sure things were deleted
+        /// Checks to mkae sure things were deleted
         /// </summary>
         private static void CheckDeletes()
         {
@@ -233,7 +218,7 @@ namespace OMF_API
                 {
                     success = true;
                 }
-                if(!success)
+                if (!success)
                     throw new Exception("Container was found.");
             }
             else
@@ -253,13 +238,11 @@ namespace OMF_API
                     success = true;
                 }
 
-                if(!success)
+                if (!success)
                     throw new Exception("Container was found.");
-                
             }
         }
 
-        
         /// <summary>
         /// Use this to run a method that you don't want to stop the program if there is an error
         /// </summary>
@@ -282,9 +265,8 @@ namespace OMF_API
             }
         }
 
-
         /// <summary>
-        /// Cehcks the last value of Container1 to see if it matches the incoming value
+        /// Checks the last value of Container1 to see if it matches the incoming value
         /// </summary>
         /// <param name="value">last sent value to Container1</param>
         private static void CheckValues(string value)
@@ -337,16 +319,16 @@ namespace OMF_API
         /// <returns></returns>
         private static string create_data_values_for_NonTimeStampIndexAndMultiIndex_type(string NonTimeStampIndexID, string MultiIndexId)
         {
-            integer_index1 = integer_index1 + 2;
+            integer_index1 += 2;
 
             if (integer_index2_2 % 3 == 0) {
                 integer_index2_2 = 1;
-                integer_index2_1 = integer_index2_1 + 1;
+                integer_index2_1 += 1;
             }
             else
-                integer_index2_2 = integer_index2_2 + 1;
+                integer_index2_2 += 1;
 
-            return String.Format(@"[{{
+            return string.Format(@"[{{
                         ""containerid"": ""{0}"",
                         ""values"": [
                             {{
@@ -454,7 +436,6 @@ namespace OMF_API
         /// <param name="action"></param>
         private static void sendTypesAndContainers(string action = "create")
         {
-
             // Step 3
             if (!sendingToOCS)
             {
@@ -483,10 +464,9 @@ namespace OMF_API
                 sendStaticData(action);
                 // sendLinks2(action);
                 // Step 8
-               // sendLinks3(action);
+                // sendLinks3(action);
             }
         }
-
 
         /// <summary>
         /// Wrapper around the type and container calls
@@ -496,10 +476,10 @@ namespace OMF_API
         {
             if (sendingToOCS)
                 RunInTryCatch(sendContainers2,action);
-               // sendContainers2(action);
+                // sendContainers2(action);
 
             RunInTryCatch(sendContainers,action);
-           // sendContainers(action);
+            // sendContainers(action);
 
             if (sendingToOCS)
                 RunInTryCatch(sendNonTimeStampTypes,action);
@@ -508,18 +488,19 @@ namespace OMF_API
             RunInTryCatch(sendFirstDynamicType,action);
             RunInTryCatch(sendSecondDynamicType,action);
             RunInTryCatch(sendThirdDynamicType,action);
-           // sendFirstDynamicType(action);
-          //  sendSecondDynamicType(action);
-          //  sendThirdDynamicType(action);
+            // sendFirstDynamicType(action);
+            // sendSecondDynamicType(action);
+            // sendThirdDynamicType(action);
             
             if (!sendingToOCS)
             {
                 RunInTryCatch(sendFirstStaticType,action);
                 RunInTryCatch(sendSecondStaticType,action);
-               // sendFirstStaticType(action);
-               // sendSecondStaticType(action);
+                // sendFirstStaticType(action);
+                // sendSecondStaticType(action);
             }            
         }
+
         /// <summary>
         /// Sends the values to the preconfigured endpoint
         /// </summary>
@@ -546,7 +527,6 @@ namespace OMF_API
                 request.Credentials = new NetworkCredential(username, password);
             }
 
-
             byte[] byteArray;
 
             request.ContentType = "application/x-www-form-urlencoded";
@@ -556,11 +536,7 @@ namespace OMF_API
             }
             else
             {
-                //throw new NotImplementedException();
-                
-               // byte[] bytes = null;
-
-                using (var msi = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(dataJson)))
+                using (var msi = new MemoryStream(Encoding.UTF8.GetBytes(dataJson)))
                 using (var mso = new MemoryStream())
                 {
                     using (var gs = new GZipStream(mso, CompressionMode.Compress))
@@ -580,10 +556,8 @@ namespace OMF_API
             // Close the Stream object.  
             dataStream.Close();          
 
-            
             Send(request);
         }
-        
 
         private static string checkValue(string URL)
         {
@@ -603,7 +577,6 @@ namespace OMF_API
 
             return Send(request);
         }
-
 
         /// <summary>
         /// Assists in zipping the message if needed
@@ -649,7 +622,6 @@ namespace OMF_API
                 }
             }
         }
-
 
         /// <summary>
         /// Wrapper around definition of first static type
@@ -718,7 +690,7 @@ namespace OMF_API
                     }
                 }
             }]", action);
-            }
+        }
 
         /// <summary>
         /// wrapper around defintiion of first dynamic type
@@ -747,7 +719,7 @@ namespace OMF_API
                     }
                 }
             }]", action);
-            }
+        }
 
         /// <summary>
         /// wrapper around defintiion of second dynamic type
@@ -830,56 +802,56 @@ namespace OMF_API
         {
             sendValue("type",
             @"[{
-            ""id"": ""NonTimeStampIndex"",
-            ""name"": ""NonTimeStampIndex"",
-            ""classification"": ""dynamic"",
-            ""type"": ""object"",
-            ""description"": ""Integer Fun"",
-            ""properties"": {
-                ""Value"": {
-                    ""type"": ""number"",
-                    ""name"": ""Value"",
-                    ""description"": ""This could be any value""
-                },
-                ""Int_Key"": {
-                    ""type"": ""integer"",
-                    ""name"": ""Integer Key"",
-                    ""isindex"": True,
-                    ""description"": ""A non-time stamp key""
+                ""id"": ""NonTimeStampIndex"",
+                ""name"": ""NonTimeStampIndex"",
+                ""classification"": ""dynamic"",
+                ""type"": ""object"",
+                ""description"": ""Integer Fun"",
+                ""properties"": {
+                    ""Value"": {
+                        ""type"": ""number"",
+                        ""name"": ""Value"",
+                        ""description"": ""This could be any value""
+                    },
+                    ""Int_Key"": {
+                        ""type"": ""integer"",
+                        ""name"": ""Integer Key"",
+                        ""isindex"": True,
+                        ""description"": ""A non-time stamp key""
+                    }
                 }
-            }
-        },        
-        {
-            ""id"": ""MultiIndex"",
-            ""name"": ""Multi_index"",
-            ""classification"": ""dynamic"",
-            ""type"": ""object"",
-            ""description"": ""This one has multiple indicies"",
-            ""properties"": {
-                ""Value"": {
-                    ""type"": ""number"",
-                    ""name"": ""Value1"",
-                    ""description"": ""This could be any value""
-                },                
-                ""Value2"": {
-                    ""type"": ""number"",
-                    ""name"": ""Value2"",
-                    ""description"": ""This could be any value too""
-                },
-                ""IntKey"": {
-                    ""type"": ""integer key part 1"",
-                    ""name"": ""integer key part 1"",
-                    ""isindex"": True,
-                    ""description"": ""This could represent any integer value""
-                },
-                ""IntKey2"": {
-                    ""type"": ""integer key part 2"",
-                    ""name"": ""integer key part 2"",
-                    ""isindex"": True,
-                    ""description"": ""This could represent any integer value as well""
+            },        
+            {
+                ""id"": ""MultiIndex"",
+                ""name"": ""Multi_index"",
+                ""classification"": ""dynamic"",
+                ""type"": ""object"",
+                ""description"": ""This one has multiple indicies"",
+                ""properties"": {
+                    ""Value"": {
+                        ""type"": ""number"",
+                        ""name"": ""Value1"",
+                        ""description"": ""This could be any value""
+                    },                
+                    ""Value2"": {
+                        ""type"": ""number"",
+                        ""name"": ""Value2"",
+                        ""description"": ""This could be any value too""
+                    },
+                    ""IntKey"": {
+                        ""type"": ""integer key part 1"",
+                        ""name"": ""integer key part 1"",
+                        ""isindex"": True,
+                        ""description"": ""This could represent any integer value""
+                    },
+                    ""IntKey2"": {
+                        ""type"": ""integer key part 2"",
+                        ""name"": ""integer key part 2"",
+                        ""isindex"": True,
+                        ""description"": ""This could represent any integer value as well""
+                    }
                 }
-            }
-        }]", action);
+            }]", action);
         }
 
         /// <summary>
@@ -988,7 +960,6 @@ namespace OMF_API
             }    ]", action);
         }
 
-
         /// <summary>
         /// wrapper around defintiion of data for links
         /// </summary>
@@ -1035,7 +1006,6 @@ namespace OMF_API
                     }
                 }]", action);
         }
-
 
         /// <summary>
         /// Gets the token for auth for connecting
