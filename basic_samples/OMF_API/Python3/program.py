@@ -1099,7 +1099,7 @@ def main(test=False):
                 VERIFY_SSL = False
 
         if not forceSending:
-            if tenant is "":
+            if tenant == "":
                 sendingToOCS = False
             else:
                 sendingToOCS = True
