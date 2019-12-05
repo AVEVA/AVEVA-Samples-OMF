@@ -1,136 +1,71 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/OMF_API/CSharp'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/OMF_API/CSharp'
+
 variables:
-- group: LocalServer
-- name: projpath
-  value: /basic_samples/OMF_API/CSharp/OMF_API/
-- name: CredFile
-  value: appsettings.json
-- name: CredFileLibrary
-  value: prod_omf_appsettings.json
-- name: CredFileLibraryOP
-  value: prod_onprem_omf_appsettings.json
-- name: testpath
-  value: /basic_samples/OMF_API/CSharp/OMF_APITests
-- name: job
-  value: OMF_APIDotNet
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/basic_samples/OMF_API/CSharp/OMF_API/'
+  - name: testPath
+    value: '/basic_samples/OMF_API/CSharp/OMF_APITests'
+  - name: CredFile
+    value: appsettings.json
+  - name: CredFileLibrary
+    value: product-readiness.omf_api_dotnet.ocs.json
+  - name: CredFileLibraryOP
+    value: product-readiness.omf_api_dotnet.onprem.json
+  - name: covStream
+    value: OMF_APIDotNet
 
-jobs:      
-- job: OMF_APIDotNet
+jobs:
+  - job: Tests_OCS
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
 
-  pool:
-    vmImage: 'Ubuntu-16.04'
-  steps :
+      - script: |
+          dotnet restore
+          dotnet msbuild -p:HIGHENTROPYVA=true
+          dotnet test
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Run tests'
 
-    # Download Secure File
-    # Download a secure file to a temporary location on the build or release agent
-    - task: DownloadSecureFile@1
-      inputs:
-        secureFile: $(CredFileLibrary)
+  - job: Tests_OnPrem
+    pool:
+      name: 00-OSIManaged-Test
+      demands: USERNAME -equals $(covAgent)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibraryOP)
+          filePath: $(projPath)
 
+      - script: |
+          dotnet restore
+          dotnet msbuild -p:HIGHENTROPYVA=true
+          dotnet test
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Run tests'
 
-    # Copy Files basic_samples\OMF_API\CSharp\OMF_API
-    # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-    - task: CopyFiles@2
-      inputs:
-        sourceFolder: $(Agent.TempDirectory)
-        contents: $(CredFileLibrary)
-        targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
-        #cleanTargetFolder: false # Optional  
-        overWrite: true # Optional
-        #flattenFolders: false # Optional 
-      displayName: copy file
+  - template: '/miscellaneous/build_templates/coverity.yml'
 
-    - script: |
-        mv $(CredFileLibrary) $(CredFile)
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'rename config file'     
-      
-    - script: |
-        dotnet restore
-        dotnet msbuild -p:HIGHENTROPYVA=true
-        dotnet test
-      workingDirectory: $(Build.SourcesDirectory)$(testpath)/
-      displayName: 'Run Test'
-     
-- job: OMF_APIDotNet_PWS
-  pool:
-    name: 00-OSIManaged-Test
-    demands: USERNAME -equals $(LocalServer)
-
-  steps :
-    # Download Secure File
-    # Download a secure file to a temporary location on the build or release agent
-    - task: DownloadSecureFile@1
-      inputs:
-        secureFile: $(CredFileLibraryOP)
-
-
-    # Copy Files basic_samples\OMF_API\CSharp\OMF_API
-    # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-    - task: CopyFiles@2
-      inputs:
-        sourceFolder: $(Agent.TempDirectory)
-        contents:  $(CredFileLibraryOP)
-        targetFolder: '$(Build.SourcesDirectory)$(projpath)'
-        #cleanTargetFolder: false # Optional  
-        overWrite: true # Optional
-        #flattenFolders: false # Optional 
-      displayName: copy file
-
-    - script: |
-        del $(CredFile)
-      workingDirectory:  '$(Build.SourcesDirectory)$(projpath)'
-      displayName: 'rename config file1'
-
-
-    - script: |
-        rename  $(CredFileLibraryOP)  $(CredFile)
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)
-      displayName: 'rename config file'     
-      
-    - script: |
-        dotnet restore
-        dotnet test
-      workingDirectory: $(Build.SourcesDirectory)$(testpath)
-      displayName: 'Run Test'
-      
-- job: OMF_APIDotNet_Cov
-
-  pool:
-    name: 00-OSIManaged-Test
-    demands: USERNAME -equals $(LocalServer)
-
-  steps:
-  - script: 'if not exist $(covFolder) mkdir $(covFolder)'
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
-    displayName: 'make dir '
-    continueOnError: true
-
-  - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'build '
-
-  - script: '"$(covPath)cov-analyze" --dir . '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'analyze '
-
-  - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'upload '
-
-- job: OMF_APIDotNet_BS
-
-  pool:
-    name: Hosted VS2017
-
-  steps:
-  
-    - script: |
-        dotnet restore
-        dotnet msbuild -p:HIGHENTROPYVA=true
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)
-      displayName: 'Build'
-
-    - task: ms-codeanalysis.vss-microsoft-security-code-analysis.build-task-binskim.BinSkim@3
-      displayName: 'Run BinSkim '
-      inputs:
-        AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
+  - template: '/miscellaneous/build_templates/binskim.yml'
