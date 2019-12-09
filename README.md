@@ -17,9 +17,23 @@ The official OMF samples are divided in multiple categories depending on the sce
 Sending to OCS:
 Configure OMF Connection. This can be done programmatically, but here are the general steps to do it via the OCS portal:
 
-1. Create an OMF application client credential.
-1. Setup the OMF Connection to use the client credential and point to a namespace.
-1. Use the OMF Connection information in your application.
+If you do not already have a Client-Credentials Client set up to use:
+
+1. After logging in to OCS, open [Clients](https://cloud.osisoft.com/clients), or follow the link under the section "Security"
+1. Under "Client Type", select "Client-Credentials"
+1. Click "Add Client" and either grant the "Account Administrator" role or whatever custom roles are required to create and write data to Streams
+1. Click "Continue," then optionally enter a description and/or update the expiration date for the Client Secret
+1. On the "Client Successfully Created" screen, be sure to save the Client Secret as it will not be available again (a new secret can be generated if necessary)
+
+Once you have a Client-Credentials Client for use with OMF:
+
+1. After logging in to OCS, open [Connections](https://cloud.osisoft.com/connections), or follow the link under the section "Data Management"
+1. Under "Type", select "OMF"
+1. Click "Add Connection" and fill in a name for your OMF Connection
+1. Click "Next," and choose the Client-Credentials Client you intend your OMF application to use (or the one you just created above)
+1. Click "Next," and choose the Namespace(s) you intend to write OMF data to
+1. Click "Next," and review the configuration
+1. Click "Save," and you can now use this Client-Credentials Client to write OMF data to the specified Namespace(s) in the samples
 
 Sending to PI:
 
