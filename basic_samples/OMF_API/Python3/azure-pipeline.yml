@@ -19,8 +19,6 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/OMF_API/Python3'
-  - name: testPath
-    value: '/basic_samples/OMF_API/Python3'
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
@@ -49,20 +47,17 @@ jobs:
           architecture: 'x64'
 
       - script: |
-          pip install setuptools wheel
-          pip install unittest-xml-reporting    
-          pip install pytest
-          pip install pytest-cov
-        displayName: 'Install tools'
-
-      - script: |
-          pip install -r requirements.txt
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
-        displayName: 'Install requirements'
-
-      - script: |
-          python -m pytest ./program.py
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+          echo Install tools
+          call pip install setuptools wheel
+          call pip install unittest-xml-reporting    
+          call pip install pytest
+          call pip install pytest-cov
+          echo Install requirements
+          call pip install -r requirements.txt
+          echo Run tests
+          call python -m pytest ./program.py
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
 
   - job: Tests_OnPrem
