@@ -29,6 +29,8 @@ variables:
     value: product-readiness.omf_api_java.onprem.properties
   - name: covStream
     value: OMF_APIJava
+  - name: bdProject
+    value: OMF_API_Java
 
 jobs:
   - job: Tests_OCS

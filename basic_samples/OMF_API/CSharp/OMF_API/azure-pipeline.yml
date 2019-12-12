@@ -29,6 +29,8 @@ variables:
     value: product-readiness.omf_api_dotnet.onprem.json
   - name: covStream
     value: OMF_APIDotNet
+  - name: bdProject
+    value: OMF_API_DotNet
 
 jobs:
   - job: Tests_OCS

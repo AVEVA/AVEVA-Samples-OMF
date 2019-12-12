@@ -29,6 +29,8 @@ variables:
     value: product-readiness.omf_api_python.onprem.ini
   - name: covStream
     value: OMF_APIPy
+  - name: bdProject
+    value: OMF_API_Python
 
 jobs:
   - job: Tests_OCS
