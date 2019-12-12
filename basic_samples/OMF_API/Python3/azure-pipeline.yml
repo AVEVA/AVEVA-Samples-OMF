@@ -66,7 +66,7 @@ jobs:
   - job: Tests_OnPrem
     pool:
       name: 00-OSIManaged-Test
-      demands: USERNAME -equals $(covAgent)
+      demands: USERNAME -equals $(buildAgent)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
