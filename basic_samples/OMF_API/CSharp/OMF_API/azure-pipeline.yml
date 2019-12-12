@@ -33,9 +33,18 @@ variables:
     value: OMF_API_DotNet
 
 jobs:
-  - job: Tests_OCS
+  - job: Tests
+    strategy:
+      matrix:
+        ocs:
+          imageName: 'ubuntu-16.04'
+        onPrem:
+          poolName: '00-OSIManaged-Test'
+          poolDemands: 'USERNAME -equals $(buildAgent)'
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: $(imageName)
+      name: $(poolName)
+      demands: $(poolDemands)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
@@ -44,27 +53,15 @@ jobs:
           filePath: $(projPath)
 
       - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-          dotnet test
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
-        displayName: 'Run tests'
-
-  - job: Tests_OnPrem
-    pool:
-      name: 00-OSIManaged-Test
-      demands: USERNAME -equals $(buildAgent)
-    steps:
-      - template: '/miscellaneous/build_templates/config.yml'
-        parameters:
-          fileOriginal: $(CredFile)
-          fileLibrary: $(CredFileLibraryOP)
-          filePath: $(projPath)
-
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-          dotnet test
+          echo Clean
+          call dotnet clean
+          echo Restore
+          call dotnet restore --ignore-failed-sources
+          echo Build
+          call dotnet msbuild -p:HIGHENTROPYVA=true
+          echo Test
+          call dotnet test
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
