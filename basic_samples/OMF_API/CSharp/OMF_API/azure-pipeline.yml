@@ -33,23 +33,38 @@ variables:
     value: OMF_API_DotNet
 
 jobs:
-  - job: Tests
-    strategy:
-      matrix:
-        ocs:
-          imageName: 'ubuntu-16.04'
-        onPrem:
-          poolName: '00-OSIManaged-Test'
-          poolDemands: 'USERNAME -equals $(buildAgent)'
+  - job: Tests_OCS
     pool:
-      vmImage: $(imageName)
-      name: $(poolName)
-      demands: $(poolDemands)
+      vmImage: 'ubuntu-16.04'
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
+
+      - script: |
+          echo Clean
+          call dotnet clean
+          echo Restore
+          call dotnet restore --ignore-failed-sources
+          echo Build
+          call dotnet msbuild -p:HIGHENTROPYVA=true
+          echo Test
+          call dotnet test
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Run tests'
+
+  - job: Tests_OnPrem
+    pool:
+      name: 00-OSIManaged-Test
+      demands: USERNAME -equals $(buildAgent)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibraryOP)
           filePath: $(projPath)
 
       - script: |
