@@ -84,4 +84,6 @@ jobs:
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: python

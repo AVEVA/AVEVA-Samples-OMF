@@ -65,4 +65,6 @@ jobs:
         workingDirectory: '$(Build.SourcesDirectory)$(testPath)'
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: java
