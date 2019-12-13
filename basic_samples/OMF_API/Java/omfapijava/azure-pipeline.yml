@@ -29,6 +29,8 @@ variables:
     value: product-readiness.omf_api_java.onprem.properties
   - name: covStream
     value: OMF_APIJava
+  - name: bdProject
+    value: OMF_API_Java
 
 jobs:
   - job: Tests_OCS
@@ -52,7 +54,7 @@ jobs:
   - job: Tests_OnPrem
     pool:
       name: 00-OSIManaged-Test
-      demands: USERNAME -equals $(covAgent)
+      demands: USERNAME -equals $(buildAgent)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
@@ -65,4 +67,6 @@ jobs:
         workingDirectory: '$(Build.SourcesDirectory)$(testPath)'
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: java

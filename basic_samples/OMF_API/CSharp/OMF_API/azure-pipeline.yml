@@ -29,6 +29,8 @@ variables:
     value: product-readiness.omf_api_dotnet.onprem.json
   - name: covStream
     value: OMF_APIDotNet
+  - name: bdProject
+    value: OMF_API_DotNet
 
 jobs:
   - job: Tests_OCS
@@ -42,16 +44,22 @@ jobs:
           filePath: $(projPath)
 
       - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-          dotnet test
+          echo Clean
+          call dotnet clean
+          echo Restore
+          call dotnet restore --ignore-failed-sources
+          echo Build
+          call dotnet msbuild -p:HIGHENTROPYVA=true
+          echo Test
+          call dotnet test
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
   - job: Tests_OnPrem
     pool:
       name: 00-OSIManaged-Test
-      demands: USERNAME -equals $(covAgent)
+      demands: USERNAME -equals $(buildAgent)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
@@ -60,12 +68,18 @@ jobs:
           filePath: $(projPath)
 
       - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-          dotnet test
+          echo Clean
+          call dotnet clean
+          echo Restore
+          call dotnet restore --ignore-failed-sources
+          echo Build
+          call dotnet msbuild -p:HIGHENTROPYVA=true
+          echo Test
+          call dotnet test
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
-
-  - template: '/miscellaneous/build_templates/binskim.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: dotnet
