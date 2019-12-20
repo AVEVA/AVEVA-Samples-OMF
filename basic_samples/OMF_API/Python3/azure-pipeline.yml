@@ -15,6 +15,13 @@ pr:
     include:
       - '/basic_samples/OMF_API/Python3'
 
+schedules:
+  - cron: '0 0 * * 0'
+    displayName: Weekly build
+    branches:
+      include:
+        - master
+
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
