@@ -437,6 +437,30 @@ def oneTimeSendMessagesDelete(action='delete'):
                 "typeid": "MultiIndex"
             }
         ], action)
+    else:
+        # PI Web API requires cleaning up data before deleting types
+        send_omf_message_to_endpoint("data", [
+            {
+                "typeid": "FirstStaticType",
+                "values": [
+                    {
+                        "index": "Asset1",
+                        "name": "Parent element",
+                        "StringProperty": "Parent element attribute value"
+                    }
+                ]
+            },
+            {
+                "typeid": "SecondStaticType",
+                "values": [
+                    {
+                        "index": "Asset2",
+                        "name": "Child element",
+                        "StringProperty": "Child element attribute value"
+                    }
+                ]
+            }
+        ], action)
 
     send_omf_message_to_endpoint("type", [
         {
