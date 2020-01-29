@@ -71,6 +71,8 @@ If your client computer Python does not trust the PI Web API certificate you wil
 requests.exceptions.SSLError: HTTPSConnectionPool(host='...', port=443): Max retries exceeded with url: /piwebapi/omf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self signed certificate (_ssl.c:1051)')))
 ```
 
+Complete dependencies listed in [DEPENDENCIES.md](DEPENDENCIES.md)
+
 ---
 
 For the general steps or switch languages see the Task [ReadMe](../)  
