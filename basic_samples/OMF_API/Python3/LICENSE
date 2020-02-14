@@ -1,10 +1,5 @@
 Copyright 2020
 
-[product-readiness.OMF_API_Python : master]
-
-Phase: DEVELOPMENT
-Distribution: EXTERNAL
-
 Components: 
 
 chardet 3.0.4 : GNU Lesser General Public License v2.1 only
