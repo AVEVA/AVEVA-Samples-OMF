@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OSIsoft.OCSClients" Version="3.0.2-prerelease-20190924.3" />
+    <PackageReference Include="OSIsoft.Omf" Version="1.0.1-prerelease-20190619.9" />
+    <PackageReference Include="OSIsoft.OmfIngress" Version="1.1.0-prerelease-20190715.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
