@@ -38,11 +38,6 @@ namespace BARTIngress
                 OmfServices.ConfigureEdsOmfIngress(Settings.EdsPort);
             }
 
-            if (Settings.SendToPi)
-            {
-                OmfServices.ConfigurePiOmfIngress(Settings.PiWebApiUri);
-            }
-
             OmfServices.SendOmfMessage(OmfMessageCreator.CreateTypeMessage(typeof(BartStationEtd)));
         }
 

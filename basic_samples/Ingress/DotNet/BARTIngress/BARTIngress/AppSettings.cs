@@ -15,8 +15,5 @@
 
         public bool SendToEds { get; set; }
         public int EdsPort { get; set; }
-
-        public bool SendToPi { get; set; }
-        public string PiWebApiUri{ get; set; }
     }
 }
