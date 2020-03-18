@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
@@ -36,6 +37,19 @@ namespace BARTIngress
             if (Settings.SendToEds)
             {
                 OmfServices.ConfigureEdsOmfIngress(Settings.EdsPort);
+            }
+
+            if (Settings.SendToPi)
+            {
+                OmfServices.ConfigurePiOmfIngress(Settings.PiWebApiUri);
+            }
+
+            if (!Settings.ValidateEndpointCertificate)
+            {
+                Console.WriteLine("Warning: You have disabled verification of destination certificates. This should only be done for testing with self-signed certificate as this introduces security issues.");
+                // This turns off SSL verification
+                // This should not be done in production, please properly handle your certificates
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             }
 
             OmfServices.SendOmfMessage(OmfMessageCreator.CreateTypeMessage(typeof(BartStationEtd)));

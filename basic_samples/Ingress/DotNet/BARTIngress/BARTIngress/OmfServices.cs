@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using OSIsoft.Omf;
 using OSIsoft.Omf.Converters;
 using OSIsoft.OmfIngress;
@@ -12,6 +15,8 @@ namespace BARTIngress
     {
         static IOmfIngressService OcsOmfIngressService { get; set; }
         static IOmfIngressService EdsOmfIngressService { get; set; }
+        static HttpClient PiHttpClient { get; set; }
+        static Uri PiOmfUri { get; set; }
 
         /// <summary>
         /// Configure OCS OMF Ingress Service
@@ -32,6 +37,16 @@ namespace BARTIngress
             var omfIngressService = new OmfIngressService(new Uri($"http://localhost:{port}"), null, HttpCompressionMethod.GZip);
             EdsOmfIngressService = omfIngressService.GetOmfIngressService("default", "default");
         }
+
+        /// <summary>
+        /// Configure EDS PI Web API HttpClient
+        /// </summary>
+        /// <param name="uriString"></param>
+        internal static void ConfigurePiOmfIngress(string uriString)
+        {
+            PiHttpClient = new HttpClient();
+            PiOmfUri = new Uri(uriString + $"/omf");
+        }
         
         /// <summary>
         /// Sends a message to an OMF endpoint
@@ -42,13 +57,35 @@ namespace BARTIngress
 
             if (OcsOmfIngressService != null)
             {
-                OcsOmfIngressService.SendOMFMessageAsync(serializedOmfMessage);
+                OcsOmfIngressService.SendOmfMessageAsync(serializedOmfMessage);
             }
 
             if (EdsOmfIngressService != null)
             {
-                EdsOmfIngressService.SendOMFMessageAsync(serializedOmfMessage);
+                EdsOmfIngressService.SendOmfMessageAsync(serializedOmfMessage);
             }
+
+            if (PiHttpClient != null)
+            {
+                _ = SendPiOmfMessageAsync(serializedOmfMessage);
+            }
+        }
+
+        internal static async Task<string> SendPiOmfMessageAsync(SerializedOmfMessage omfMessage)
+        {
+            HttpRequestMessage request = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Post,
+                RequestUri = PiOmfUri,
+                Content = new StringContent(omfMessage.ToString(), Encoding.UTF8, "application/json")
+            };
+            request.Headers.Add("Accept", "application/json");
+            var response = await PiHttpClient.SendAsync(request);
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+                throw new Exception($"Error sending OMF to PI Web API. Response code: {response.StatusCode} Response: {responseString}");
+            return responseString;
         }
 
         internal static void SendOmfData<T>(Dictionary<string, T> data, string typeId)
