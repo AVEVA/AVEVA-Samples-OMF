@@ -56,7 +56,15 @@ jobs:
           echo Build
           call dotnet msbuild -p:HIGHENTROPYVA=true
           echo Test
-          call dotnet test
+          call dotnet test --logger trx
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: VSTest
+          testResultsFiles: '*.trx'
+          searchFolder: $(Build.SourcesDirectory)$(projPath)/BartIngressTests/TestResults
+        condition: always()
+        displayName: 'Publish test results'
