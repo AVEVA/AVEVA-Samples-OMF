@@ -111,12 +111,12 @@ namespace BartIngress
 
             if (OcsOmfIngressService != null)
             {
-                _ = OcsOmfIngressService.SendOmfMessageAsync(serializedOmfMessage).Result;
+                _ = OcsOmfIngressService.SendOMFMessageAsync(serializedOmfMessage).Result;
             }
 
             if (EdsOmfIngressService != null)
             {
-                _ = EdsOmfIngressService.SendOmfMessageAsync(serializedOmfMessage).Result;
+                _ = EdsOmfIngressService.SendOMFMessageAsync(serializedOmfMessage).Result;
             }
 
             if (PiHttpClient != null)
