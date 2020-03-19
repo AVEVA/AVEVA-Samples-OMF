@@ -1,24 +1,31 @@
 ﻿using System;
-using System.IO;
-using System.Net;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace BARTIngress
 {
-    static class BartApi
+    public static class BartApi
     {
-        internal static Dictionary<string, BartStationEtd> GetRealTimeEstimates(string orig = "all", string dest = "all", string key = "MW9S-E7SL-26DU-VV8V")
+        /// <summary>
+        /// Gets and parses the current data from the BART ETD (Estimated Time of Departure) API
+        /// </summary>
+        /// <param name="key">BART API registration key</param>
+        /// <param name="orig">Specifies the origin station abbreviation. The default value, "all", will get all current ETDs.</param>
+        /// <param name="dest">Specifies the destination station abbreviation. The default value, "all", will parse all current destination ETDs.</param>
+        /// <returns>A dictionary of ETD data keyed by the stream ID</returns>
+        internal static Dictionary<string, BartStationEtd> GetRealTimeEstimates(string key, string orig = "all", string dest = "all")
         {
             var data = new Dictionary<string, BartStationEtd>();
             var etdJson = HttpGet(orig, key);
             var etdRoot = JsonConvert.DeserializeObject<JObject>(etdJson)["root"];
             var date = (string)etdRoot["date"];
             var time = (string)etdRoot["time"];
-            time = time.Replace("PST", "-8:00").Replace("PDT", "-7:00");
-            var dateTime = DateTime.ParseExact(date + " " + time, "MM/dd/yyyy hh:mm:ss tt zzz", CultureInfo.InvariantCulture);
+            time = time.Replace("PST", "-8:00", StringComparison.OrdinalIgnoreCase).Replace("PDT", "-7:00", StringComparison.OrdinalIgnoreCase);
+            var dateTime = DateTime.ParseExact(date + " " + time, "MM/dd/yyyy hh:mm:ss tt zzz", CultureInfo.InvariantCulture).ToUniversalTime();
             var origins = (JArray)etdRoot["station"];
             foreach (JObject origin in origins)
             {
@@ -36,13 +43,16 @@ namespace BARTIngress
                     }
                 }
             }
+
             return data;
         }
 
         /// <summary>
-        /// Runs a generic HTTP GET request
+        /// Runs an HTTP Get request against the BART ETD (Estimated Time of Departure) API
+        /// <param name="key">BART API registration key</param>
+        /// <param name="orig">Specifies the origin station abbreviation. The default value, "all", will get all current ETDs.</param>
         /// </summary>
-        private static string HttpGet(string orig = "all", string key = "MW9S-E7SL-26DU-VV8V")
+        private static string HttpGet(string key, string orig = "all")
         {
             var uri = new Uri($"https://api.bart.gov/api/etd.aspx?cmd=etd&orig={orig}&key={key}&json=y");
             var request = (HttpWebRequest)WebRequest.Create(uri);

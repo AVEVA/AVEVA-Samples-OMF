@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
@@ -8,23 +7,27 @@ using OSIsoft.Omf.Converters;
 
 namespace BARTIngress
 {
-    class Program
+    public static class Program
     {
-        static AppSettings Settings { get; set; }
-        static int TimerInterval { get; set; } = 10000;
+        private static readonly object _timerLock = new object();
+        private static readonly string _typeId = ClrToOmfTypeConverter.Convert(typeof(BartStationEtd)).Id;
+        private static Timer _timer;
 
-        static readonly object timerLock = new object();
-        static Timer timer;
-        static string typeId = ClrToOmfTypeConverter.Convert(typeof(BartStationEtd)).Id;
+        private static AppSettings Settings { get; set; }
+        private static int TimerInterval { get; set; } = 10000;
+        private static OmfServices OmfServices { get; set; } = new OmfServices();
 
-        static void Main(string[] args)
+        public static void Main()
         {
             LoadConfiguration();
-            timer = new Timer(new TimerCallback(TimerTask), null, 0, 10000);
-            Console.WriteLine("Started, press Enter to quit");
+            _timer = new Timer(new TimerCallback(TimerTask), null, 0, 10000);
+            Console.WriteLine(Resources.MSG_STARTED);
             Console.ReadLine();
         }
         
+        /// <summary>
+        /// Loads configuration from the appsettings.json file and sets up configured OMF endpoints
+        /// </summary>
         private static void LoadConfiguration()
         {
             Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(Directory.GetCurrentDirectory() + "\\appsettings.json"));
@@ -41,33 +44,28 @@ namespace BARTIngress
 
             if (Settings.SendToPi)
             {
-                OmfServices.ConfigurePiOmfIngress(Settings.PiWebApiUri);
-            }
-
-            if (!Settings.ValidateEndpointCertificate)
-            {
-                Console.WriteLine("Warning: You have disabled verification of destination certificates. This should only be done for testing with self-signed certificate as this introduces security issues.");
-                // This turns off SSL verification
-                // This should not be done in production, please properly handle your certificates
-                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+                OmfServices.ConfigurePiOmfIngress(Settings.PiWebApiUri, Settings.Username, Settings.Password, Settings.ValidateEndpointCertificate);
             }
 
             OmfServices.SendOmfMessage(OmfMessageCreator.CreateTypeMessage(typeof(BartStationEtd)));
         }
 
+        /// <summary>
+        /// Task callback when the timer fires, attempts to run ingress 
+        /// </summary>
         private static void TimerTask(object timerState)
         {
             var hasLock = false;
 
             try
             {
-                Monitor.TryEnter(timerLock, ref hasLock);
+                Monitor.TryEnter(_timerLock, ref hasLock);
                 if (!hasLock)
                 {
                     return;
                 }
 
-                timer.Change(Timeout.Infinite, Timeout.Infinite);
+                _timer.Change(Timeout.Infinite, Timeout.Infinite);
 
                 RunIngress();
             }
@@ -75,17 +73,20 @@ namespace BARTIngress
             {
                 if (hasLock)
                 {
-                    Monitor.Exit(timerLock);
-                    timer.Change(TimerInterval, TimerInterval);
+                    Monitor.Exit(_timerLock);
+                    _timer.Change(TimerInterval, TimerInterval);
                 }
             }
         }
 
+        /// <summary>
+        /// Run BART API ingress to configured OMF endpoints
+        /// </summary>
         private static void RunIngress()
         {
             var data = BartApi.GetRealTimeEstimates(Settings.BartApiOrig, Settings.BartApiDest, Settings.BartApiKey);
-            OmfServices.SendOmfData(data, typeId);
-            Console.WriteLine($"{DateTime.Now.ToString()}: Sent value for {data.Keys.Count} stream{(data.Keys.Count > 1 ? "s" : string.Empty)}");
+            OmfServices.SendOmfData(data, _typeId);
+            Console.WriteLine($"{DateTime.Now}: Sent value for {data.Keys.Count} stream{(data.Keys.Count > 1 ? "s" : string.Empty)}");
         }
     }
 }

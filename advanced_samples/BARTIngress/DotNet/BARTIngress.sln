@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BARTIngress", "BARTIngress\BARTIngress.csproj", "{C46DDDF6-65C0-432B-8655-EFE41322419D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BARTIngress", "BARTIngress\BARTIngress.csproj", "{C46DDDF6-65C0-432B-8655-EFE41322419D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B33C0E53-5CCC-4B65-824C-E589F50AFE4D}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Directory.Build.props = ..\..\..\Directory.Build.props
+		..\..\..\Extensions.ruleset = ..\..\..\Extensions.ruleset
+		..\..\..\OSIsoft.ruleset = ..\..\..\OSIsoft.ruleset
+		..\..\..\stylecop.json = ..\..\..\stylecop.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
