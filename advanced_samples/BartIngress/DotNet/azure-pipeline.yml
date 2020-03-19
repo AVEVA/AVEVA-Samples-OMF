@@ -30,7 +30,7 @@ variables:
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
-    value: product-readiness.bart_ingress_dotnet.json
+    value: product-readiness.bartingress_dotnet.json
   - name: covStream
     value: BartIngress_DotNet
   - name: bdProject
