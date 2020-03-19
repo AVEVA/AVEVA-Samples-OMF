@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BARTIngress
+namespace BartIngress
 {
     /// <summary>
     /// Represents the application settings defined in appsettings.json

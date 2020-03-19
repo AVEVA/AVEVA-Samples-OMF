@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using OSIsoft.Omf;
 using OSIsoft.Omf.DefinitionAttributes;
 
-namespace BARTIngress
+namespace BartIngress
 {
     /// <summary>
     /// OMF Definition of BART Station ETD Data

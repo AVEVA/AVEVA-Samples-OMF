@@ -9,7 +9,7 @@ using OSIsoft.Omf;
 using OSIsoft.Omf.Converters;
 using OSIsoft.OmfIngress;
 
-namespace BARTIngress
+namespace BartIngress
 {
     /// <summary>
     /// Manages sending OMF data to the OCS, EDS, and/or PI Web API OMF endpoints

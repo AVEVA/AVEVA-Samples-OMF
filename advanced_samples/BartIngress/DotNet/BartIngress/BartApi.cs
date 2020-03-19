@@ -6,7 +6,7 @@ using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace BARTIngress
+namespace BartIngress
 {
     public static class BartApi
     {
@@ -20,7 +20,7 @@ namespace BARTIngress
         internal static Dictionary<string, BartStationEtd> GetRealTimeEstimates(string key, string orig = "all", string dest = "all")
         {
             var data = new Dictionary<string, BartStationEtd>();
-            var etdJson = HttpGet(orig, key);
+            var etdJson = HttpGet(key, orig);
             var etdRoot = JsonConvert.DeserializeObject<JObject>(etdJson)["root"];
             var date = (string)etdRoot["date"];
             var time = (string)etdRoot["time"];

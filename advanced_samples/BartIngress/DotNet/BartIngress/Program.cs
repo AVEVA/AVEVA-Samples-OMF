@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using OSIsoft.Omf;
 using OSIsoft.Omf.Converters;
 
-namespace BARTIngress
+namespace BartIngress
 {
     public static class Program
     {
@@ -13,7 +13,7 @@ namespace BARTIngress
         private static readonly string _typeId = ClrToOmfTypeConverter.Convert(typeof(BartStationEtd)).Id;
         private static Timer _timer;
 
-        private static AppSettings Settings { get; set; }
+        public static AppSettings Settings { get; set; }
         private static int TimerInterval { get; set; } = 10000;
         private static OmfServices OmfServices { get; set; } = new OmfServices();
 
@@ -28,7 +28,7 @@ namespace BARTIngress
         /// <summary>
         /// Loads configuration from the appsettings.json file and sets up configured OMF endpoints
         /// </summary>
-        private static void LoadConfiguration()
+        public static void LoadConfiguration()
         {
             Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(Directory.GetCurrentDirectory() + "\\appsettings.json"));
 
@@ -48,6 +48,16 @@ namespace BARTIngress
             }
 
             OmfServices.SendOmfMessage(OmfMessageCreator.CreateTypeMessage(typeof(BartStationEtd)));
+        }
+
+        /// <summary>
+        /// Run BART API ingress to configured OMF endpoints
+        /// </summary>
+        public static void RunIngress()
+        {
+            var data = BartApi.GetRealTimeEstimates(Settings.BartApiKey, Settings.BartApiOrig, Settings.BartApiDest);
+            OmfServices.SendOmfData(data, _typeId);
+            Console.WriteLine($"{DateTime.Now}: Sent value for {data.Keys.Count} stream{(data.Keys.Count > 1 ? "s" : string.Empty)}");
         }
 
         /// <summary>
@@ -77,16 +87,6 @@ namespace BARTIngress
                     _timer.Change(TimerInterval, TimerInterval);
                 }
             }
-        }
-
-        /// <summary>
-        /// Run BART API ingress to configured OMF endpoints
-        /// </summary>
-        private static void RunIngress()
-        {
-            var data = BartApi.GetRealTimeEstimates(Settings.BartApiOrig, Settings.BartApiDest, Settings.BartApiKey);
-            OmfServices.SendOmfData(data, _typeId);
-            Console.WriteLine($"{DateTime.Now}: Sent value for {data.Keys.Count} stream{(data.Keys.Count > 1 ? "s" : string.Empty)}");
         }
     }
 }
