@@ -9,10 +9,10 @@ using Xunit;
 
 namespace BartIngressTests
 {
-    public class BartIngressE2ETests
+    public class UnitTests
     {
         [Fact]
-        public void BartIngressEndToEndTest()
+        public void BartIngressTest()
         {
             Program.LoadConfiguration();
 
