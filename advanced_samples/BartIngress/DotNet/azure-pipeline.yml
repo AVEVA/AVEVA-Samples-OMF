@@ -68,3 +68,7 @@ jobs:
           searchFolder: $(Build.SourcesDirectory)$(projPath)/BartIngressTests/TestResults
         condition: always()
         displayName: 'Publish test results'
+
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: dotnet
