@@ -16,10 +16,10 @@ namespace BartIngress
     /// </summary>
     public class OmfServices : IDisposable
     {
-        private IOmfIngressService OcsOmfIngressService { get; set; }
-        private IOmfIngressService EdsOmfIngressService { get; set; }
+        public IOmfIngressService OcsOmfIngressService { get; set; }
+        public IOmfIngressService EdsOmfIngressService { get; set; }
+        public HttpClient PiHttpClient { get; set; }
         private HttpClientHandler PiHttpClientHandler { get; set; }
-        private HttpClient PiHttpClient { get; set; }
         private Uri PiOmfUri { get; set; }
 
         public void Dispose()

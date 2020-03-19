@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\..\..\stylecop.json = ..\..\..\stylecop.json
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BartIngressTests", "BartIngressTests\BartIngressTests.csproj", "{05B0AC38-FDAB-49C3-8060-677CE03AA830}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{C46DDDF6-65C0-432B-8655-EFE41322419D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C46DDDF6-65C0-432B-8655-EFE41322419D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C46DDDF6-65C0-432B-8655-EFE41322419D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05B0AC38-FDAB-49C3-8060-677CE03AA830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B0AC38-FDAB-49C3-8060-677CE03AA830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B0AC38-FDAB-49C3-8060-677CE03AA830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B0AC38-FDAB-49C3-8060-677CE03AA830}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -101,6 +101,11 @@ namespace BartIngress
         /// </summary>
         public bool ValidateEndpointCertificate { get; set; }
 
+        /// <summary>
+        /// (Optional) Only used by test for verification purposes, the name of the PI Data Archive where OMF data is sent.
+        /// </summary>
+        public string TestPiDataArchive { get; set; }
+
         #endregion
     }
 }

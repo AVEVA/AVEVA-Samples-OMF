@@ -11,6 +11,10 @@ namespace BartIngress
     [OmfType(ClassificationType = ClassificationType.Dynamic, Name ="BartStationEtd", Description ="BART station current departure information")]
     public class BartStationEtd
     {
+        public BartStationEtd()
+        {
+        }
+
         /// <summary>
         /// Create a new data value for a BART Station ETD Stream
         /// </summary>

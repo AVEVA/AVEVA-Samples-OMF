@@ -1,6 +1,10 @@
 ﻿using System;
-using System.Net.Http;
 using BartIngress;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OSIsoft.Data;
+using OSIsoft.Data.Http;
+using OSIsoft.Identity;
 using Xunit;
 
 namespace BartIngressTests
@@ -10,26 +14,37 @@ namespace BartIngressTests
         [Fact]
         public void BartIngressEndToEndTest()
         {
+            Program.LoadConfiguration();
+
             // Verify timestamp is within last minute
             var verifyTimestamp = DateTime.UtcNow.AddMinutes(-1);
 
             // Test requires that specific stations are chosen for BartApiOrig and BartApiDest, "all" is not allowed
             var streamId = $"BART_{Program.Settings.BartApiOrig}_{Program.Settings.BartApiDest}";
 
-            Program.LoadConfiguration();
             Program.RunIngress();
 
-            // TODO: Verify OCS Data
-            var uri = new Uri($"{Program.Settings.OcsUri}/api/v1/Tenants/{Program.Settings.OcsTenantId}/Namespaces/{Program.Settings.OcsTenantId}/Streams/{streamId}/Data/Last");
-            var request = (HttpWebRequest)WebRequest.Create(uri);
-            using var response = (HttpWebResponse)request.GetResponse();
-            using var stream = response.GetResponseStream();
-            using var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
+            // Verify OCS Data
+            using var ocsAuthenticationHandler = new AuthenticationHandler(Program.Settings.OcsUri, Program.Settings.OcsClientId, Program.Settings.OcsClientSecret);
+            var ocsSdsService = new SdsService(Program.Settings.OcsUri, null, HttpCompressionMethod.GZip, ocsAuthenticationHandler);
+            var ocsDataService = ocsSdsService.GetDataService(Program.Settings.OcsTenantId, Program.Settings.OcsNamespaceId);
+            var ocsValue = ocsDataService.GetLastValueAsync<BartStationEtd>(streamId).Result;
+            Assert.True(ocsValue.TimeStamp > verifyTimestamp);
 
-            // TODO: Verify EDS Data
+            // Verify EDS Data
+            var edsSdsService = new SdsService(new Uri($"http://localhost:{Program.Settings.EdsPort}"), null, HttpCompressionMethod.GZip, null);
+            var edsDataService = edsSdsService.GetDataService("default", "default");
+            var edsValue = edsDataService.GetLastValueAsync<BartStationEtd>(streamId).Result;
+            Assert.True(edsValue.TimeStamp > verifyTimestamp);
 
-            // TODO: Verify PI Web API Data
+            // Verify PI Web API Data
+            var piPointUri = new Uri($"{Program.Settings.PiWebApiUri}/points?path=\\\\{Program.Settings.TestPiDataArchive}\\{streamId}.Minutes");
+            var piPoint = JsonConvert.DeserializeObject<JObject>(Program.OmfServices.PiHttpClient.GetStringAsync(piPointUri).Result);
+            var piWebId = piPoint["WebId"];
+            var piValueUri = new Uri($"{Program.Settings.PiWebApiUri}/streams/{piWebId}/value");
+            var piValue = JsonConvert.DeserializeObject<JObject>(Program.OmfServices.PiHttpClient.GetStringAsync(piValueUri).Result);
+            var piTimestamp = (DateTime)piValue["Timestamp"];
+            Assert.True(piTimestamp > verifyTimestamp);
         }
     }
 }

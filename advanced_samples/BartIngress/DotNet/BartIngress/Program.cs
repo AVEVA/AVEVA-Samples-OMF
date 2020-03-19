@@ -14,8 +14,8 @@ namespace BartIngress
         private static Timer _timer;
 
         public static AppSettings Settings { get; set; }
+        public static OmfServices OmfServices { get; set; } = new OmfServices();
         private static int TimerInterval { get; set; } = 10000;
-        private static OmfServices OmfServices { get; set; } = new OmfServices();
 
         public static void Main()
         {
