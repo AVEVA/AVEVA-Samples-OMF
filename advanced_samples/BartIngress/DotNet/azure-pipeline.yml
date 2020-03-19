@@ -59,6 +59,8 @@ jobs:
           call dotnet msbuild -p:HIGHENTROPYVA=true
           echo Test
           call dotnet test --logger trx
+          echo Clean for analysis
+          call dotnet clean
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'

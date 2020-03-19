@@ -18,7 +18,7 @@
     </PackageReference>
     <PackageReference Include="OSIsoft.OCSClients" Version="3.0.2-prerelease-20190924.3" />
     <PackageReference Include="OSIsoft.Omf" Version="1.0.1-prerelease-20190619.9" />
-    <PackageReference Include="OSIsoft.OmfIngress" Version="1.1.0-prerelease-20190715.1" />
+    <PackageReference Include="OSIsoft.OmfIngress" Version="3.0.0-prerelease-20200225.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
