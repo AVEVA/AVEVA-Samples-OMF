@@ -26,7 +26,9 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/advanced_samples/BartIngress/DotNet'
+    value: '/advanced_samples/BartIngress/DotNet/BartIngress'
+  - name: testPath
+    value: '/advanced_samples/BartIngress/DotNet/BartIngressTests'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
@@ -46,7 +48,7 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)/BartIngress
+          filePath: $(projPath)
 
       - script: |
           echo Clean
@@ -58,14 +60,14 @@ jobs:
           echo Test
           call dotnet test --logger trx
           echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: VSTest
           testResultsFiles: '*.trx'
-          searchFolder: $(Build.SourcesDirectory)$(projPath)/BartIngressTests/TestResults
+          searchFolder: $(Build.SourcesDirectory)$(testPath)/TestResults
         condition: always()
         displayName: 'Publish test results'
 
