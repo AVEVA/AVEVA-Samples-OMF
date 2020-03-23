@@ -13,7 +13,7 @@ namespace BartIngress
         private static Timer _timer;
 
         public static AppSettings Settings { get; set; }
-        public static OmfServices OmfServices { get; set; } = new OmfServices();
+        private static OmfServices OmfServices { get; set; } = new OmfServices();
         private static int TimerInterval { get; set; } = 10000;
 
         public static void Main()
@@ -47,7 +47,7 @@ namespace BartIngress
             }
 
             // Send OMF Type Message
-            OmfServices.SendOmfMessage(OmfMessageCreator.CreateTypeMessage(typeof(BartStationEtd)));
+            OmfServices.SendOmfType(typeof(BartStationEtd));
 
             // Send OMF Container Message
             var data = BartApi.GetRealTimeEstimates(Settings.BartApiKey, Settings.BartApiOrig, Settings.BartApiDest);
@@ -63,6 +63,14 @@ namespace BartIngress
             var data = BartApi.GetRealTimeEstimates(Settings.BartApiKey, Settings.BartApiOrig, Settings.BartApiDest);
             OmfServices.SendOmfData(data);
             Console.WriteLine($"{DateTime.Now}: Sent value for {data.Keys.Count} stream{(data.Keys.Count > 1 ? "s" : string.Empty)}");
+        }
+
+        /// <summary>
+        /// Deletes type and containers that were created by the BART Ingress sample
+        /// </summary>
+        public static void Cleanup()
+        {
+            OmfServices.CleanupOmf();
         }
 
         /// <summary>

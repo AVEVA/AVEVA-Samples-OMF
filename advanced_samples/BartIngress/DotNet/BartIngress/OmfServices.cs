@@ -16,6 +16,9 @@ namespace BartIngress
     /// </summary>
     public class OmfServices : IDisposable
     {
+        private OmfMessage _typeDeleteMessage;
+        private OmfMessage _containerDeleteMessage;
+
         public IOmfIngressService OcsOmfIngressService { get; set; }
         public IOmfIngressService EdsOmfIngressService { get; set; }
         public HttpClient PiHttpClient { get; set; }
@@ -80,6 +83,18 @@ namespace BartIngress
         }
 
         /// <summary>
+        /// Sends OMF type message for a type
+        /// </summary>
+        /// <param name="type">OMF type to be sent</param>
+        internal void SendOmfType(Type type)
+        {
+            var msg = OmfMessageCreator.CreateTypeMessage(type);
+            SendOmfMessage(msg);
+            msg.ActionType = ActionType.Delete;
+            _typeDeleteMessage = msg;
+        }
+
+        /// <summary>
         /// Sends OMF container messages for a dictionary of OMF data keyed by the stream ID to the configured OMF endpoints
         /// </summary>
         /// <typeparam name="T">OMF type of the OMF data to be sent</typeparam>
@@ -93,7 +108,10 @@ namespace BartIngress
                 containers.Add(new OmfContainer(streamId, typeId));
             }
 
-            SendOmfMessage(new OmfContainerMessage(containers));
+            var msg = new OmfContainerMessage(containers);
+            SendOmfMessage(msg);
+            msg.ActionType = ActionType.Delete;
+            _containerDeleteMessage = msg;
         }
 
         /// <summary>
@@ -134,6 +152,33 @@ namespace BartIngress
             if (PiHttpClient != null)
             {
                 _ = SendPiOmfMessageAsync(serializedOmfMessage).Result;
+            }
+        }
+
+        /// <summary>
+        /// Deletes type and containers that were created by these services
+        /// </summary>
+        internal void CleanupOmf()
+        {
+            var serializedTypeDelete = OmfMessageSerializer.Serialize(_typeDeleteMessage);
+            var serializedContainerDelete = OmfMessageSerializer.Serialize(_containerDeleteMessage);
+
+            if (OcsOmfIngressService != null)
+            {
+                _ = OcsOmfIngressService.SendOmfMessageAsync(serializedContainerDelete).Result;
+                _ = OcsOmfIngressService.SendOmfMessageAsync(serializedTypeDelete).Result;
+            }
+
+            if (EdsOmfIngressService != null)
+            {
+                _ = EdsOmfIngressService.SendOmfMessageAsync(serializedContainerDelete).Result;
+                _ = EdsOmfIngressService.SendOmfMessageAsync(serializedTypeDelete).Result;
+            }
+
+            if (PiHttpClient != null)
+            {
+                _ = SendPiOmfMessageAsync(serializedContainerDelete).Result;
+                _ = SendPiOmfMessageAsync(serializedTypeDelete).Result;
             }
         }
 

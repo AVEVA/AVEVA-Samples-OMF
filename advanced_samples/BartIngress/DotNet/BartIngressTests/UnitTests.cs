@@ -22,29 +22,25 @@ namespace BartIngressTests
             // Test requires that specific stations are chosen for BartApiOrig and BartApiDest, "all" is not allowed
             var streamId = $"BART_{Program.Settings.BartApiOrig}_{Program.Settings.BartApiDest}";
 
-            Program.RunIngress();
+            try
+            {
+                Program.RunIngress();
 
-            // Verify OCS Data
-            using var ocsAuthenticationHandler = new AuthenticationHandler(Program.Settings.OcsUri, Program.Settings.OcsClientId, Program.Settings.OcsClientSecret);
-            var ocsSdsService = new SdsService(Program.Settings.OcsUri, null, HttpCompressionMethod.GZip, ocsAuthenticationHandler);
-            var ocsDataService = ocsSdsService.GetDataService(Program.Settings.OcsTenantId, Program.Settings.OcsNamespaceId);
-            var ocsValue = ocsDataService.GetLastValueAsync<BartStationEtd>(streamId).Result;
-            Assert.True(ocsValue.TimeStamp > verifyTimestamp);
+                // Edge Data Store and PI Web API process OMF before sending a response, and will return an error code if there is a problem
+                // In this test, the call to RunIngress above will result in an exception if there is a failure on either of those endpoints
 
-            // Verify EDS Data
-            var edsSdsService = new SdsService(new Uri($"http://localhost:{Program.Settings.EdsPort}"), null, HttpCompressionMethod.GZip, null);
-            var edsDataService = edsSdsService.GetDataService("default", "default");
-            var edsValue = edsDataService.GetLastValueAsync<BartStationEtd>(streamId).Result;
-            Assert.True(edsValue.TimeStamp > verifyTimestamp);
-
-            // Verify PI Web API Data
-            var piPointUri = new Uri($"{Program.Settings.PiWebApiUri}/points?path=\\\\{Program.Settings.TestPiDataArchive}\\{streamId}.Minutes");
-            var piPoint = JsonConvert.DeserializeObject<JObject>(Program.OmfServices.PiHttpClient.GetStringAsync(piPointUri).Result);
-            var piWebId = piPoint["WebId"];
-            var piValueUri = new Uri($"{Program.Settings.PiWebApiUri}/streams/{piWebId}/value");
-            var piValue = JsonConvert.DeserializeObject<JObject>(Program.OmfServices.PiHttpClient.GetStringAsync(piValueUri).Result);
-            var piTimestamp = (DateTime)piValue["Timestamp"];
-            Assert.True(piTimestamp > verifyTimestamp);
+                // OCS does not validate OMF before sending a success response, so the test must check that the messages were successful
+                using var ocsAuthenticationHandler = new AuthenticationHandler(Program.Settings.OcsUri, Program.Settings.OcsClientId, Program.Settings.OcsClientSecret);
+                var ocsSdsService = new SdsService(Program.Settings.OcsUri, null, HttpCompressionMethod.GZip, ocsAuthenticationHandler);
+                var ocsDataService = ocsSdsService.GetDataService(Program.Settings.OcsTenantId, Program.Settings.OcsNamespaceId);
+                var ocsValue = ocsDataService.GetLastValueAsync<BartStationEtd>(streamId).Result;
+                Assert.True(ocsValue.TimeStamp > verifyTimestamp);
+            }
+            finally
+            {
+                // Delete type and containers
+                Program.Cleanup();
+            }
         }
     }
 }

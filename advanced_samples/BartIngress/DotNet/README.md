@@ -43,7 +43,6 @@ If sending to PI Web API, set `SendToPi` to true.
 1. PI Web API should have Basic authentication turned on as one of the allowed authentication methods, see [OSIsoft Live Library](https://livelibrary.osisoft.com/LiveLibrary/web/ui.xql?action=html&resource=publist_home.html&pub_category=PI-Web-API)
 1. `Username` and `Password` should be the domain user/password that will be used to perform Basic authentication against PI Web API
 1. `ValidateEndpointCertificate` may be set to false in order to bypass certificate validation when PI Web API is configured to use a self-signed certificate. This will generate a warning; this should only be done for testing with a self-signed PI Web API certificate as it is insecure.
-1. (Optional) If running the automated test, `TestPiDataArchive` should specify the PI Data Archive configured for the PI Web API OMF endpoint
 
 
 ## Running the Sample
@@ -68,7 +67,7 @@ dotnet restore
 dotnet test
 ```
 
-The test will send a single OMF type, container, and data message to each of the configured OMF endpoints. Then, the test will verify that a value with a recent timestamp is found in a destination stream in each configured OMF endpoint. 
+The test sends a single OMF type, container, and data message to each of the configured OMF endpoints. Then, the test checks that a value with a recent timestamp is found in OSIsoft Cloud Services. The Edge Data Store and PI Web API OMF endpoints return an HTTP error response if they fail to process an OMF message, so it is not necessary to perform an explicit check against those endpoints. 
 
 
 ---
