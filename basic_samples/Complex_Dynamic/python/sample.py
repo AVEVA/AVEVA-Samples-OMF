@@ -43,7 +43,9 @@ def getAppConfig():
         timeout = 30
     app_config['timeout'] = timeout
 
-    if not verify:
+    if verify == "False" or verify == "false"or verify == "FALSE":
+        verify = False
+    else:
         verify = True
     app_config['verify'] = verify
     
