@@ -52,11 +52,11 @@ def test_main():
     # Tests to make sure the sample runs as expected
     
     try:
-        config = sample.main(True, ["2,3","n"] )
+        config = sample.main(True, ['2,3','n'] )
         checkData()
     
     except Exception as ex:
-        print(f"Encountered Error: {ex}.")
+        print(f'Encountered Error: {ex}.')
         print
         traceback.print_exc()
         print

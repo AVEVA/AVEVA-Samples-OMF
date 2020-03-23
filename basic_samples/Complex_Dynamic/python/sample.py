@@ -80,7 +80,7 @@ def main(test=False, entries = []):
             break
 
         split = ans.split(',')
-        sendOMF.sendDataCreate(omfHelper.getData(pressure = split[0], temperature = split[1]))
+        sendOMF.sendDataCreate(omfHelper.getData(pressure = float(split[0]), temperature = float(split[1])))
     return app_config
             
 if __name__ == "__main__":

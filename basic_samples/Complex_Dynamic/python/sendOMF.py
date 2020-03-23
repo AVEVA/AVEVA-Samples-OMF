@@ -45,10 +45,10 @@ def sendCall(msg_body, message_type, action):
     
     # response code in 200s if the request was successful!
     if response.status_code < 200 or response.status_code >= 300:
-        print(msg_headers)
+        print(headers)
         response.close()
         print('Response from was bad.  "{0}" message: {1} {2}.  Message holdings: {3}'.format(
-            message_type, response.status_code, response.text, message_omf_json))
+            message_type, response.status_code, response.text, msg_body))
         print()
         raise Exception("OMF message was unsuccessful, {message_type}. {status}:{reason}".format(
             message_type=message_type, status=response.status_code, reason=response.text))
