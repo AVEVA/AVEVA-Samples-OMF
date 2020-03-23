@@ -49,9 +49,9 @@ ClientId = REPLACE_WITH_APPLICATION_IDENTIFIER
 ClientSecret = REPLACE_WITH_APPLICATION_SECRET
 ```
 
-The PIServer will use the PI Web API as its OMF accepting endpoint. This is what the sample is tested against. Currently the only OMF supported endpoint for PI is the Connector Relay. These samples have not been tested against this.
+The PIServer will use the PI Web API as its OMF accepting endpoint. This is what the sample is tested against. 
 
-To configure the sample to work against PI update the appsettings.json to have only these parameters and update that parameter values to what is being used.
+To configure the sample to work against PI update the config.ini to have only these parameters and update that parameter values to what is being used.
 
 Note: the tenantId is used to autodetect if you are going against OCS or PI, so make sure that is removed if going against PI.
 
@@ -71,7 +71,7 @@ If your client computer Python does not trust the PI Web API certificate you wil
 requests.exceptions.SSLError: HTTPSConnectionPool(host='...', port=443): Max retries exceeded with url: /piwebapi/omf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self signed certificate (_ssl.c:1051)')))
 ```
 
-Complete dependencies listed in [DEPENDENCIES.md](DEPENDENCIES.md)
+Complete dependencies listed in [LICENSE](LICENSE)
 
 ---
 
