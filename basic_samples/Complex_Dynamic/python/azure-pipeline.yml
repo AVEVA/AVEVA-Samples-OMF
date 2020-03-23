@@ -32,7 +32,7 @@ variables:
   - name: CredFileLibrary
     value: product-readiness.omf_dc_python.ocs.ini
   - name: CredFileLibraryOP
-    value: product-readiness.omf_dc_python.pi.ini
+    value: product-readiness.omf_dc_python.onprem.ini
   - name: CredFileLibraryEDS
     value: product-readiness.omf_dc_python.eds.ini
   - name: covStream
@@ -65,7 +65,7 @@ jobs:
           echo Install requirements
           call pip install -r requirements.txt
           echo Run tests
-          call python -m pytest ./program.py
+          call python -m pytest ./test_sample.py
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
@@ -87,7 +87,7 @@ jobs:
         displayName: 'Install requirements'
 
       - script: |
-          "C:\Program Files (x86)\Python37-32\python.exe" ./test.py
+          "C:\Program Files (x86)\Python37-32\Scripts\pytest.exe" ./test_sample.py
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Run tests'
 
@@ -108,7 +108,7 @@ jobs:
         displayName: 'Install requirements'
 
       - script: |
-          "C:\Program Files (x86)\Python37-32\python.exe" ./test.py
+          "C:\Program Files (x86)\Python37-32\Scripts\pytest.exe" ./test_sample.py
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Run tests'
 
