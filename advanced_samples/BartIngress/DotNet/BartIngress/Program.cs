@@ -10,7 +10,6 @@ namespace BartIngress
     public static class Program
     {
         private static readonly object _timerLock = new object();
-        private static readonly string _typeId = ClrToOmfTypeConverter.Convert(typeof(BartStationEtd)).Id;
         private static Timer _timer;
 
         public static AppSettings Settings { get; set; }
@@ -47,7 +46,13 @@ namespace BartIngress
                 OmfServices.ConfigurePiOmfIngress(Settings.PiWebApiUri, Settings.Username, Settings.Password, Settings.ValidateEndpointCertificate);
             }
 
+            // Send OMF Type Message
             OmfServices.SendOmfMessage(OmfMessageCreator.CreateTypeMessage(typeof(BartStationEtd)));
+
+            // Send OMF Container Message
+            var data = BartApi.GetRealTimeEstimates(Settings.BartApiKey, Settings.BartApiOrig, Settings.BartApiDest);
+            var typeId = ClrToOmfTypeConverter.Convert(typeof(BartStationEtd)).Id;
+            OmfServices.SendOmfContainers(data, typeId);
         }
 
         /// <summary>
@@ -56,7 +61,7 @@ namespace BartIngress
         public static void RunIngress()
         {
             var data = BartApi.GetRealTimeEstimates(Settings.BartApiKey, Settings.BartApiOrig, Settings.BartApiDest);
-            OmfServices.SendOmfData(data, _typeId);
+            OmfServices.SendOmfData(data);
             Console.WriteLine($"{DateTime.Now}: Sent value for {data.Keys.Count} stream{(data.Keys.Count > 1 ? "s" : string.Empty)}");
         }
 

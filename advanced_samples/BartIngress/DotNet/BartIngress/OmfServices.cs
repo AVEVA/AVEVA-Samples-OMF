@@ -80,24 +80,36 @@ namespace BartIngress
         }
 
         /// <summary>
-        /// Sends a dictionary of OMF data keyed by the stream ID to the configured OMF endpoints
+        /// Sends OMF container messages for a dictionary of OMF data keyed by the stream ID to the configured OMF endpoints
         /// </summary>
         /// <typeparam name="T">OMF type of the OMF data to be sent</typeparam>
         /// <param name="data">Dictionary of OMF data keyed by the stream ID</param>
         /// <param name="typeId">TypeID of the OMF type</param>
-        internal void SendOmfData<T>(Dictionary<string, T> data, string typeId)
+        internal void SendOmfContainers<T>(Dictionary<string, T> data, string typeId)
         {
             var containers = new List<OmfContainer>();
-            var dataContainers = new List<OmfDataContainer>();
             foreach (var streamId in data.Keys)
             {
                 containers.Add(new OmfContainer(streamId, typeId));
+            }
+
+            SendOmfMessage(new OmfContainerMessage(containers));
+        }
+
+        /// <summary>
+        /// Sends OMF data messages for a dictionary of OMF data keyed by the stream ID to the configured OMF endpoints
+        /// </summary>
+        /// <typeparam name="T">OMF type of the OMF data to be sent</typeparam>
+        /// <param name="data">Dictionary of OMF data keyed by the stream ID</param>
+        internal void SendOmfData<T>(Dictionary<string, T> data)
+        {
+            var dataContainers = new List<OmfDataContainer>();
+            foreach (var streamId in data.Keys)
+            {
                 var omfValue = (OmfObjectValue)ClrToOmfValueConverter.Convert(data[streamId]);
                 dataContainers.Add(new OmfDataContainer(streamId, new List<OmfObjectValue>() { omfValue }));
             }
 
-            // Send parsed data
-            SendOmfMessage(new OmfContainerMessage(containers));
             SendOmfMessage(new OmfDataMessage(dataContainers));
         }
 
