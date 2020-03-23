@@ -59,7 +59,6 @@ jobs:
           call dotnet msbuild
           echo Test
           call dotnet test --logger trx
-          echo Clean for analysis
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
