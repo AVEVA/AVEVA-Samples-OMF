@@ -32,7 +32,7 @@ variables:
   - name: CredFileLibrary
     value: product-readiness.omf_dc_python.ocs.ini
   - name: CredFileLibraryOP
-    value: product-readiness.omf_dc_python.onprem.ini
+    value: product-readiness.omf_dc_python.pi.ini
   - name: CredFileLibraryEDS
     value: product-readiness.omf_dc_python.eds.ini
   - name: covStream
