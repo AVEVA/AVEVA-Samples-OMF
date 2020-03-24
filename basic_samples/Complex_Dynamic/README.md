@@ -1,6 +1,9 @@
 # Complex Dynamic OMF Python Sample
 
-NEEDS BADGE
+
+| Language | OCS Test Status | EDS Test Status | PI Test Status |
+| -------------- | -------------- | ------------------ |------------------ |
+| <a href="Python3/">Python3</a> | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_DC_Python?branchName=python&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1436&branchName=python) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_DC_Python?branchName=python&jobName=Tests_EDS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1436&branchName=python) |[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_DC_Python?branchName=python&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1436&branchName=python) |
 
 This sample uses OSIsoft Message Format to send data to OSIsoft Cloud Services, Edge Data Store, or PI Web API. 
 
