@@ -193,8 +193,8 @@ namespace BartIngress
 
             if (PiOmfUri != null)
             {
-                _ = SendOmfMessageAsync(serializedContainerDelete, PiOmfUri).Result;
-                _ = SendOmfMessageAsync(serializedTypeDelete, PiOmfUri).Result;
+                _ = SendOmfMessageAsync(serializedContainerDelete, PiOmfUri, PiAuthHeader).Result;
+                _ = SendOmfMessageAsync(serializedTypeDelete, PiOmfUri, PiAuthHeader).Result;
             }
         }
 
