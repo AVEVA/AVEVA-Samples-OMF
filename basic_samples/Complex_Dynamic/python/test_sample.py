@@ -72,3 +72,5 @@ def test_main():
         suppressError(lambda: sendTypeDelete(omfHelper.getType()))      
 
 
+if __name__ == "__main__":
+    test_main()

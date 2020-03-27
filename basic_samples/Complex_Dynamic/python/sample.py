@@ -17,7 +17,6 @@ import base64
 import sys
 
 import auth as auth
-import check as check
 import sendOMF as sendOMF
 import omfHelper as omfHelper 
 
