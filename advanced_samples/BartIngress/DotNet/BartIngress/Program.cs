@@ -13,7 +13,7 @@ namespace BartIngress
         private static Timer _timer;
 
         public static AppSettings Settings { get; set; }
-        private static OmfServices OmfServices { get; set; } = new OmfServices();
+        private static OmfServices OmfServices { get; set; }
         private static int TimerInterval { get; set; } = 10000;
 
         public static void Main()
@@ -31,6 +31,8 @@ namespace BartIngress
         {
             Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(Directory.GetCurrentDirectory() + "\\appsettings.json"));
 
+            OmfServices = new OmfServices(Settings.ValidateEndpointCertificate);
+
             if (Settings.SendToOcs)
             {
                 OmfServices.ConfigureOcsOmfIngress(Settings.OcsUri, Settings.OcsTenantId, Settings.OcsNamespaceId, Settings.OcsClientId, Settings.OcsClientSecret);
@@ -43,7 +45,7 @@ namespace BartIngress
 
             if (Settings.SendToPi)
             {
-                OmfServices.ConfigurePiOmfIngress(Settings.PiWebApiUri, Settings.Username, Settings.Password, Settings.ValidateEndpointCertificate);
+                OmfServices.ConfigurePiOmfIngress(Settings.PiWebApiUri, Settings.Username, Settings.Password);
             }
 
             // Send OMF Type Message
