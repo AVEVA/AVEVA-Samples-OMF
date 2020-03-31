@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using OSIsoft.Identity;
 using OSIsoft.Omf;
 using OSIsoft.Omf.Converters;
 
@@ -19,41 +16,11 @@ namespace BartIngress
         private OmfMessage _typeDeleteMessage;
         private OmfMessage _containerDeleteMessage;
 
-        /// <summary>
-        /// Creates a new instance of OMF Services
-        /// </summary>
-        /// <param name="validate">Whether to validate the PI Web API endpoint certificate. Setting to false should only be done for testing with a self-signed PI Web API certificate as it is insecure.</param>
-        public OmfServices(bool validate = true)
-        {
-            if (validate)
-            {
-                HttpClient = new HttpClient();
-            }
-            else
-            {
-                Console.WriteLine(Resources.WARNING_CERT_VALIDATE_DISABLED);
-
-                HttpClientHandler = new HttpClientHandler
-                {
-                    // This turns off SSL verification
-                    // This should not be done in production, please properly handle your certificates
-                    ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true,
-                };
-                HttpClient = new HttpClient(HttpClientHandler);
-            }
-
-            HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpClient.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-        }
-
-        public HttpClient HttpClient { get; set; }
-        private HttpClientHandler HttpClientHandler { get; set; }
-
-        private Uri OcsOmfUri { get; set; }
-        private AuthenticationHeaderValue OcsAuthHeader { get; set; }
-        private Uri EdsOmfUri { get; set; }
-        private Uri PiOmfUri { get; set; }
-        private AuthenticationHeaderValue PiAuthHeader { get; set; }
+        private AuthenticationHandler OcsAuthenticationHandler { get; set; }
+        private HttpClient OcsHttpClient { get; set; }
+        private HttpClient EdsHttpClient { get; set; }
+        private HttpClientHandler PiHttpClientHandler { get; set; }
+        private HttpClient PiHttpClient { get; set; }
 
         public void Dispose()
         {
@@ -71,9 +38,15 @@ namespace BartIngress
         /// <param name="clientSecret">OSIsoft Cloud Services Client Secret</param>
         internal void ConfigureOcsOmfIngress(Uri ocsUri, string tenantId, string namespaceId, string clientId, string clientSecret)
         {
-            OcsOmfUri = new Uri(ocsUri.AbsoluteUri + $"api/v1/tenants/{tenantId}/namespaces/{namespaceId}/omf");
-            var token = GetOCSClientCredentialsToken(ocsUri, clientId, clientSecret);
-            OcsAuthHeader = new AuthenticationHeaderValue("Bearer", token);
+            OcsAuthenticationHandler = new AuthenticationHandler(ocsUri, clientId, clientSecret)
+            {
+                InnerHandler = new HttpClientHandler(),
+            };
+
+            OcsHttpClient = new HttpClient(OcsAuthenticationHandler)
+            {
+                BaseAddress = new Uri(ocsUri.AbsoluteUri + $"api/v1/tenants/{tenantId}/namespaces/{namespaceId}/omf"),
+            };
         }
 
         /// <summary>
@@ -82,7 +55,10 @@ namespace BartIngress
         /// <param name="port">Edge Data Store Port, default is 5590</param>
         internal void ConfigureEdsOmfIngress(int port = 5590)
         {
-            EdsOmfUri = new Uri($"http://localhost:{port}/api/v1/tenants/default/namespaces/default/omf");
+            EdsHttpClient = new HttpClient
+            {
+                BaseAddress = new Uri($"http://localhost:{port}/api/v1/tenants/default/namespaces/default/omf"),
+            };
         }
 
         /// <summary>
@@ -91,11 +67,29 @@ namespace BartIngress
         /// <param name="piUri">PI Web API Endpoint URI, like https://server//piwebapi</param>
         /// <param name="username">Domain user name to use for Basic authentication against PI Web API</param>
         /// <param name="password">Domain user password to use for Basic authentication against PI Web API</param>
-        internal void ConfigurePiOmfIngress(Uri piUri, string username, string password)
+        /// <param name="validate">Whether to validate the PI Web API endpoint certificate. Setting to false should only be done for testing with a self-signed PI Web API certificate as it is insecure.</param>
+        internal void ConfigurePiOmfIngress(Uri piUri, string username, string password, bool validate = true)
         {
-            PiOmfUri = new Uri(piUri.AbsoluteUri + $"/omf");
-            var authBytes = Encoding.ASCII.GetBytes($"{username}:{password}");
-            PiAuthHeader = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authBytes));
+            if (validate)
+            {
+                PiHttpClient = new HttpClient();
+            }
+            else
+            {
+                Console.WriteLine(Resources.WARNING_CERT_VALIDATE_DISABLED);
+
+                PiHttpClientHandler = new HttpClientHandler
+                {
+                    // This turns off SSL verification
+                    // This should not be done in production, please properly handle your certificates
+                    ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true,
+                };
+                PiHttpClient = new HttpClient(PiHttpClientHandler);
+            }
+
+            PiHttpClient.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+            PiHttpClient.BaseAddress = new Uri(piUri.AbsoluteUri + $"/omf");
+            PiHttpClient.SetBasicAuthentication(username, password);
         }
 
         /// <summary>
@@ -155,19 +149,19 @@ namespace BartIngress
         {
             var serializedOmfMessage = OmfMessageSerializer.Serialize(omfMessage);
 
-            if (OcsOmfUri != null)
+            if (OcsHttpClient != null)
             {
-                _ = SendOmfMessageAsync(serializedOmfMessage, OcsOmfUri, OcsAuthHeader).Result;
+                _ = SendOmfMessageAsync(serializedOmfMessage, OcsHttpClient).Result;
             }
 
-            if (EdsOmfUri != null)
+            if (EdsHttpClient != null)
             {
-                _ = SendOmfMessageAsync(serializedOmfMessage, EdsOmfUri).Result;
+                _ = SendOmfMessageAsync(serializedOmfMessage, EdsHttpClient).Result;
             }
 
-            if (PiOmfUri != null)
+            if (PiHttpClient != null)
             {
-                _ = SendOmfMessageAsync(serializedOmfMessage, PiOmfUri, PiAuthHeader).Result;
+                _ = SendOmfMessageAsync(serializedOmfMessage, PiHttpClient).Result;
             }
         }
 
@@ -179,22 +173,22 @@ namespace BartIngress
             var serializedTypeDelete = OmfMessageSerializer.Serialize(_typeDeleteMessage);
             var serializedContainerDelete = OmfMessageSerializer.Serialize(_containerDeleteMessage);
 
-            if (OcsOmfUri != null)
+            if (OcsHttpClient != null)
             {
-                _ = SendOmfMessageAsync(serializedContainerDelete, OcsOmfUri, OcsAuthHeader).Result;
-                _ = SendOmfMessageAsync(serializedTypeDelete, OcsOmfUri, OcsAuthHeader).Result;
+                _ = SendOmfMessageAsync(serializedContainerDelete, OcsHttpClient).Result;
+                _ = SendOmfMessageAsync(serializedTypeDelete, OcsHttpClient).Result;
             }
 
-            if (EdsOmfUri != null)
+            if (EdsHttpClient != null)
             {
-                _ = SendOmfMessageAsync(serializedContainerDelete, EdsOmfUri).Result;
-                _ = SendOmfMessageAsync(serializedTypeDelete, EdsOmfUri).Result;
+                _ = SendOmfMessageAsync(serializedContainerDelete, EdsHttpClient).Result;
+                _ = SendOmfMessageAsync(serializedTypeDelete, EdsHttpClient).Result;
             }
 
-            if (PiOmfUri != null)
+            if (PiHttpClient != null)
             {
-                _ = SendOmfMessageAsync(serializedContainerDelete, PiOmfUri, PiAuthHeader).Result;
-                _ = SendOmfMessageAsync(serializedTypeDelete, PiOmfUri, PiAuthHeader).Result;
+                _ = SendOmfMessageAsync(serializedContainerDelete, PiHttpClient).Result;
+                _ = SendOmfMessageAsync(serializedTypeDelete, PiHttpClient).Result;
             }
         }
 
@@ -202,9 +196,14 @@ namespace BartIngress
         {
             if (includeManaged)
             {
-                if (HttpClientHandler != null)
+                if (OcsAuthenticationHandler != null)
                 {
-                    HttpClientHandler.Dispose();
+                    OcsAuthenticationHandler.Dispose();
+                }
+
+                if (OcsHttpClient != null)
+                {
+                    OcsHttpClient.Dispose();
                 }
             }
         }
@@ -213,70 +212,26 @@ namespace BartIngress
         /// Sends an OMF message to an OMF endpoint with optional authentication header
         /// </summary>
         /// <param name="omfMessage">The OMF message to send</param>
-        /// <param name="omfUri">The OMF endpoint to send to</param>
-        /// <param name="authHeader">(Optional) The authentication header to add to the request</param>
+        /// <param name="httpClient">HttpClient for the OMF endpoint to send to</param>
         /// <returns>A task returning the response of the HTTP request</returns>
-        private async Task<string> SendOmfMessageAsync(SerializedOmfMessage omfMessage, Uri omfUri, AuthenticationHeaderValue authHeader = null)
+        private static async Task<string> SendOmfMessageAsync(SerializedOmfMessage omfMessage, HttpClient httpClient)
         {
             using var request = new HttpRequestMessage()
             {
                 Method = HttpMethod.Post,
-                RequestUri = omfUri,
                 Content = new ByteArrayContent(omfMessage.BodyBytes),
             };
-
-            if (authHeader != null)
-            {
-                request.Headers.Authorization = authHeader;
-            }
 
             foreach (var omfHeader in omfMessage.Headers)
             {
                 request.Headers.Add(omfHeader.Name, omfHeader.Value);
             }
 
-            var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+            var response = await httpClient.SendAsync(request).ConfigureAwait(false);
             var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!response.IsSuccessStatusCode)
-                throw new Exception($"Error sending OMF to endpoint at {omfUri}. Response code: {response.StatusCode} Response: {responseString}");
+                throw new Exception($"Error sending OMF to endpoint at {httpClient.BaseAddress}. Response code: {response.StatusCode} Response: {responseString}");
             return responseString;
-        }
-
-        /// <summary>
-        /// Gets a bearer token from OCS using Client Credentials
-        /// </summary>
-        /// <param name="ocsUri">OSIsoft Cloud Services OMF Endpoint URI</param>
-        /// <param name="clientId">OSIsoft Cloud Services Client ID</param>
-        /// <param name="clientSecret">OSIsoft Cloud Services Client Secret</param>
-        /// <returns>A bearer token</returns>
-        private string GetOCSClientCredentialsToken(Uri ocsUri, string clientId, string clientSecret)
-        {
-            using var openIdConfigRequest = new HttpRequestMessage()
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(ocsUri.AbsoluteUri + "identity/.well-known/openid-configuration"),
-            };
-            var openIdConfigResponse = HttpClient.SendAsync(openIdConfigRequest).Result;
-            var openIdConfig = JsonConvert.DeserializeObject<JObject>(openIdConfigResponse.Content.ReadAsStringAsync().Result);
-            var token_endpoint = (string)openIdConfig["token_endpoint"];
-
-            using var tokenRequest = new HttpRequestMessage()
-            {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri(token_endpoint),
-                Content = new FormUrlEncodedContent(
-                    new List<KeyValuePair<string, string>>()
-                    {
-                        new KeyValuePair<string, string>("grant_type", "client_credentials"),
-                        new KeyValuePair<string, string>("client_id", clientId),
-                        new KeyValuePair<string, string>("client_secret", clientSecret),
-                        new KeyValuePair<string, string>("resource", ocsUri.AbsoluteUri),
-                    }),
-            };
-
-            var tokenResponse = HttpClient.SendAsync(tokenRequest).Result;
-            var token = JsonConvert.DeserializeObject<JObject>(tokenResponse.Content.ReadAsStringAsync().Result);
-            return (string)token["access_token"];
         }
     }
 }

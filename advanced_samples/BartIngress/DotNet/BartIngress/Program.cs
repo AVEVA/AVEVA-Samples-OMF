@@ -31,7 +31,7 @@ namespace BartIngress
         {
             Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(Directory.GetCurrentDirectory() + "\\appsettings.json"));
 
-            OmfServices = new OmfServices(Settings.ValidateEndpointCertificate);
+            OmfServices = new OmfServices();
 
             if (Settings.SendToOcs)
             {
@@ -45,7 +45,7 @@ namespace BartIngress
 
             if (Settings.SendToPi)
             {
-                OmfServices.ConfigurePiOmfIngress(Settings.PiWebApiUri, Settings.Username, Settings.Password);
+                OmfServices.ConfigurePiOmfIngress(Settings.PiWebApiUri, Settings.Username, Settings.Password, Settings.ValidateEndpointCertificate);
             }
 
             // Send OMF Type Message
