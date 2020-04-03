@@ -1,0 +1,16 @@
+{
+  "name": "complex_dynamic_nodejs",
+  "version": "0.0.1",
+  "description": "A sample showing how to send complex dynamic OMF types, containers and data",
+  "main": "Sample.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "OSIsoft",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "http": "0.0.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5"
+  }
+}
