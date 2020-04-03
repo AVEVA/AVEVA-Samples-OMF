@@ -4,7 +4,7 @@
   "description": "A sample showing how to send complex dynamic OMF types, containers and data",
   "main": "Sample.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "author": "OSIsoft",
   "license": "Apache-2.0",
@@ -12,5 +12,8 @@
     "http": "0.0.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.5"
+  },
+  "devDependencies": {
+    "jasmine": "^3.5.0"
   }
 }
