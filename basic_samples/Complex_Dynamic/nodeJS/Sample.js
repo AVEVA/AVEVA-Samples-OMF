@@ -1,9 +1,9 @@
 // sample.js
 
-var config = require('./config.js');
-const readline = require('readline');
-var authObj = require('./auth.js');
-var omfObj = require('./omfClient.js');
+var config = require("./config.js");
+const readline = require("readline");
+var authObj = require("./auth.js");
+var omfObj = require("./omfClient.js");
 
 // retrieve configuration
 var OCS = config.OCS;
@@ -15,7 +15,7 @@ var password = config.password;
 var success = true;
 var deleteData = true;
 var errorCap = {};
-var resource = omfURL.split('.com/')[0] + '.com';
+var resource = omfURL.split(".com/")[0] + ".com";
 var authClient = {};
 
 global.ending = false;
@@ -25,20 +25,20 @@ global.omfClient = {};
 
 var omfType = [
   {
-    id: 'TankMeasurement',
-    type: 'object',
-    classification: 'dynamic',
+    id: "TankMeasurement",
+    type: "object",
+    classification: "dynamic",
     properties: {
-      Time: { format: 'date-time', type: 'string', isindex: true },
+      Time: { format: "date-time", type: "string", isindex: true },
       Pressure: {
-        type: 'number',
-        name: 'Tank Pressure',
-        description: 'Tank Pressure in Pa',
+        type: "number",
+        name: "Tank Pressure",
+        description: "Tank Pressure in Pa",
       },
       Temperature: {
-        type: 'number',
-        name: 'Tank Temperature',
-        description: 'Tank Temperature in K',
+        type: "number",
+        name: "Tank Temperature",
+        description: "Tank Temperature in K",
       },
     },
   },
@@ -47,9 +47,9 @@ var omfType = [
 var omfContainer = function () {
   return [
     {
-      id: 'Tank1Measurements',
-      typeid: 'TankMeasurement',
-      typeVersion: '1.0.0.0',
+      id: "Tank1Measurements",
+      typeid: "TankMeasurement",
+      typeVersion: "1.0.0.0",
     },
   ];
 };
@@ -69,11 +69,11 @@ var logError = function (err) {
   success = false;
   errorCap = err;
 
-  console.log('Error');
+  console.log("Error");
   console.trace();
   console.log(err.message);
   console.log(err.stack);
-  console.log(err.options.headers['Operation-Id']);
+  console.log(err.options.headers["Operation-Id"]);
   throw err;
 };
 
@@ -118,7 +118,7 @@ var app = function (entries) {
 
   var createType = getClientToken
     .then(function (res) {
-      console.log('Creating Type');
+      console.log("Creating Type");
       if (authClient.tokenExpires >= nowSeconds) {
         return function (res) {
           refreshToken(res, authClient);
@@ -134,7 +134,7 @@ var app = function (entries) {
 
   var createContainer = createType
     .then(function (res) {
-      console.log('Creating Container');
+      console.log("Creating Container");
       containerObj = omfContainer();
       if (authClient.tokenExpires >= nowSeconds) {
         return function (res) {
@@ -152,8 +152,8 @@ var app = function (entries) {
   var sendDataWrapper = createContainer
     .then(function (res) {
       entriesT = entries;
-      console.log(entries);
-      console.log('Creating Data');
+      //console.log(entries);
+      console.log("Creating Data");
       if (entriesT.length > 0) {
         entriesT.forEach(function (val, index, array) {
           sendData(val);
@@ -167,7 +167,7 @@ var app = function (entries) {
 
   var createData = function () {
     if (!global.ending) {
-      rl.question('Enter pressure, temperature? n to cancel:', (answer) => {
+      rl.question("Enter pressure, temperature? n to cancel:", (answer) => {
         sendData(answer);
       });
     }
@@ -175,15 +175,16 @@ var app = function (entries) {
 
   var sendData = function (answer) {
     try {
-      if (answer == 'n') {
+      if (answer == "n") {
         appFinished();
       } else {
-        var arr = answer.split(',');
+        var arr = answer.split(",");
         var currtime = new Date();
         var dataStr = `[{ "containerid": "Tank1Measurements", "values": [{ "Time": "${currtime.toISOString()}", "Pressure": ${
           arr[0]
         }, "Temperature": ${arr[1]} }] }]`;
         var dataObj = JSON.parse(dataStr);
+        console.log(dataStr);
         if (authClient.tokenExpires >= nowSeconds) {
           return function (res) {
             refreshToken(res, authClient);
@@ -200,15 +201,13 @@ var app = function (entries) {
   };
 
   var appFinished = function () {
-    console.log(global.ending);
     global.ending = true;
     console.log();
-    console.log(global.ending);
 
     if (!success) {
       throw errorCap;
     }
-    console.log('All values sent successfully!');
+    console.log("All values sent successfully!");
 
     if (require.main === module) {
       process.exit();
