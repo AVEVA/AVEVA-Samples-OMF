@@ -1,5 +1,3 @@
-// sample.js
-
 var config = require("./config.js");
 const readline = require("readline");
 var authObj = require("./auth.js");
