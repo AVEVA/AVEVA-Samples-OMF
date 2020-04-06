@@ -1,4 +1,4 @@
-var Sample = require("../Sample");
+var Sample = require("../sample");
 describe("Complex_Dynamic NodeJS Sample", function () {
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 
