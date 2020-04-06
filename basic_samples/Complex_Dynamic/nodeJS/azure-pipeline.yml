@@ -1,0 +1,131 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - "/basic_samples/Complex_Dynamic/nodeJS/"
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - "/basic_samples/Complex_Dynamic/nodeJS/"
+
+schedules:
+  - cron: "0 0 * * 0"
+    displayName: Weekly build
+    branches:
+      include:
+        - master
+    always: true
+
+variables:
+  - template: "/miscellaneous/build_templates/variables.yml"
+  - name: testPath
+    value: /basic_samples/Complex_Dynamic/nodeJS
+  - name: projPath
+    value: /basic_samples/Complex_Dynamic/nodeJS
+  - name: CredFile
+    value: config.js
+  - name: CredFileLibrary
+    value: product-readiness.omf_dc_nodejs.ocs.js
+  - name: CredFileLibraryOP
+    value: product-readiness.omf_dc_nodejs.pi.js
+  - name: CredFileLibraryEDS
+    value: product-readiness.omf_dc_nodejs.eds.js
+  - name: covStream
+    value: OMF_DC_nodeJS
+  - name: bdProject
+    value: OMF_DC_nodeJS
+
+jobs:
+  - job: Tests_OCS
+    pool:
+      vmImage: "ubuntu-16.04"
+    steps:
+      - template: "/miscellaneous/build_templates/config.yml"
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "10.x"
+        displayName: "Specify Node version"
+
+      - script: |
+          npm install request
+          npm install request-promise
+          npm install jasmine
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: "Install dependencies"
+
+      - script: |
+          npm test
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: "Run tests"
+
+  - job: Tests_OnPrem
+    pool:
+      name: 00-OSIManaged-Test
+      demands: COMPUTERNAME -equals $(buildAgent)
+    steps:
+      - template: "/miscellaneous/build_templates/config.yml"
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibraryOP)
+          filePath: $(projPath)
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "10.x"
+        displayName: "Specify Node version"
+
+      - script: |
+          npm install request
+          npm install request-promise
+          npm install jasmine
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: "Install dependencies"
+
+      - script: |
+          npm test
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: "Run tests"
+
+  - job: Tests_EDS
+    pool:
+      name: 00-OSIManaged-Test
+      demands: COMPUTERNAME -equals $(buildAgent)
+    steps:
+      - template: "/miscellaneous/build_templates/config.yml"
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibraryEDS)
+          filePath: $(projPath)
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "10.x"
+        displayName: "Specify Node version"
+
+      - script: |
+          npm install request
+          npm install request-promise
+          npm install jasmine
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: "Install dependencies"
+
+      - script: |
+          npm test
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: "Run tests"
+
+  - template: "/miscellaneous/build_templates/analysis.yml"
+    parameters:
+      language: nodejs

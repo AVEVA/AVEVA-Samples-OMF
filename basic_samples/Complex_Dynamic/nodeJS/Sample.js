@@ -184,7 +184,6 @@ var app = function (entries) {
           arr[0]
         }, "Temperature": ${arr[1]} }] }]`;
         var dataObj = JSON.parse(dataStr);
-        console.log(dataStr);
         if (authClient.tokenExpires >= nowSeconds) {
           return function (res) {
             refreshToken(res, authClient);
