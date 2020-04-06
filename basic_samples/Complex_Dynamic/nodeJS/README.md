@@ -76,6 +76,42 @@ An OMF endpoint must be properly set up and configured.
 
 ## Running the Sample
 
+1. Make a local copy of the git repo
+1. Install node.js, installation instructions are available at [node.js](https://nodejs.org/en/).
+1. Install dependencies, using the command line:
+
+   ```bash
+   npm ci
+   ```
+
+1. Open Command Prompt in Windows
+1. Goto folder where js files are located
+1. Configure desired OMF endpoints to receive the data in [config.js](.\config.js])
+1. Type the following command to run the test file in the local server
+
+   ```bash
+   node sample.js
+   ```
+
+## Running the test
+
+1. Make a local copy of the git repo
+1. Install node.js, installation instructions are available at [node.js](https://nodejs.org/en/).
+1. Install dependencies, using the command line:
+
+   ```bash
+   npm ci
+   ```
+
+1. Open Command Prompt in Windows
+1. Goto folder where js files are located
+1. Configure desired OMF endpoints to receive the data in [config.js](.\config.js])
+1. Type the following command to run the test file in the local server
+
+   ```bash
+   npm test
+   ```
+
 ---
 
 For the OMF landing page [ReadMe](../../../)  
