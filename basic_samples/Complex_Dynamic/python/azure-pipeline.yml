@@ -36,7 +36,7 @@ variables:
   - name: CredFileLibraryEDS
     value: product-readiness.omf_dc_python.eds.ini
   - name: covStream
-    value: OMF_DC_Py
+    value: OMF_DC_Python
   - name: bdProject
     value: OMF_DC_Python
 
