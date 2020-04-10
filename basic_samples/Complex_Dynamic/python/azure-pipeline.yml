@@ -82,12 +82,12 @@ jobs:
           filePath: $(projPath)
 
       - script: |
-          "C:\Program Files (x86)\Python37-32\Scripts\pip.exe" install -r requirements.txt
+          "pip.exe" install -r requirements.txt
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Install requirements'
 
       - script: |
-          "C:\Program Files (x86)\Python37-32\Scripts\pytest.exe" ./test_sample.py
+          "pytest.exe" ./test_sample.py
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Run tests'
 
@@ -103,12 +103,12 @@ jobs:
           filePath: $(projPath)
 
       - script: |
-          "C:\Program Files (x86)\Python37-32\Scripts\pip.exe" install -r requirements.txt
+          "pip.exe" install -r requirements.txt
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Install requirements'
 
       - script: |
-          "C:\Program Files (x86)\Python37-32\Scripts\pytest.exe" ./test_sample.py
+          "pytest.exe" ./test_sample.py
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Run tests'
 
