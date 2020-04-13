@@ -77,22 +77,22 @@ def send_omf_message_to_endpoint(message_type, msg_body, action='create'):
     response = {}
 
     # Assemble headers
-    if app_config.PI:
+    if app_config['destinationPI']:
         response = requests.post(
-            app_config.omfEndPoint,
+            app_config['omfURL'],
             headers=msg_headers,
             data=msg_body,
-            verify=app_config.VERIFY_SSL,
-            timeout=app_config.WEB_REQUEST_TIMEOUT_SECONDS,
+            verify=app_config['verify'],
+            timeout=app_config['timeout'],
             auth=(app_config.Id, app_config.Secret)
         )
     else:
         response = requests.post(
-            app_config.omfEndPoint,
+            app_config['omfURL'],
             headers=msg_headers,
             data=msg_body,
-            verify=app_config.VERIFY_SSL,
-            timeout=app_config.WEB_REQUEST_TIMEOUT_SECONDS
+            verify=app_config['verify'],
+            timeout=app_config['timeout']
         )
 
     # response code in 200s if the request was successful!
@@ -110,20 +110,20 @@ def getHeaders(message_type="", action=""):
     global app_config
 
     # Assemble headers
-    if app_config.OCS:
+    if app_config['destinationOCS']:
         msg_headers = {
             "Authorization": "Bearer %s" % getToken(),
             'messagetype': message_type,
             'action': action,
             'messageformat': 'JSON',
-            'omfversion': app_config.omfVersion
+            'omfversion': app_config['version']
         }
-    elif app_config.EDS:
+    elif app_config['destinationEDS']:
         msg_headers = {
             'messagetype': message_type,
             'action': action,
             'messageformat': 'JSON',
-            'omfversion': app_config.omfVersion
+            'omfversion': app_config['version']
         }
     else:
         msg_headers = {
@@ -131,110 +131,9 @@ def getHeaders(message_type="", action=""):
             'messagetype': message_type,
             'action': action,
             'messageformat': 'JSON',
-            'omfversion': app_config.omfVersion
+            'omfversion': app_config['version']
         }
     return msg_headers
-
-
-def checkValueGone(url):
-    # Sends the request out to the preconfigured endpoint..
-
-    global app_config
-
-    # Assemble headers
-    msg_headers = getHeaders()
-
-    # Send the request, and collect the response
-    if app_config.PI:
-        response = requests.get(
-            url,
-            headers=msg_headers,
-            verify=app_config.VERIFY_SSL,
-            timeout=app_config.WEB_REQUEST_TIMEOUT_SECONDS,
-            auth=(app_config.Id, app_config.Secret)
-        )
-    else:
-        response = requests.get(
-            url,
-            headers=msg_headers,
-            verify=app_config.VERIFY_SSL,
-            timeout=app_config.WEB_REQUEST_TIMEOUT_SECONDS,
-        )
-
-    # response code in 200s if the request was successful!
-    if response.status_code >= 200 and response.status_code < 300:
-        response.close()
-        print('Value found.  This is unexpected.  "{0}"'.format(
-            response.status_code))
-        print()
-        opId = response.headers["Operation-Id"]
-        status = response.status_code
-        reason = response.text
-        url = response.url
-        error = f"  {status}:{reason}.  URL {url}  OperationId {opId}"
-        raise Exception(f"Check message was failed. {error}")
-    return response.text
-
-
-def checkValue(url):
-    # Sends the request out to the preconfigured endpoint..
-
-    global app_config
-
-    # Assemble headers
-    msg_headers = getHeaders()
-
-    # Send the request, and collect the response
-    if app_config.PI:
-        response = requests.get(
-            url,
-            headers=msg_headers,
-            verify=app_config.VERIFY_SSL,
-            timeout=app_config.WEB_REQUEST_TIMEOUT_SECONDS,
-            auth=(app_config.Id, app_config.Secret)
-        )
-    else:
-        response = requests.get(
-            url,
-            headers=msg_headers,
-            verify=app_config.VERIFY_SSL,
-            timeout=app_config.WEB_REQUEST_TIMEOUT_SECONDS,
-        )
-
-    # response code in 200s if the request was successful!
-    if response.status_code < 200 or response.status_code >= 300:
-        response.close()
-        print('Response from endpoint was bad.  "{0}"'.format(
-            response.status_code))
-        print()
-        opId = response.headers["Operation-Id"]
-        status = response.status_code
-        reason = response.text
-        url = response.url
-        error = f"  {status}:{reason}.  URL {url}  OperationId {opId}"
-        raise Exception(f"OMF message was unsuccessful. {error}")
-    return response.text
-
-
-def getCurrentTime():
-    # Returns the current time
-    return datetime.datetime.utcnow().isoformat() + 'Z'
-
-
-def checkDeletes():
-    global app_config
-
-
-def checkSends(lastVal):
-    global app_config
-
-
-def supressError(sdsCall):
-    # easily call a function and not have to wrap it individually for failure
-    try:
-        sdsCall()
-    except Exception as e:
-        print(("Encountered Error: {error}".format(error=e)))
 
 
 def getConfig(section, field):
@@ -271,24 +170,29 @@ def getAppConfig():
     return app_config
 
 
+def getFile(file):
+    with open(file) as myfile:
+        return "".join(line.rstrip() for line in myfile)
+
+
 def main(test=False):
     # Main program.  Seperated out so that we can add a test function and call this easily
     global app_config
     success = True
     try:
+        print("getting configuration")
         getAppConfig()
 
-        with open("type.json") as myfile:
-            typeData = "".join(line.rstrip() for line in myfile)
-            send_omf_message_to_endpoint("type", typeData)
+        print("sending types")
+        send_omf_message_to_endpoint("type", getFile("type.json"))
 
-        with open("container.json") as myfile:
-            containerData = "".join(line.rstrip() for line in myfile)
-            send_omf_message_to_endpoint("container", containerData)
+        print("sending containers")
+        send_omf_message_to_endpoint("container", getFile("container.json"))
 
+        print("sending data")
         with open("data.json") as myfile:
             dataData = "".join(line.rstrip() for line in myfile)
-            send_omf_message_to_endpoint("data", dataData)
+            send_omf_message_to_endpoint("data", getFile("data.json"))
 
     except Exception as ex:
         print(("Encountered Error: {error}".format(error=ex)))
@@ -298,15 +202,11 @@ def main(test=False):
         success = False
         raise ex
     finally:
-        print('Deletes')
+        print("done")
 
 
-main()
-print("done")
+if __name__ == "__main__":
+    main()
 
 # Straightforward test to make sure program is working without an error in program.  Can run it yourself with pytest program.py
 
-
-def test_main():
-    # Tests to make sure the sample runs as expected
-    main(True)
