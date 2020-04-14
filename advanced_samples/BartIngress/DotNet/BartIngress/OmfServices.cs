@@ -110,7 +110,7 @@ namespace BartIngress
         /// <typeparam name="T">OMF type of the OMF data to be sent</typeparam>
         /// <param name="data">Dictionary of OMF data keyed by the stream ID</param>
         /// <param name="typeId">TypeID of the OMF type</param>
-        internal void SendOmfContainers<T>(Dictionary<string, T> data, string typeId)
+        internal void SendOmfContainersForData<T>(Dictionary<string, T> data, string typeId)
         {
             var containers = new List<OmfContainer>();
             foreach (var streamId in data.Keys)

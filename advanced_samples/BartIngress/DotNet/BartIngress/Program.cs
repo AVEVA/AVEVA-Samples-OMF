@@ -19,7 +19,7 @@ namespace BartIngress
         public static void Main()
         {
             LoadConfiguration();
-            _timer = new Timer(new TimerCallback(TimerTask), null, 0, 10000);
+            _timer = new Timer(new TimerCallback(TimerTask), null, 0, TimerInterval);
             Console.WriteLine(Resources.MSG_STARTED);
             Console.ReadLine();
         }
@@ -54,7 +54,7 @@ namespace BartIngress
             // Send OMF Container Message
             var data = BartApi.GetRealTimeEstimates(Settings.BartApiKey, Settings.BartApiOrig, Settings.BartApiDest);
             var typeId = ClrToOmfTypeConverter.Convert(typeof(BartStationEtd)).Id;
-            OmfServices.SendOmfContainers(data, typeId);
+            OmfServices.SendOmfContainersForData(data, typeId);
         }
 
         /// <summary>
