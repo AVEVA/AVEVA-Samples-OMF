@@ -57,6 +57,8 @@ jobs:
           call dotnet restore --ignore-failed-sources
           echo Build
           call dotnet msbuild
+          echo Delete Old Test Results
+          del TestResults\*.trx
           echo Test
           call dotnet test --logger trx
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
