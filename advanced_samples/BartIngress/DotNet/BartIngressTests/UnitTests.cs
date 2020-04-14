@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using BartIngress;
 using OSIsoft.Data;
 using OSIsoft.Data.Http;
@@ -23,6 +24,9 @@ namespace BartIngressTests
             try
             {
                 Program.RunIngress();
+
+                // Wait for data to be processed by OCS
+                Thread.Sleep(5000);
 
                 // Edge Data Store and PI Web API process OMF before sending a response, and will return an error code if there is a problem
                 // In this test, the call to RunIngress above will result in an exception if there is a failure on either of those endpoints
