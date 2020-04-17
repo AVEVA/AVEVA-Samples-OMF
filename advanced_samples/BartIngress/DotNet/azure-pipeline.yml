@@ -1,0 +1,77 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/advanced_samples/BartIngress/DotNet'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/advanced_samples/BartIngress/DotNet'
+
+schedules:
+  - cron: '0 0 * * 0'
+    displayName: Weekly build
+    branches:
+      include:
+        - master
+    always: true
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/advanced_samples/BartIngress/DotNet/BartIngress'
+  - name: testPath
+    value: '/advanced_samples/BartIngress/DotNet/BartIngressTests'
+  - name: CredFile
+    value: appsettings.json
+  - name: CredFileLibrary
+    value: product-readiness.bartingress_dotnet.json
+  - name: covStream
+    value: BartIngress_DotNet
+  - name: bdProject
+    value: BartIngress_DotNet
+
+jobs:
+  - job: Tests
+    pool:
+      name: 00-OSIManaged-Test
+      demands: COMPUTERNAME -equals $(buildAgent)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
+
+      - script: |
+          echo Clean
+          call dotnet clean
+          echo Restore
+          call dotnet restore --ignore-failed-sources
+          echo Build
+          call dotnet msbuild
+          echo Delete Old Test Results
+          del TestResults\*.trx
+          echo Test
+          call dotnet test --logger trx
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: VSTest
+          testResultsFiles: '*.trx'
+          searchFolder: $(Build.SourcesDirectory)$(testPath)/TestResults
+        condition: always()
+        displayName: 'Publish test results'
+
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: dotnet
