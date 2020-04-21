@@ -18,11 +18,12 @@ import sys
 
 import auth as auth
 import sendOMF as sendOMF
-import omfHelper as omfHelper 
+import omfHelper as omfHelper
 
 endpointPI = False
 endpointOCS = False
 endpointEDS = False
+
 
 def getAppConfig():
 
@@ -47,10 +48,10 @@ def getAppConfig():
     else:
         verify = True
     app_config['verify'] = verify
-    
+
     sendOMF.setConfig(app_config)
-    check.setConfig(app_config)
     return app_config
+
 
 def getConfig(section, field):
     # Reads the config file for the field specified
@@ -58,7 +59,8 @@ def getConfig(section, field):
     config.read('config.ini')
     return config.has_option(section, field) and config.get(section, field) or ""
 
-def main(test=False, entries = []):
+
+def main(test=False, entries=[]):
     # Main program.  Seperated out so that we can add a test function and call this easily
     app_config = {}
     print('Welcome')
@@ -68,22 +70,23 @@ def main(test=False, entries = []):
     sendOMF.sendContainerCreate(omfHelper.getContainer())
 
     while not test or len(entries) > 0:
-        ans =None
+        ans = None
         # can read entries fromt he command line here
-        if len(entries) > 0 :
+        if len(entries) > 0:
             ans = entries.pop(0)
         else:
-            ans = input('Enter pressure, temperature: n to cancel:') 
+            ans = input('Enter pressure, temperature: n to cancel:')
 
-        if ans == 'n' :
+        if ans == 'n':
             break
 
         split = ans.split(',')
-        sendOMF.sendDataCreate(omfHelper.getData(pressure = float(split[0]), temperature = float(split[1])))
+        sendOMF.sendDataCreate(omfHelper.getData(
+            pressure=float(split[0]), temperature=float(split[1])))
     return app_config
-            
+
+
 if __name__ == "__main__":
     sys.argv.pop()
-    main(entries = sys.argv)
+    main(entries=sys.argv)
     print("done")
-
