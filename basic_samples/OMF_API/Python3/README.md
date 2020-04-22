@@ -30,7 +30,7 @@ or
 
 ## Configure constants for connecting and authentication
 
-The SDS Service is secured by obtaining tokens from Azure Active Directory. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the directory. The sample includes an appsettings.json configuration file to hold configuration strings, including the authentication strings. You must replace the placeholders with the authentication-related values you received from OSIsoft.
+The SDS Service is secured by obtaining tokens from Azure Active Directory. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the directory. The sample includes an config.ini configuration file to hold configuration strings, including the authentication strings. You must replace the placeholders with the authentication-related values you received from OSIsoft.
 
 The values to be replaced are in `config.ini`:
 
@@ -49,7 +49,7 @@ ClientId = REPLACE_WITH_APPLICATION_IDENTIFIER
 ClientSecret = REPLACE_WITH_APPLICATION_SECRET
 ```
 
-The PIServer will use the PI Web API as its OMF accepting endpoint. This is what the sample is tested against. 
+The PIServer will use the PI Web API as its OMF accepting endpoint. This is what the sample is tested against. Currently the only OMF supported endpoint for PI is the Connector Relay. These samples have not been tested against this.
 
 To configure the sample to work against PI update the config.ini to have only these parameters and update that parameter values to what is being used.
 
@@ -71,7 +71,7 @@ If your client computer Python does not trust the PI Web API certificate you wil
 requests.exceptions.SSLError: HTTPSConnectionPool(host='...', port=443): Max retries exceeded with url: /piwebapi/omf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self signed certificate (_ssl.c:1051)')))
 ```
 
-Complete dependencies listed in [LICENSE](LICENSE)
+Complete dependencies listed in [DEPENDENCIES.md](DEPENDENCIES.md)
 
 ---
 
