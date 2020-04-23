@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - '/basic_samples/Complex_Dynamic/python'
+      - '/basic_samples/Complex_Dynamic/Python'
 
 pr:
   branches:
@@ -13,7 +13,7 @@ pr:
       - master
   paths:
     include:
-      - '/basic_samples/Complex_Dynamic/python'
+      - '/basic_samples/Complex_Dynamic/Python'
 
 schedules:
   - cron: '0 0 * * 0'
@@ -26,7 +26,7 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/Complex_Dynamic/python'
+    value: '/basic_samples/Complex_Dynamic/Python'
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
