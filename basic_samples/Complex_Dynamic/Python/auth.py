@@ -8,9 +8,11 @@ config = {}
 __expiration = None
 __token = None
 
+
 def setConfig(_config):
     global config
     config = _config
+
 
 def getToken():
     # Gets the oken for the omfsendpoint

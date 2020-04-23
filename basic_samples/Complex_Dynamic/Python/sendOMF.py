@@ -14,16 +14,17 @@ def setConfig(_config):
     config = _config
     auth.setConfig(_config)
 
+
 def sendContainerCreate(container):
-    sendCall(json.dumps(container), 'container','create')
+    sendCall(json.dumps(container), 'container', 'create')
 
 
 def sendTypeCreate(_type):
-    sendCall(json.dumps(_type), 'type','create')
+    sendCall(json.dumps(_type), 'type', 'create')
 
 
 def sendDataCreate(data):
-    sendCall(json.dumps(data), 'data','create')
+    sendCall(json.dumps(data), 'data', 'create')
 
 
 def sendCall(msg_body, message_type, action):
@@ -41,8 +42,8 @@ def sendCall(msg_body, message_type, action):
         verify=config['verify'],
         timeout=config['timeout'],
         auth=auth
-        )
-    
+    )
+
     # response code in 200s if the request was successful!
     if response.status_code < 200 or response.status_code >= 300:
         print(headers)
@@ -58,12 +59,12 @@ def getHeaders(message_type, action):
     global config
 
     msg_headers = {
-            "x-requested-with": "xmlhttprequest",
-            'messagetype': message_type,
-            'action': action,
-            'messageformat': 'JSON',
-            'omfversion': config['version']
-        }
+        "x-requested-with": "xmlhttprequest",
+        'messagetype': message_type,
+        'action': action,
+        'messageformat': 'JSON',
+        'omfversion': config['version']
+    }
     if config['compression'] == "gzip":
         msg_headers["compression"] = "gzip"
 
@@ -71,5 +72,3 @@ def getHeaders(message_type, action):
     if authorization:
         msg_headers["Authorization"] = authorization
     return msg_headers
-
-compression

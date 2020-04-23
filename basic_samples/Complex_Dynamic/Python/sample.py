@@ -1,4 +1,3 @@
-
 # ************************************************************************
 # Import necessary packages
 # ************************************************************************
@@ -34,10 +33,10 @@ def getAppConfig():
     app_config['omfURL'] = getConfig('Access', 'omfURL')
     app_config['id'] = getConfig('Credentials', 'id')
     app_config['password'] = getConfig('Credentials', 'password')
-    app_config['version'] = getConfig('Configurations', 'omfVersion')
-    app_config['compression'] = getConfig('Configurations', 'compression')
-    timeout = getConfig('Configurations', 'WEB_REQUEST_TIMEOUT_SECONDS')
-    verify = getConfig('Configurations', 'VERIFY_SSL')
+    app_config['version'] = getConfig('Configuration', 'omfVersion')
+    app_config['compression'] = getConfig('Configuration', 'compression')
+    timeout = getConfig('Configuration', 'WEB_REQUEST_TIMEOUT_SECONDS')
+    verify = getConfig('Configuration', 'VERIFY_SSL')
 
     if not timeout:
         timeout = 30
