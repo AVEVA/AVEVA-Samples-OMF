@@ -75,7 +75,7 @@ jobs:
         inputs:
           testResultsFiles: "**/test-*.xml"
           failTaskOnFailedTests: true
-          testRunTitle: "$(Agent.JobName) on $(vmImage)"
+          testRunTitle: "$(Agent.JobName) on ubuntu-16.04"
         displayName: "Publish test results"
 
   - job: Tests_OnPrem
