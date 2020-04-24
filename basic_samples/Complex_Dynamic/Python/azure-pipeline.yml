@@ -94,7 +94,7 @@ jobs:
         displayName: "Install requirements"
 
       - script: |
-          "pytest.exe" ./test_sample.py
+          "pytest.exe" ./test_sample.py --junitxml=junit/test-results.xml  ./program.py
         workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
         displayName: "Run tests"
 
@@ -122,7 +122,7 @@ jobs:
         displayName: "Install requirements"
 
       - script: |
-          "pytest.exe" ./test_sample.py
+          "pytest.exe" ./test_sample.py --junitxml=junit/test-results.xml  ./program.py
         workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
         displayName: "Run tests"
 
