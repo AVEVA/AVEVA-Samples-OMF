@@ -70,6 +70,13 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: "Run tests"
 
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: "**/test-*.xml"
+          failTaskOnFailedTests: true
+        displayName: "Publish test results"
+
   - job: Tests_OnPrem
     pool:
       name: 00-OSIManaged-Test
@@ -91,6 +98,13 @@ jobs:
         workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
         displayName: "Run tests"
 
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: "**/test-*.xml"
+          failTaskOnFailedTests: true
+        displayName: "Publish test results"
+
   - job: Tests_EDS
     pool:
       name: 00-OSIManaged-Test
@@ -111,6 +125,13 @@ jobs:
           "pytest.exe" ./test_sample.py
         workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
         displayName: "Run tests"
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: "**/test-*.xml"
+          failTaskOnFailedTests: true
+        displayName: "Publish test results"
 
   - template: "/miscellaneous/build_templates/analysis.yml"
     parameters:
