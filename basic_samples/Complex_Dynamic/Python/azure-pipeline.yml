@@ -75,6 +75,7 @@ jobs:
         inputs:
           testResultsFiles: "**/test-*.xml"
           failTaskOnFailedTests: true
+          testRunTitle: "$(Agent.JobName) on $(imageName)"
         displayName: "Publish test results"
 
   - job: Tests_OnPrem
@@ -103,6 +104,7 @@ jobs:
         inputs:
           testResultsFiles: "**/test-*.xml"
           failTaskOnFailedTests: true
+          testRunTitle: "$(Agent.JobName) on $(buildAgent)"
         displayName: "Publish test results"
 
   - job: Tests_EDS
@@ -131,6 +133,7 @@ jobs:
         inputs:
           testResultsFiles: "**/test-*.xml"
           failTaskOnFailedTests: true
+          testRunTitle: "$(Agent.JobName) on $(buildAgent)"
         displayName: "Publish test results"
 
   - template: "/miscellaneous/build_templates/analysis.yml"
