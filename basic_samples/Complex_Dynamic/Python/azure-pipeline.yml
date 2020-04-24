@@ -58,14 +58,14 @@ jobs:
 
       - script: |
           echo Install tools
-          call pip install setuptools wheel
-          call pip install unittest-xml-reporting    
-          call pip install pytest
-          call pip install pytest-cov
+          pip install setuptools wheel
+          pip install unittest-xml-reporting    
+          pip install pytest
+          pip install pytest-cov
           echo Install requirements
-          call pip install -r requirements.txt
+          pip install -r requirements.txt
           echo Run tests
-          call python -m pytest ./test_sample.py --junitxml=junit/test-results.xml 
+          python -m pytest ./test_sample.py --junitxml=junit/test-results.xml 
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: "Run tests"
