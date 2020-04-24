@@ -75,7 +75,7 @@ jobs:
         inputs:
           testResultsFiles: "**/test-*.xml"
           failTaskOnFailedTests: true
-          testRunTitle: "$(Agent.JobName) on $(imageName)"
+          testRunTitle: "$(Agent.JobName) on $(vmImage)"
         displayName: "Publish test results"
 
   - job: Tests_OnPrem
