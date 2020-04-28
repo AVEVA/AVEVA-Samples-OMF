@@ -15,15 +15,19 @@ This sample uses OSIsoft Message Format to send data to OSIsoft Cloud Services, 
 ```json
   "dependencies": {
     "http": "0.0.0",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5"
+    "request": "2.88.2",
+    "request-promise": "4.2.5"
   },
   "devDependencies": {
-    "jasmine": "^3.5.0"
+    "jasmine": "3.5.0"
   }
 ```
 
-## Details
+## Know Security Issues
+
+This sample has a sub dependency on lodash 4.17.15 because of request-promise 2.88.2. In this version of lodash there is an outstanding security [issue](https://hackerone.com/reports/670779). Please note that using this sample is potentially unsafe because of this issue. Please review the issue before using this.
+
+## Sample Details
 
 See [ReadMe](../)
 
