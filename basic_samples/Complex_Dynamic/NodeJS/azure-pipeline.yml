@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - "/basic_samples/Complex_Dynamic/nodeJS/"
+      - "/basic_samples/Complex_Dynamic/NodeJS/"
 
 pr:
   branches:
@@ -13,7 +13,7 @@ pr:
       - master
   paths:
     include:
-      - "/basic_samples/Complex_Dynamic/nodeJS/"
+      - "/basic_samples/Complex_Dynamic/NodeJS/"
 
 schedules:
   - cron: "0 0 * * 0"
@@ -26,9 +26,9 @@ schedules:
 variables:
   - template: "/miscellaneous/build_templates/variables.yml"
   - name: testPath
-    value: /basic_samples/Complex_Dynamic/nodeJS
+    value: /basic_samples/Complex_Dynamic/NodeJS
   - name: projPath
-    value: /basic_samples/Complex_Dynamic/nodeJS
+    value: /basic_samples/Complex_Dynamic/NodeJS
   - name: CredFile
     value: config.js
   - name: CredFileLibrary
