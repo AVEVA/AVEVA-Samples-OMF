@@ -38,7 +38,7 @@ variables:
   - name: CredFileLibraryEDS
     value: product-readiness.omf_dc_nodejs.eds.js
   - name: covStream
-    value: OMF_DC_nodeJS
+    value: OMF_DC_NodeJS
   - name: bdProject
     value: OMF_DC_nodeJS
 
