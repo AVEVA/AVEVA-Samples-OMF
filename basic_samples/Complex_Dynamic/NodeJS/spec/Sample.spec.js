@@ -36,7 +36,6 @@ describe("Complex_Dynamic NodeJS Sample", function () {
 deleteContainer = function (sample) {
   console.log("Deleting Container");
   containerObj = Sample.omfContainer();
-  console.log(containerObj);
   if (global.authClient.tokenExpires >= sample.nowSeconds) {
     return function (res) {
       refreshToken(res, authClient);
