@@ -58,3 +58,8 @@ deleteType = function (sample) {
     return omfClient.deleteType(Sample.omfType);
   }
 };
+const { JUnitXmlReporter } = require("jasmine-reporters");
+var junitReporter = new JUnitXmlReporter({
+  savePath: "TestResults",
+});
+jasmine.getEnv().addReporter(junitReporter);

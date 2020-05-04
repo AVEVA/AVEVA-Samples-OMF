@@ -3,18 +3,9 @@ const readline = require("readline");
 var authObj = require("./auth.js");
 var omfObj = require("./omfClient.js");
 
-// retrieve configuration
-var OCS = config.OCS;
-var EDS = config.EDS;
-var PI = config.PI;
-var omfURL = config.omfURL;
-var id = config.id;
-var password = config.password;
 var success = true;
-var deleteData = true;
 var errorCap = {};
-var resource = omfURL.split(".com/")[0] + ".com";
-var authClient = {};
+var resource = config.omfURL.split(".com/")[0] + ".com";
 
 global.ending = false;
 global.config = config;
@@ -83,33 +74,34 @@ ran = false;
 
 var app = function (entries) {
   ran = true;
-  var omfURL = config.omfURL;
   var authClient = new authObj.AuthClient(resource);
   global.authClient = authClient;
-  omfClient = new omfObj.OMFClient(omfURL, authClient);
+  omfClient = new omfObj.OMFClient(config.omfURL, authClient);
   var getClientToken;
 
-  if (OCS) {
-    //OCS
+  if (config.OCS) {
     getClientToken = authClient
-      .getToken(id, password, resource)
+      .getToken(config.id, config.password, resource)
       .then(function (res) {
         refreshToken(res, authClient);
       })
       .catch(function (err) {
         throw err;
       });
-  } else if (EDS) {
-    //EDS
+  } else if (config.EDS) {
     getClientToken = new Promise(function (resolve, reject) {
       authClient.tokenExpires = 0;
       resolve();
     });
-  } else if (PI) {
-    //PI
+  } else if (config.PI) {
     getClientToken = new Promise(function (resolve, reject) {
       authClient.tokenExpires = 0;
-      omfClient = new omfObj.OMFClient(omfURL, null, id, password);
+      omfClient = new omfObj.OMFClient(
+        config.omfURL,
+        null,
+        config.id,
+        config.password
+      );
       resolve();
     });
   }
@@ -149,11 +141,10 @@ var app = function (entries) {
 
   var sendDataWrapper = createContainer
     .then(function (res) {
-      entriesT = entries;
-      //console.log(entries);
+      entriesLocal = entries;
       console.log("Creating Data");
-      if (entriesT.length > 0) {
-        entriesT.forEach(function (val, index, array) {
+      if (entriesLocal.length > 0) {
+        entriesLocal.forEach(function (val, index, array) {
           sendData(val);
         });
       }

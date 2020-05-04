@@ -1,4 +1,4 @@
-# Complex Dynamic OMF NodeKS Sample
+# Complex Dynamic OMF NodeJS Sample
 
 **Version:** 1.0.0
 
@@ -23,7 +23,7 @@ This sample uses OSIsoft Message Format to send data to OSIsoft Cloud Services, 
   }
 ```
 
-## Know Security Issues
+## Known Security Issues
 
 This sample has a sub dependency on lodash 4.17.15 because of request-promise 2.88.2. In this version of lodash there is an outstanding security [issue](https://hackerone.com/reports/670779). Please note that using this sample is potentially unsafe because of this issue. Please review the issue before using this.
 
@@ -82,7 +82,7 @@ An OMF endpoint must be properly set up and configured.
 
 ## Running the Sample
 
-1. Make a local copy of the git repo
+1. Clone the GitHub repository
 1. Install node.js, installation instructions are available at [node.js](https://nodejs.org/en/).
 1. Install dependencies, using the command line:
 
