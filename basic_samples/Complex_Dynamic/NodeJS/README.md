@@ -59,7 +59,7 @@ Capitalized fields have default settings that are used if not entered.
 
 #### OSIsoft Cloud Services
 
-An OMF ingress client must be configured.
+An OMF ingress client must be configured. For an instructional video on creating an OMF Connection go to our [You Tube Learning Channel](https://www.youtube.com/watch?v=52lAnkGC1IM).
 
 1. Set `OCS` to true. All other endpoints need to be empty or not in the .js
 1. `omfURL` should be the full omf URL. For example: `https://dat-b.osisoft.com/api/v1/Tenants/{{tenant}}/Namespaces/{{namespace}}/omf`

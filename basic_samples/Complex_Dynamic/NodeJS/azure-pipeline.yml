@@ -62,6 +62,7 @@ jobs:
           npm install request
           npm install request-promise
           npm install jasmine
+          npm install jasmine-reporters
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: "Install dependencies"
 
