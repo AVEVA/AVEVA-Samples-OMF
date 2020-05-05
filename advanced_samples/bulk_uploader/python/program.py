@@ -152,10 +152,10 @@ def getAppConfig():
     app_config['omfURL'] = getConfig('Access', 'omfURL')
     app_config['id'] = getConfig('Credentials', 'id')
     app_config['password'] = getConfig('Credentials', 'password')
-    app_config['version'] = getConfig('Configurations', 'omfVersion')
-    app_config['compression'] = getConfig('Configurations', 'compression')
-    timeout = getConfig('Configurations', 'WEB_REQUEST_TIMEOUT_SECONDS')
-    verify = getConfig('Configurations', 'VERIFY_SSL')
+    app_config['version'] = getConfig('configuration', 'omfVersion')
+    app_config['compression'] = getConfig('configuration', 'compression')
+    timeout = getConfig('configuration', 'WEB_REQUEST_TIMEOUT_SECONDS')
+    verify = getConfig('configuration', 'VERIFY_SSL')
 
     if not timeout:
         timeout = 30
@@ -209,4 +209,3 @@ if __name__ == "__main__":
     main()
 
 # Straightforward test to make sure program is working without an error in program.  Can run it yourself with pytest program.py
-
