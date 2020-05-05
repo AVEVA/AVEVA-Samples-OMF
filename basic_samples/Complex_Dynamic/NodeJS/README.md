@@ -25,7 +25,7 @@ This sample uses OSIsoft Message Format to send data to OSIsoft Cloud Services, 
 
 ## Known Security Issues
 
-This sample has a sub dependency on lodash 4.17.15 because of request-promise 2.88.2. In this version of lodash there is an outstanding security [issue](https://hackerone.com/reports/670779). Please note that using this sample is potentially unsafe because of this issue. Please review the issue before using this.
+This sample has an indirect dependency on lodash 4.17.15 because of request-promise 2.88.2. In this version of lodash there is an outstanding security [issue](https://hackerone.com/reports/670779). Please note that using this sample is potentially unsafe because of this issue. Please review the issue before using this.
 
 ## Sample Details
 
@@ -91,7 +91,7 @@ An OMF endpoint must be properly set up and configured.
    ```
 
 1. Open Command Prompt in Windows
-1. Goto folder where js files are located
+1. Go to the folder where js files are located
 1. Configure desired OMF endpoints to receive the data in [config.js](.\config.js])
 1. Type the following command to run the test file in the local server
 
@@ -110,7 +110,7 @@ An OMF endpoint must be properly set up and configured.
    ```
 
 1. Open Command Prompt in Windows
-1. Goto folder where js files are located
+1. Go to the folder where js files are located
 1. Configure desired OMF endpoints to receive the data in [config.js](.\config.js])
 1. Type the following command to run the test file in the local server
 

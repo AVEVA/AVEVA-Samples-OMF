@@ -59,10 +59,7 @@ jobs:
         displayName: "Specify Node version"
 
       - script: |
-          npm install request
-          npm install request-promise
-          npm install jasmine
-          npm install jasmine-reporters
+          npm ci
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: "Install dependencies"
 
@@ -70,6 +67,16 @@ jobs:
           npm test
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: "Run tests"
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: "*.xml"
+          failTaskOnFailedTests: true
+          searchFolder: "$(Build.SourcesDirectory)$(projPath)/TestResults"
+          testRunTitle: "$(Agent.JobName) on $(imageName)"
+        displayName: "Publish test results"
+        condition: always()
 
   - job: Tests_OnPrem
     pool:
@@ -88,9 +95,7 @@ jobs:
         displayName: "Specify Node version"
 
       - script: |
-          npm install request
-          npm install request-promise
-          npm install jasmine
+          npm ci
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: "Install dependencies"
 
@@ -98,6 +103,16 @@ jobs:
           npm test
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: "Run tests"
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: "*.xml"
+          failTaskOnFailedTests: true
+          searchFolder: "$(Build.SourcesDirectory)$(projPath)/TestResults"
+          testRunTitle: "$(Agent.JobName) on $(imageName)"
+        displayName: "Publish test results"
+        condition: always()
 
   - job: Tests_EDS
     pool:
@@ -126,6 +141,16 @@ jobs:
           npm test
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: "Run tests"
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: "*.xml"
+          failTaskOnFailedTests: true
+          searchFolder: "$(Build.SourcesDirectory)$(projPath)/TestResults"
+          testRunTitle: "$(Agent.JobName) on $(imageName)"
+        displayName: "Publish test results"
+        condition: always()
 
   - template: "/miscellaneous/build_templates/analysis.yml"
     parameters:
