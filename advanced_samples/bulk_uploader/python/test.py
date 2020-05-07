@@ -2,6 +2,8 @@
 import requests
 import program as program
 import json
+import sys
+import traceback
 
 
 app_config = {}
@@ -103,14 +105,17 @@ def checkLastOCSVal():
             message_type=message_type, status=response.status_code, reason=response.text))
 
 
-def test_main():
+def test_main(onlyDelete: bool = False):
     global app_config
     # Tests to make sure the sample runs as expected
 
     try:
-        program.main()
+
+        program.main(onlyDelete)
         app_config = program.app_config
-        checkData()
+
+        if(not onlyDelete):
+            checkData()
 
     except Exception as ex:
         print(f'Encountered Error: {ex}.')
@@ -118,8 +123,7 @@ def test_main():
         traceback.print_exc()
         print
         success = False
-        if test:
-            raise ex
+        raise ex
 
     finally:
         print('Deletes')
@@ -129,5 +133,8 @@ def test_main():
         suppressError(lambda: sendTypeDelete())
 
 
+if len(sys.argv) >= 1:
+    onlyDelete = sys.argv[1]
+
 if __name__ == "__main__":
-    test_main()
+    test_main(onlyDelete)

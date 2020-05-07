@@ -175,13 +175,16 @@ def getFile(file):
         return "".join(line.rstrip() for line in myfile)
 
 
-def main(test=False):
+def main(onlyConfigure: bool = False):
     # Main program.  Seperated out so that we can add a test function and call this easily
     global app_config
     success = True
     try:
         print("getting configuration")
         getAppConfig()
+
+        if onlyConfigure:
+            return
 
         print("sending types")
         send_omf_message_to_endpoint("type", getFile("type.json"))
