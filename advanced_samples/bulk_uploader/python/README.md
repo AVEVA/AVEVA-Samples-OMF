@@ -10,41 +10,36 @@ It does only basic error checking to make sure the message was accepted by the e
 
 ### OSIsoft Message Format Endpoints
 
-Configure desired OMF endpoints to receive the data in [config.ini](.\config.ini).
+Configure desired OMF endpoints to receive the data in [config.ini](.\config.ini). Only one of PI, EDS, or OCS can be configured at a time.
 
 #### OSIsoft Cloud Services
 
-If sending to OSIsoft Cloud Services, set `SendToOcs` to true.
+If sending to OSIsoft Cloud Services, set `OCS` to true. This sample needs an OMF cleint credential created. For details on creating those see [OSISoft Learning Channel(https://www.youtube.com/watch?v=52lAnkGC1IM).
 
-1. `OcsUri` can usually be left as default, but should be the host specified at the beginning of the URL in the [OCS API Console](https://cloud.osisoft.com/apiconsole)
-1. `OcsTenantId` should be the ID that comes after `/Tenants/` in the same URL
-1. `OcsNamespaceId` should be the name of the OCS [Namespace](https://cloud.osisoft.com/namespaces) to receive the data
-1. `OcsClientId` should be the ID of a [Client Credentials Client](https://cloud.osisoft.com/clients). This client will need to have an OMF Connection configured to the specified Namespace in order to successfully send data. To configure one, pick "OMF" from the "Type" dropdown in the [Connections](https://cloud.osisoft.com/connections) page.
-1. `OcsClientSecret` should be the secret from the Client Credentials Client that was specified
+1. `omfURL` is the OMFURL as displayed on the protal
+1. `id` should be the ID of a [Client Credentials Client](https://cloud.osisoft.com/clients). This client will need to have an OMF Connection configured to the specified Namespace in order to successfully send data. To configure one, pick "OMF" from the "Type" dropdown in the [Connections](https://cloud.osisoft.com/connections) page.
+1. `password` should be the secret from the Client Credentials Client that was specified
 
 #### Edge Data Store
 
-If sending to the local Edge Data Store, set `SendToEds` to true, and update `EdsPort` if using a non-default port. Sending to a remote Edge Data Store is not supported.
+If sending to the local Edge Data Store, set `EDS` to true, and update `EdsPort` if using a non-default port. Sending to a remote Edge Data Store is not supported.
 
 #### PI Web API
 
-If sending to PI Web API, set `SendToPi` to true.
+If sending to PI Web API, set `PI` to true.
 
-1. `PiWebApiUrl` should be updated with the machine name or fully qualified domain name of the PI Web API server; if possible choose whatever value matches the certificate of the machine
+1. `omfURL` should be updated with the machine name or fully qualified domain name of the PI Web API server; if possible choose whatever value matches the certificate of the machine
 1. PI Web API should have Basic authentication turned on as one of the allowed authentication methods, see [OSIsoft Live Library](https://livelibrary.osisoft.com/LiveLibrary/web/ui.xql?action=html&resource=publist_home.html&pub_category=PI-Web-API)
-1. `Username` and `Password` should be the domain user/password that will be used to perform Basic authentication against PI Web API
-1. `ValidateEndpointCertificate` may be set to false in order to bypass certificate validation when PI Web API is configured to use a self-signed certificate. This will generate a warning; this should only be done for testing with a self-signed PI Web API certificate as it is insecure.
+1. `id` and `password` should be the domain user/password that will be used to perform Basic authentication against PI Web API
+1. `VERIFY_SSL` may be set to false in order to bypass certificate validation when PI Web API is configured to use a self-signed certificate. This will generate a warning; this should only be done for testing with a self-signed PI Web API certificate as it is insecure.
 
 ## Running the Sample
 
 From the command line, run
 
 ```shell
-dotnet restore
-dotnet run
+python program.py
 ```
-
-If the [appsettings.json](./BartIngress/appsettings.json) file has been set up, the sample will first send an OMF type message for BART estimated time of departure (ETD) data ([BartStationEtd.cs](./BartIngress/BartStationEtd.cs)) and an OMF container message for the desired routes. Then, every 10 seconds, the sample will collect real time data and send data messages to the configured OMF endpoints, until the sample is stopped.
 
 ## Running the Automated Test
 
@@ -53,8 +48,7 @@ To run the automated test, all three OMF endpoint types must be fully configured
 From the command line, run
 
 ```shell
-dotnet restore
-dotnet test
+pytest test.py
 ```
 
 The test sends a single OMF type, container, and data message to each of the configured OMF endpoints. Then, the test checks that a value with a recent timestamp is found in OSIsoft Cloud Services. The Edge Data Store and PI Web API OMF endpoints return an HTTP error response if they fail to process an OMF message, so it is not necessary to perform an explicit check against those endpoints.
