@@ -2,7 +2,7 @@
 
 **Version:** 1.0.0
 
-This sample uses OSIsoft Message Format to send values, streams and types. This simple sample sends omf messages that are saved pre-formed as type.json, container.json, and data.json.
+This sample uses OSIsoft Message Format to send values, streams and types. This simple sample sends omf messages that are saved pre-formed as type.json, container.json, and data.json. It sends the file in that order.
 
 It does only basic error checking to make sure the message was accepted by the endpoint, which means for OCS there is no built-in checking to ensure the upload worked completely. The primary function of this sample is for easy bulk loading of data for other samples (particularly ML based samples where the amount of data is prohibitive to include in the sample itself).
 
@@ -51,7 +51,7 @@ From the command line, run
 pytest test.py
 ```
 
-The test sends a single OMF type, container, and data message to each of the configured OMF endpoints. Then, the test checks that a value with a recent timestamp is found in OSIsoft Cloud Services. The Edge Data Store and PI Web API OMF endpoints return an HTTP error response if they fail to process an OMF message, so it is not necessary to perform an explicit check against those endpoints.
+The test sends a single OMF type, container, and data message to each of the configured OMF endpoints. Then, the test checks that a value with a recent timestamp is found in OSIsoft Cloud Services. The Edge Data Store and PI Web API OMF endpoints return an HTTP error response if they fail to process an OMF message, so it is not necessary to perform an explicit check against those endpoints. The containers and types are then deleted.
 
 ---
 
