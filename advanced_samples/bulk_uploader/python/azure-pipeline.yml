@@ -26,7 +26,7 @@ schedules:
 variables:
   - template: "/miscellaneous/build_templates/variables.yml"
   - name: projPath
-    value: "advanced_samples/bulk_uploader/python"
+    value: "/advanced_samples/bulk_uploader/python"
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
@@ -66,6 +66,14 @@ jobs:
           overWrite: true # Optional
           #flattenFolders: false # Optional
         displayName: "Copy library config file"
+
+      - bash: dir
+        workingDirectory: $(Build.SourcesDirectory)
+        displayName: "Dir"
+
+      - bash: dir
+        workingDirectory: $(Build.SourcesDirectory)/advanced_samples
+        displayName: "Dir"
 
       - bash: rm $(CredFile)
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
