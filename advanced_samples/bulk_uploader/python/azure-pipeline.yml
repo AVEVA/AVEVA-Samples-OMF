@@ -52,7 +52,7 @@ jobs:
 
       - task: DownloadSecureFile@1
         inputs:
-          secureFile: ${{ CredFileLibrary }}
+          secureFile: $(CredFileLibrary)
         displayName: "Download library config file"
 
       # Copy Files
@@ -60,19 +60,19 @@ jobs:
       - task: CopyFiles@2
         inputs:
           sourceFolder: $(Agent.TempDirectory)
-          contents: ${{ CredFileLibrary }}
-          targetFolder: $(Build.SourcesDirectory)${{ projPath }}/
+          contents: $(CredFileLibrary)
+          targetFolder: $(Build.SourcesDirectory)$(projPath)/
           #cleanTargetFolder: false # Optional
           overWrite: true # Optional
           #flattenFolders: false # Optional
         displayName: "Copy library config file"
 
-      - bash: rm $${{ CredFile }}
-        workingDirectory: $(Build.SourcesDirectory)${{ projPath}}/
+      - bash: rm $(CredFile)
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: "Delete original config file"
 
-      - bash: mv ${{ CredFileLibrary }} ${{ CredFile }}
-        workingDirectory: $(Build.SourcesDirectory)${{ projPath }}/
+      - bash: mv $(CredFileLibrary) $(CredFile)
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: "Rename library config file"
 
       - script: |
