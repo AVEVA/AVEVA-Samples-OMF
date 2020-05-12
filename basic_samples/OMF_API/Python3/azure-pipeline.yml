@@ -79,13 +79,11 @@ jobs:
           fileLibrary: $(CredFileLibraryOP)
           filePath: $(projPath)
 
-      - script: |
-          "C:\Program Files (x86)\Python37-32\Scripts\pip.exe" install -r requirements.txt
+      - script: pip install -r requirements.txt
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Install requirements'
 
-      - script: |
-          "C:\Program Files (x86)\Python37-32\python.exe" ./test.py
+      - script: python ./test.py
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Run tests'
 
