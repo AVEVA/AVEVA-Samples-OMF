@@ -65,7 +65,7 @@ jobs:
           echo Install requirements
           pip install -r requirements.txt
           echo Run tests
-          python -m pytest ./test_sample.py --junitxml=junit/test-results.xml 
+          python -m pytest ./test.py --junitxml=junit/test-results.xml 
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: "Run tests"
@@ -95,7 +95,7 @@ jobs:
         displayName: "Install requirements"
 
       - script: |
-          "pytest.exe" --junitxml=junit/test-results.xml ./test_sample.py
+          "pytest.exe" --junitxml=junit/test-results.xml ./test.py
         workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
         displayName: "Run tests"
 
@@ -124,7 +124,7 @@ jobs:
         displayName: "Install requirements"
 
       - script: |
-          "pytest.exe"  --junitxml=junit/test-results.xml ./test_sample.py
+          "pytest.exe"  --junitxml=junit/test-results.xml ./test.py
         workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
         displayName: "Run tests"
 
