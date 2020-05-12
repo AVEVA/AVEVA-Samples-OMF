@@ -4,7 +4,7 @@ These OMF API based samples are introductory, language-specific examples of send
 
 ## Sample Pattern
 
-All OMF API samples are console applications that follow the same sequence of events, allowing you to select the langauge with which you are most comfortable without missing any instructional features. The pattern followed is:
+All OMF API samples are console applications that follow the same sequence of events, allowing you to select the language with which you are most comfortable without missing any instructional features. The pattern followed is:
 
 1.  Read Configuration from a file (note some configuration is only settable in the code)
 1.  Get auth information for endpoint
