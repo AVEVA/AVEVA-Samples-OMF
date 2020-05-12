@@ -26,9 +26,9 @@ def getToken():
     # Gets the oken for the omfsendpoint
     global app_config
 
-    if(app_config.EDS):
+    if(app_config['destinationEDS']):
         return
-    if(app_config.PI):
+    if(app_config['destinationPI']):
         return
 
     if ((app_config.__expiration - time.time()) > 5 * 60):
