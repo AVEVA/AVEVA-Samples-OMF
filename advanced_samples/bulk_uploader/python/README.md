@@ -8,6 +8,8 @@ It does only basic error checking to make sure the message was accepted by the e
 
 ## Requirements
 
+requests==2.23.0
+
 ### OSIsoft Message Format Endpoints
 
 Configure desired OMF endpoints to receive the data in [config.ini](.\config.ini). Only one of PI, EDS, or OCS can be configured at a time.
