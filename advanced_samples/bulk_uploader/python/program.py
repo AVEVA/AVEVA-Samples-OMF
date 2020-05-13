@@ -31,7 +31,7 @@ def getToken():
     if(app_config['destinationPI']):
         return
 
-    if ((app_config.__expiration - time.time()) > 5 * 60):
+    if (hasttr(app_config, '__expiration') and (app_config.__expiration - time.time()) > 5 * 60):
         return app_config.__token
 
     # we can't short circuit it, so we must go retreive it.
@@ -39,7 +39,7 @@ def getToken():
     discoveryUrl = requests.get(
         app_config.resourceBase + "/identity/.well-known/openid-configuration",
         headers={"Accept": "application/json"},
-        verify=app_config.VERIFY_SSL)
+        verify=app_config['verify'])
 
     if discoveryUrl.status_code < 200 or discoveryUrl.status_code >= 300:
         discoveryUrl.close()
@@ -51,10 +51,10 @@ def getToken():
 
     tokenInformation = requests.post(
         tokenEndpoint,
-        data={"client_id": app_config.Id,
-              "client_secret": app_config.Secret,
+        data={"client_id": app_config['id'],
+              "client_secret": app_config['password'],
               "grant_type": "client_credentials"},
-        verify=app_config.VERIFY_SSL)
+        verify=app_config['verify'])
 
     token = json.loads(tokenInformation.content)
 
@@ -84,7 +84,7 @@ def send_omf_message_to_endpoint(message_type, msg_body, action='create'):
             data=msg_body,
             verify=app_config['verify'],
             timeout=app_config['timeout'],
-            auth=(app_config.Id, app_config.Secret)
+            auth=(app_config['id'], app_config['password'])
         )
     else:
         response = requests.post(
@@ -152,10 +152,10 @@ def getAppConfig():
     app_config['omfURL'] = getConfig('Access', 'omfURL')
     app_config['id'] = getConfig('Credentials', 'id')
     app_config['password'] = getConfig('Credentials', 'password')
-    app_config['version'] = getConfig('configuration', 'omfVersion')
-    app_config['compression'] = getConfig('configuration', 'compression')
-    timeout = getConfig('configuration', 'WEB_REQUEST_TIMEOUT_SECONDS')
-    verify = getConfig('configuration', 'VERIFY_SSL')
+    app_config['version'] = getConfig('Configuration', 'omfVersion')
+    app_config['compression'] = getConfig('Configuration', 'compression')
+    timeout = getConfig('Configuration', 'WEB_REQUEST_TIMEOUT_SECONDS')
+    verify = getConfig('Configuration', 'VERIFY_SSL')
 
     if not timeout:
         timeout = 30
