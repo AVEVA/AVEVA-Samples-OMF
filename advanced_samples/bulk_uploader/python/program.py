@@ -31,7 +31,7 @@ def getToken():
     if(app_config['destinationPI']):
         return
 
-    if (hasttr(app_config, '__expiration') and (app_config.__expiration - time.time()) > 5 * 60):
+    if (hasattr(app_config, '__expiration') and (app_config.__expiration - time.time()) > 5 * 60):
         return app_config.__token
 
     # we can't short circuit it, so we must go retreive it.
