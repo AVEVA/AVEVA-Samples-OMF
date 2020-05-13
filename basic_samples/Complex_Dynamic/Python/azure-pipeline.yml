@@ -135,7 +135,7 @@ jobs:
           failTaskOnFailedTests: true
           testRunTitle: "$(Agent.JobName) on $(buildAgent)"
         displayName: "Publish test results"
-        
-      - template: "/miscellaneous/build_templates/analysis.yml"	
-          parameters:	
-            language: python
+
+  - template: "/miscellaneous/build_templates/analysis.yml"	
+      parameters:	
+        language: python
