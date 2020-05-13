@@ -1,7 +1,7 @@
 parameters:
-  fileOriginal: ""
-  fileLibrary: ""
-  filePath: ""
+  fileOriginal: ''
+  fileLibrary: ''
+  filePath: ''
 
 steps:
   # Download Secure File
@@ -9,7 +9,7 @@ steps:
   - task: DownloadSecureFile@1
     inputs:
       secureFile: ${{ parameters.fileLibrary }}
-    displayName: "Download library config file"
+    displayName: 'Download library config file'
 
   # Copy Files
   # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
@@ -21,12 +21,12 @@ steps:
       #cleanTargetFolder: false # Optional
       overWrite: true # Optional
       #flattenFolders: false # Optional
-    displayName: "Copy library config file"
+    displayName: 'Copy library config file'
 
   - bash: rm ${{ parameters.fileOriginal }}
     workingDirectory: $(Build.SourcesDirectory)${{ parameters.filePath }}/
-    displayName: "Delete original config file"
+    displayName: 'Delete original config file'
 
   - bash: mv ${{ parameters.fileLibrary }} ${{ parameters.fileOriginal }}
     workingDirectory: $(Build.SourcesDirectory)${{ parameters.filePath }}/
-    displayName: "Rename library config file"
+    displayName: 'Rename library config file'
