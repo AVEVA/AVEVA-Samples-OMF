@@ -36,8 +36,10 @@ def getToken():
 
     # we can't short circuit it, so we must go retreive it.
 
+    baseURL = config['omfURL'].split('.com/')[0] + '.com'
+
     discoveryUrl = requests.get(
-        app_config.resourceBase + "/identity/.well-known/openid-configuration",
+        baseURL + "/identity/.well-known/openid-configuration",
         headers={"Accept": "application/json"},
         verify=app_config['verify'])
 
