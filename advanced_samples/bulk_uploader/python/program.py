@@ -36,7 +36,7 @@ def getToken():
 
     # we can't short circuit it, so we must go retreive it.
 
-    baseURL = config['omfURL'].split('.com/')[0] + '.com'
+    baseURL = app_config['omfURL'].split('.com/')[0] + '.com'
 
     discoveryUrl = requests.get(
         baseURL + "/identity/.well-known/openid-configuration",
