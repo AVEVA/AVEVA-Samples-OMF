@@ -31,14 +31,14 @@ def getToken():
     if(app_config['destinationPI']):
         return
 
-    if ((app_config['__expiration'] and (app_config['__expiration'] - time.time()) > 5 * 60):
+    if (app_config['__expiration'] and (app_config['__expiration'] - time.time()) > 5 * 60):
         return app_config['__token']
 
     # we can't short circuit it, so we must go retreive it.
 
-    baseURL=app_config['omfURL'].split('.com/')[0] + '.com'
+    baseURL = app_config['omfURL'].split('.com/')[0] + '.com'
 
-    discoveryUrl=requests.get(
+    discoveryUrl = requests.get(
         baseURL + "/identity/.well-known/openid-configuration",
         headers={"Accept": "application/json"},
         verify=app_config['verify'])
@@ -49,22 +49,22 @@ def getToken():
               format(status=discoveryUrl.status_code, reason=discoveryUrl.text))
         raise ValueError
 
-    tokenEndpoint=json.loads(discoveryUrl.content)["token_endpoint"]
+    tokenEndpoint = json.loads(discoveryUrl.content)["token_endpoint"]
 
-    tokenInformation=requests.post(
+    tokenInformation = requests.post(
         tokenEndpoint,
         data={"client_id": app_config['id'],
               "client_secret": app_config['password'],
               "grant_type": "client_credentials"},
         verify=app_config['verify'])
 
-    token=json.loads(tokenInformation.content)
+    token = json.loads(tokenInformation.content)
 
     if token is None:
         raise Exception("Failed to retrieve Token")
 
-    app_config['__expiration']=float(token['expires_in']) + time.time()
-    app_config['__token']=token['access_token']
+    app_config['__expiration'] = float(token['expires_in']) + time.time()
+    app_config['__token'] = token['access_token']
     return app_config['__token']
 
 
@@ -75,12 +75,12 @@ def send_omf_message_to_endpoint(message_type, msg_body, action='create'):
     # Compress json omf payload, if specified
     # msg_body = json.dumps(message_omf_json)
 
-    msg_headers=getHeaders(message_type, action)
-    response={}
+    msg_headers = getHeaders(message_type, action)
+    response = {}
 
     # Assemble headers
     if app_config['destinationPI']:
-        response=requests.post(
+        response = requests.post(
             app_config['omfURL'],
             headers=msg_headers,
             data=msg_body,
@@ -89,7 +89,7 @@ def send_omf_message_to_endpoint(message_type, msg_body, action='create'):
             auth=(app_config['id'], app_config['password'])
         )
     else:
-        response=requests.post(
+        response = requests.post(
             app_config['omfURL'],
             headers=msg_headers,
             data=msg_body,
@@ -113,7 +113,7 @@ def getHeaders(message_type="", action=""):
 
     # Assemble headers
     if app_config['destinationOCS']:
-        msg_headers={
+        msg_headers = {
             "Authorization": "Bearer %s" % getToken(),
             'messagetype': message_type,
             'action': action,
@@ -121,14 +121,14 @@ def getHeaders(message_type="", action=""):
             'omfversion': app_config['version']
         }
     elif app_config['destinationEDS']:
-        msg_headers={
+        msg_headers = {
             'messagetype': message_type,
             'action': action,
             'messageformat': 'JSON',
             'omfversion': app_config['version']
         }
     else:
-        msg_headers={
+        msg_headers = {
             "x-requested-with": "xmlhttprequest",
             'messagetype': message_type,
             'action': action,
@@ -140,34 +140,34 @@ def getHeaders(message_type="", action=""):
 
 def getConfig(section, field):
     # Reads the config file for the field specified
-    config=configparser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read('config.ini')
     return config.has_option(section, field) and config.get(section, field) or ""
 
 
 def getAppConfig():
     global app_config
-    app_config={}
-    app_config['destinationPI']=getConfig('Destination', 'PI')
-    app_config['destinationOCS']=getConfig('Destination', 'OCS')
-    app_config['destinationEDS']=getConfig('Destination', 'EDS')
-    app_config['omfURL']=getConfig('Access', 'omfURL')
-    app_config['id']=getConfig('Credentials', 'id')
-    app_config['password']=getConfig('Credentials', 'password')
-    app_config['version']=getConfig('Configuration', 'omfVersion')
-    app_config['compression']=getConfig('Configuration', 'compression')
-    timeout=getConfig('Configuration', 'WEB_REQUEST_TIMEOUT_SECONDS')
-    verify=getConfig('Configuration', 'VERIFY_SSL')
+    app_config = {}
+    app_config['destinationPI'] = getConfig('Destination', 'PI')
+    app_config['destinationOCS'] = getConfig('Destination', 'OCS')
+    app_config['destinationEDS'] = getConfig('Destination', 'EDS')
+    app_config['omfURL'] = getConfig('Access', 'omfURL')
+    app_config['id'] = getConfig('Credentials', 'id')
+    app_config['password'] = getConfig('Credentials', 'password')
+    app_config['version'] = getConfig('Configuration', 'omfVersion')
+    app_config['compression'] = getConfig('Configuration', 'compression')
+    timeout = getConfig('Configuration', 'WEB_REQUEST_TIMEOUT_SECONDS')
+    verify = getConfig('Configuration', 'VERIFY_SSL')
 
     if not timeout:
-        timeout=30
-    app_config['timeout']=timeout
+        timeout = 30
+    app_config['timeout'] = timeout
 
     if verify == "False" or verify == "false"or verify == "FALSE":
-        verify=False
+        verify = False
     else:
-        verify=True
-    app_config['verify']=verify
+        verify = True
+    app_config['verify'] = verify
 
     return app_config
 
@@ -177,10 +177,10 @@ def getFile(file):
         return "".join(line.rstrip() for line in myfile)
 
 
-def main(onlyConfigure: bool=False):
+def main(onlyConfigure: bool = False):
     # Main program.  Seperated out so that we can add a test function and call this easily
     global app_config
-    success=True
+    success = True
     try:
         print("getting configuration")
         getAppConfig()
@@ -196,7 +196,7 @@ def main(onlyConfigure: bool=False):
 
         print("sending data")
         with open("data.json") as myfile:
-            dataData="".join(line.rstrip() for line in myfile)
+            dataData = "".join(line.rstrip() for line in myfile)
             send_omf_message_to_endpoint("data", getFile("data.json"))
 
     except Exception as ex:
@@ -204,7 +204,7 @@ def main(onlyConfigure: bool=False):
         print
         traceback.print_exc()
         print
-        success=False
+        success = False
         raise ex
     finally:
         print("done")
