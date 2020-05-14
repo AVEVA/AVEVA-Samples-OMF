@@ -9,12 +9,11 @@
   "author": "OSIsoft",
   "license": "Apache-2.0",
   "dependencies": {
-    "http": "0.0.0",
-    "jasmine-reporters": "^2.3.2",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5"
+    "request": "2.88.2",
+    "request-promise": "4.2.5"
   },
   "devDependencies": {
-    "jasmine": "^3.5.0"
+    "jasmine-reporters": "2.3.2",
+    "jasmine": "3.5.0"
   }
 }

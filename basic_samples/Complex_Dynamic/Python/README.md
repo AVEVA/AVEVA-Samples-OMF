@@ -1,6 +1,6 @@
 # Complex Dynamic OMF Python Sample
 
-**Version:** 1.0.0
+**Version:** 1.0.1
 
 ---
 
@@ -14,7 +14,7 @@ This sample uses OSIsoft Message Format to send data to OSIsoft Cloud Services, 
 
 ## Requirements
 
-request 2.22.0
+request 2.23.0
 
 ## Details
 
