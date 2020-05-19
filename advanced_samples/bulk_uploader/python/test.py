@@ -122,7 +122,6 @@ def test_main(onlyDelete: bool = False):
         print
         traceback.print_exc()
         print
-        success = False
         raise ex
 
     finally:

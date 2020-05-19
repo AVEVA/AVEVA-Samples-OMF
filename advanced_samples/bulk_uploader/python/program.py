@@ -9,15 +9,9 @@
 
 import configparser
 import json
-import time
-import datetime
-import platform
-import socket
-import gzip
-import random
 import requests
 import traceback
-import base64
+import time
 
 app_config = {}
 
@@ -26,9 +20,9 @@ def getToken():
     # Gets the oken for the omfsendpoint
     global app_config
 
-    if(app_config['destinationEDS']):
+    if app_config['destinationEDS']:
         return
-    if(app_config['destinationPI']):
+    if app_config['destinationPI']:
         return
 
     if ('__expiration' in app_config and (app_config['__expiration'] - time.time()) > 5 * 60):
@@ -180,7 +174,6 @@ def getFile(file):
 def main(onlyConfigure: bool = False):
     # Main program.  Seperated out so that we can add a test function and call this easily
     global app_config
-    success = True
     try:
         print("getting configuration")
         getAppConfig()
@@ -195,16 +188,13 @@ def main(onlyConfigure: bool = False):
         send_omf_message_to_endpoint("container", getFile("container.json"))
 
         print("sending data")
-        with open("data.json") as myfile:
-            dataData = "".join(line.rstrip() for line in myfile)
-            send_omf_message_to_endpoint("data", getFile("data.json"))
+        send_omf_message_to_endpoint("data", getFile("data.json"))
 
     except Exception as ex:
         print(("Encountered Error: {error}".format(error=ex)))
         print
         traceback.print_exc()
         print
-        success = False
         raise ex
     finally:
         print("done")
@@ -212,5 +202,3 @@ def main(onlyConfigure: bool = False):
 
 if __name__ == "__main__":
     main()
-
-# Straightforward test to make sure program is working without an error in program.  Can run it yourself with pytest program.py
