@@ -5,6 +5,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <NeutralLanguage>en</NeutralLanguage>
     <HighEntropyVA>true</HighEntropyVA>
+    <Version>1.0.1</Version>
+    <Company>OSIsoft</Company>
+    <Authors>OSIsoft</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -12,12 +15,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="OSIsoft.OCSClients" Version="3.0.2-prerelease-20190924.3" />
-    <PackageReference Include="OSIsoft.Omf" Version="1.0.1-prerelease-20190619.9" />
+    <PackageReference Include="OSIsoft.Omf" Version="2.0.0-prerelease-20200416.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
