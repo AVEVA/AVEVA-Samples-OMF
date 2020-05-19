@@ -2,6 +2,14 @@
 
 **Version:** 1.0.0
 
+---
+
+| OCS Test Status                                                                                                                                                                                                                                    | EDS Test Status                                                                                                                                                                                                                                    | PI Test Status                                                                                                                                                                                                                                        |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_BU_Python?branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1679&branchName=master) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_BU_Python?branchName=master&jobName=Tests_EDS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1679&branchName=master) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_BU_Python?branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1679&branchName=master) |
+
+---
+
 This sample uses OSIsoft Message Format to send values, streams and types. This simple sample sends OMF messages that are saved pre-formed as files named type.json, container.json, and data.json. It sends the files in that order.
 
 It does only basic error checking to make sure the message was accepted by the endpoint, which means for OCS there is no built-in checking to ensure the upload worked completely. The primary function of this sample is for easy bulk loading of data for other samples (particularly ML based samples where the amount of data is prohibitive to include in the sample itself).
