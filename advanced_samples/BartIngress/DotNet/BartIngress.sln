@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BartIngress", "BartIngress\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B33C0E53-5CCC-4B65-824C-E589F50AFE4D}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		3rdpartylicenses.txt = 3rdpartylicenses.txt
+		azure-pipeline.yml = azure-pipeline.yml
 		..\..\..\Directory.Build.props = ..\..\..\Directory.Build.props
 		..\..\..\Extensions.ruleset = ..\..\..\Extensions.ruleset
+		HISTORY.md = HISTORY.md
 		..\..\..\OSIsoft.ruleset = ..\..\..\OSIsoft.ruleset
+		README.md = README.md
 		..\..\..\stylecop.json = ..\..\..\stylecop.json
 	EndProjectSection
 EndProject

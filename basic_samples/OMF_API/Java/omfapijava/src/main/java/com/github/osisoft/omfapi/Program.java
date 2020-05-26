@@ -25,6 +25,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import java.time.*;
+import java.time.temporal.ChronoUnit;
 
 public class Program {
     // holder used for test result
@@ -113,7 +114,7 @@ public class Program {
 
         // Create Sds client to communicate with server
         System.out.println("------------------------------------------------------------------");
-        System.out.println("  .d88888b.  888b     d888 8888888888       888888        d8888 888     888     d8888");
+        System.out.println(" .d88888b.  888b     d888 8888888888       888888        d8888 888     888     d8888");
         System.out.println("d88P\" \"Y88b 8888b   d8888 888                \"88b       d88888 888     888    d88888");
         System.out.println("888     888 88888b.d88888 888                 888      d88P888 888     888   d88P888");
         System.out.println("888     888 888Y88888P888 8888888             888     d88P 888 Y88b   d88P  d88P 888");
@@ -298,7 +299,8 @@ public class Program {
 
     private static String create_data_values_for_first_dynamic_type(String containerid) {
         return "[" + "        {" + "            \"containerid\": \"" + containerid + "\"," + "            \"values\": ["
-                + "                {" + "                    \"timestamp\": \"" + Instant.now().toString() + "\","
+                + "                {" + "                    \"timestamp\": \""
+                + Instant.now().truncatedTo(ChronoUnit.MILLIS).toString() + "\","
                 + "                    \"IntegerProperty\": " + ThreadLocalRandom.current().nextInt(0, 100)
                 + "                }" + "            ]" + "        }" + "    ]";
     }
@@ -311,7 +313,8 @@ public class Program {
             string_boolean_value = "True";
         }
         return "[" + "        {" + "            \"containerid\": \"" + containerid + "\"," + "            \"values\": ["
-                + "                {" + "                    \"timestamp\": \"" + Instant.now().toString() + "\","
+                + "                {" + "                    \"timestamp\": \""
+                + Instant.now().truncatedTo(ChronoUnit.MILLIS).toString() + "\","
                 + "                    \"NumberProperty1\": " + ThreadLocalRandom.current().nextInt(0, 100) + ","
                 + "                    \"NumberProperty2\": " + ThreadLocalRandom.current().nextInt(0, 100) + ","
                 + "                    \"StringEnum\": \"" + string_boolean_value + "\"" + "                }"
@@ -326,7 +329,8 @@ public class Program {
             integer_boolean_value = 0;
         }
         return "[" + "        {" + "            \"containerid\": \"" + containerid + "\"," + "            \"values\": ["
-                + "                {" + "                    \"timestamp\": \"" + Instant.now().toString() + "\","
+                + "                {" + "                    \"timestamp\": \""
+                + Instant.now().truncatedTo(ChronoUnit.MILLIS).toString() + "\","
                 + "                    \"IntegerEnum\": " + integer_boolean_value + "," + "                }"
                 + "            ]" + "        }" + "    ]";
     }
