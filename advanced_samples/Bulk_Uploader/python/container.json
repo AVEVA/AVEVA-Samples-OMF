@@ -1,0 +1,12 @@
+[
+  {
+    "id": "Tank1Measurements",
+    "typeid": "TankMeasurement",
+    "typeVersion": "1.0.0.0"
+  },
+  {
+    "id": "Tank2Measurements",
+    "typeid": "TankMeasurement",
+    "typeVersion": "1.0.0.0"
+  }
+]
