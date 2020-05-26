@@ -20,10 +20,10 @@ Configure desired OMF endpoints to receive the data in [config.ini](.\config.ini
 
 ### OSIsoft Cloud Services
 
-If sending to OSIsoft Cloud Services, set `OCS` to true. This sample needs an OMF cleint credential created. For details on creating those see [OSISoft Learning Channel(https://www.youtube.com/watch?v=52lAnkGC1IM).
+If sending to OSIsoft Cloud Services, set `OCS` to true. This sample needs an OMF client credential created. For details on creating those see [OSISoft Learning Channel](https://www.youtube.com/watch?v=52lAnkGC1IM).
 
-1. `omfURL` is the OMFURL as displayed on the protal
-1. `id` should be the ID of a [Client Credentials Client](https://cloud.osisoft.com/clients). This client will need to have an OMF Connection configured to the specified Namespace in order to successfully send data. To configure one, pick "OMF" from the "Type" dropdown in the [Connections](https://cloud.osisoft.com/connections) page.
+1. `omfURL` is the OMF URL as displayed on the portal
+1. `id` should be the ID of a [Client Credentials Client](https://cloud.osisoft.com/clients). This client will need to have an OMF Connection configured to the specified Namespace in order to successfully send data. To configure one, pick "OMF" from the "Type" dropdown in the [Connections](https://cloud.osisoft.com/connections) page
 1. `password` should be the secret from the Client Credentials Client that was specified
 
 ### Edge Data Store
@@ -37,7 +37,7 @@ If sending to PI Web API, set `PI` to true.
 1. `omfURL` should be updated with the machine name or fully qualified domain name of the PI Web API server; if possible choose whatever value matches the certificate of the machine
 1. PI Web API should have Basic authentication turned on as one of the allowed authentication methods, see [OSIsoft Live Library](https://livelibrary.osisoft.com/LiveLibrary/web/ui.xql?action=html&resource=publist_home.html&pub_category=PI-Web-API)
 1. `id` and `password` should be the domain user/password that will be used to perform Basic authentication against PI Web API
-1. `VERIFY_SSL` may be set to false in order to bypass certificate validation when PI Web API is configured to use a self-signed certificate. This will generate a warning; this should only be done for testing with a self-signed PI Web API certificate as it is insecure.
+1. `VERIFY_SSL` may be set to false in order to bypass certificate validation when PI Web API is configured to use a self-signed certificate. This will generate a warning; this should only be done for testing with a self-signed PI Web API certificate as it is insecure
 
 ## Running the Sample
 
