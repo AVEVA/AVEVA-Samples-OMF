@@ -20,7 +20,7 @@ Configure desired OMF endpoints to receive the data in [config.ini](.\config.ini
 
 ### OSIsoft Cloud Services
 
-If sending to OSIsoft Cloud Services, set `OCS` to true. This sample needs an OMF client credential created. For details on creating those see [OSISoft Learning Channel](https://www.youtube.com/watch?v=52lAnkGC1IM).
+If sending to OSIsoft Cloud Services, set `OCS` to true. This sample needs an OMF client credential created. For details on creating those see [OSIsoft Learning Channel](https://www.youtube.com/watch?v=52lAnkGC1IM).
 
 1. `omfURL` is the OMF URL as displayed on the portal
 1. `id` should be the ID of a [Client Credentials Client](https://cloud.osisoft.com/clients). This client will need to have an OMF Connection configured to the specified Namespace in order to successfully send data. To configure one, pick "OMF" from the "Type" dropdown in the [Connections](https://cloud.osisoft.com/connections) page
