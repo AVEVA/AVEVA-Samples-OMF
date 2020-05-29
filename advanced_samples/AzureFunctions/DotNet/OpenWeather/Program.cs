@@ -1,26 +1,77 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OpenWeather;
 using OSIsoft.Data.Http;
 using OSIsoft.Identity;
 using OSIsoft.Omf;
-using OSIsoft.Omf.DefinitionAttributes;
+using OSIsoft.Omf.Converters;
+using OSIsoft.OmfIngress;
 
 namespace OpenWeatherFunction
 {
     public static class Program
     {
+        private static readonly string _openWeatherUrl = Environment.GetEnvironmentVariable("OPEN_WEATHER_URL");
         private static readonly string _openWeatherApiKey = Environment.GetEnvironmentVariable("OPEN_WEATHER_API_KEY");
+        private static readonly string _openWeatherQueries = Environment.GetEnvironmentVariable("OPEN_WEATHER_QUERIES");
+        private static readonly string _ocsUrl = Environment.GetEnvironmentVariable("OCS_URL");
+        private static readonly string _ocsTenantId = Environment.GetEnvironmentVariable("OCS_TENANT_ID");
+        private static readonly string _ocsNamespaceId = Environment.GetEnvironmentVariable("OCS_NAMESPACE_ID");
+        private static readonly string _ocsClientId = Environment.GetEnvironmentVariable("OCS_CLIENT_ID");
+        private static readonly string _ocsClientSecret = Environment.GetEnvironmentVariable("OCS_CLIENT_SECRET");
 
+        private static IOmfIngressService _omfIngressService;
 
         [FunctionName("CurrentWeather")]
         public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+
+            // Set up OMF Ingress Service
+            _omfIngressService = ConfigureOcsOmf(_ocsUrl, _ocsTenantId, _ocsNamespaceId, _ocsClientId, _ocsClientSecret);
+
+            // Send OMF Type message
+            SendOmfMessage(_omfIngressService, OmfMessageCreator.CreateTypeMessage(typeof(CurrentWeather)));
+
+            // Prepare OMF containers
+            var typeId = ClrToOmfTypeConverter.Convert(typeof(CurrentWeather)).Id;
+            var containers = new List<OmfContainer>();
+            var data = new List<OmfDataContainer>();
+
+            var queries = _openWeatherQueries.Split('|');
+            foreach (var query in queries)
+            {
+                // Get Current Weather Data
+                var response = JsonConvert.DeserializeObject<JObject>(HttpGet($"{_openWeatherUrl}?q={query}&appid={_openWeatherApiKey}"));
+
+                // Parse data into OMF messages
+                var value = new CurrentWeather(response);
+                var streamId = $"OpenWeather_Current_{value.Name}";
+                containers.Add(new OmfContainer(streamId, typeId));
+                var omfValue = (OmfObjectValue)ClrToOmfValueConverter.Convert(value);
+                data.Add(new OmfDataContainer(streamId, new List<OmfObjectValue>() { omfValue }));
+            }
+
+            SendOmfMessage(_omfIngressService, new OmfContainerMessage(containers));
+            log.LogInformation($"Sent {containers.Count} containers");
+            SendOmfMessage(_omfIngressService, new OmfDataMessage(data));
+            log.LogInformation($"Sent {data.Count} data messages");
+        }
+
+        /// <summary>
+        /// Configure OCS/OMF Services
+        /// </summary>
+        private static IOmfIngressService ConfigureOcsOmf(string address, string tenantId, string namespaceId, string clientId, string clientSecret)
+        {
+            var deviceAuthenticationHandler = new AuthenticationHandler(new Uri(address), clientId, clientSecret);
+            var deviceBaseOmfIngressService = new OmfIngressService(new Uri(address), null, HttpCompressionMethod.None, deviceAuthenticationHandler);
+            return deviceBaseOmfIngressService.GetOmfIngressService(tenantId, namespaceId);
         }
 
         /// <summary>
@@ -30,85 +81,19 @@ namespace OpenWeatherFunction
         {
             var uri = new Uri(url);
             var request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Accept = "application/json";
-            request.UserAgent = "OSIGitHubStats";
-            request.Headers.Add("Authorization", $"Bearer {GITHUB_PAT}");
-            using (var response = (HttpWebResponse)request.GetResponse())
-            using (var stream = response.GetResponseStream())
-            using (var reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
+            using var response = (HttpWebResponse)request.GetResponse();
+            using var stream = response.GetResponseStream();
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
 
         /// <summary>
         /// Sends a message to the OCS OMF endpoint
         /// </summary>
-        private static object SendOmfMessage(OmfMessage omfMessage)
+        private static object SendOmfMessage(IOmfIngressService service, OmfMessage omfMessage)
         {
             var serializedOmfMessage = OmfMessageSerializer.Serialize(omfMessage);
-            return deviceOmfIngressService.SendOmfMessageAsync(serializedOmfMessage).Result;
-        }
-    }
-
-    [OmfType(ClassificationType = ClassificationType.Dynamic, Name = "GitHubRepoStats", Description = "Represents daily statistics from a GitHub repository.")]
-    public class GitHubRepoStats
-    {
-        [OmfProperty(IsIndex = true)]
-        public DateTime Timestamp { get; set; }
-        public bool Private { get; set; }
-        public int Stargazers { get; set; }
-        public int Watchers { get; set; }
-        public int Forks { get; set; }
-        public int OpenIssues { get; set; }
-        public int Network { get; set; }
-        public int Subscribers { get; set; }
-        public int Views { get; set; }
-        public int UniqueViews { get; set; }
-        public int Clones { get; set; }
-        public int UniqueClones { get; set; }
-        public int Views2Week { get; set; }
-        public int UniqueViews2Week { get; set; }
-        public int Clones2Week { get; set; }
-        public int UniqueClones2Week { get; set; }
-
-        public GitHubRepoStats(JObject repo, JObject views, JObject clones)
-        {
-            // Log previous day's data since that day is complete
-            Timestamp = DateTime.Today.AddDays(-1);
-            Private = (bool)repo["private"];
-            Stargazers = (int)repo["stargazers_count"];
-            Watchers = (int)repo["watchers_count"];
-            Forks = (int)repo["forks_count"];
-            OpenIssues = (int)repo["open_issues_count"];
-            Network = (int)repo["network_count"];
-            Subscribers = (int)repo["subscribers_count"];
-
-            // Find last day's views, if any
-            var dailyViews = (JArray)views["views"];
-            var dayViews = dailyViews.FirstOrDefault(d => (DateTime)d["timestamp"] == Timestamp);
-            if (dayViews != null)
-            {
-                Views = (int)dayViews["count"];
-                UniqueViews = (int)dayViews["uniques"];
-            }
-
-            // Get two week running view totals
-            Views2Week = (int)views["count"];
-            UniqueViews2Week = (int)views["uniques"];
-
-            // Find last day's clones, if any
-            var dailyClones = (JArray)clones["clones"];
-            var dayClones = dailyClones.FirstOrDefault(d => (DateTime)d["timestamp"] == Timestamp);
-            if (dayClones != null)
-            {
-                Clones = (int)dayClones["count"];
-                UniqueClones = (int)dayClones["uniques"];
-            }
-
-            // Get two week running clone totals
-            Clones2Week = (int)clones["count"];
-            UniqueClones2Week = (int)clones["uniques"];
+            return service.SendOmfMessageAsync(serializedOmfMessage).Result;
         }
     }
 }
