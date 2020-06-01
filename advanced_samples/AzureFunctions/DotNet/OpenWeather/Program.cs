@@ -77,7 +77,8 @@ namespace OpenWeatherFunction
 
         private static void LoadConfiguration()
         {
-            if (File.Exists(Directory.GetCurrentDirectory() + "\\appsettings.json"))
+            Console.WriteLine(Directory.GetCurrentDirectory() + "/appsettings.json");
+            if (File.Exists(Directory.GetCurrentDirectory() + "/appsettings.json"))
             {
                 // Running locally, read configuration from file
                 Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(Directory.GetCurrentDirectory() + "\\appsettings.json"));
