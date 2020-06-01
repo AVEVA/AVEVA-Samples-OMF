@@ -77,19 +77,13 @@ namespace OpenWeatherFunction
 
         private static void LoadConfiguration()
         {
-            Console.WriteLine(Directory.GetCurrentDirectory() + "/appsettings.json");
             if (File.Exists(Directory.GetCurrentDirectory() + "/appsettings.json"))
             {
                 // Running locally, read configuration from file
-                Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(Directory.GetCurrentDirectory() + "\\appsettings.json"));
+                Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(Directory.GetCurrentDirectory() + "/appsettings.json"));
             }
             else
             {
-                foreach (string file in Directory.EnumerateFiles(Directory.GetCurrentDirectory()))
-                {
-                    Console.WriteLine(file);
-                }
-
                 // Running in Azure Function, read configuration from Environment
                 Settings = new AppSettings()
                 {
