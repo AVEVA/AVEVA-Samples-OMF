@@ -10,6 +10,32 @@ namespace OpenWeather
     {
         public static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         public static readonly double KelvinOffset = -273.15;
+        public static readonly Random Rand = new Random();
+
+        public CurrentWeather() 
+        {
+        }
+
+        public CurrentWeather(string name)
+        {
+            Timestamp = DateTime.UtcNow;
+            Name = name;
+            Latitude = 37.726;
+            Longitude = 122.157;
+            WeatherId = 800;
+            WeatherMain = "Clear";
+            WeatherDescription = "clear sky";
+            WeatherIcon = "01d";
+            Humidity = Rand.Next(0, 100);
+            int temp = Rand.Next(-20, 40);
+            Temp = temp;
+            TempMin = Rand.Next(-20, temp);
+            TempMax = Rand.Next(temp, 40);
+            Pressure = Rand.Next(97, 105);
+            WindSpeed = Rand.Next(0, 6);
+            WindDeg = Rand.Next(0, 36) * 10;
+            CloudCover = Rand.Next(0, 100);
+        }
 
         public CurrentWeather(JObject data)
         {
@@ -21,8 +47,8 @@ namespace OpenWeather
             Timestamp = Epoch.AddSeconds((int)data["dt"]);
             Name = (string)data["name"];
             var coord = data["coord"];
-            Longitude = (double)coord["lon"];
             Latitude = (double)coord["lat"];
+            Longitude = (double)coord["lon"];
             var weather = data["weather"][0];
             WeatherId = (int)weather["id"];
             WeatherMain = (string)weather["main"];

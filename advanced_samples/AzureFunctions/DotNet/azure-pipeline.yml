@@ -1,0 +1,64 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/advanced_samples/AzureFunctions/DotNet'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/advanced_samples/AzureFunctions/DotNet'
+
+schedules:
+  - cron: '0 0 * * 0'
+    displayName: Weekly build
+    branches:
+      include:
+        - master
+    always: true
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/advanced_samples/AzureFunctions/DotNet'
+  - name: CredFile
+    value: appsettings.json
+  - name: CredFileLibrary
+    value: product-readiness.azurefunctions_dotnet.json
+  - name: covStream
+    value: AzureFunctions_DotNet
+  - name: bdProject
+    value: AzureFunctions_DotNet
+
+jobs:
+  - job: Tests
+    strategy:
+      matrix:
+        linux:
+          imageName: ubuntu-latest
+        windows:
+          imageName: windows-latest
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)/OpenWeather
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Run tests'
+        inputs:
+          command: test
+          publishTestResults: true
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+          workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: dotnet

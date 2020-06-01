@@ -6,6 +6,6 @@
 	  - A PBI number for the eventual removal of the override. For example, in a case where compliance will take a long time.
 	  - A justification of why the override is required. -->
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
-    <!--<Rule Id="" Action="" />--> <!-- TODO: PBI #12345 --> 
+    <Rule Id="CA1303" Action="None" /> <!-- Prefer inline strings in sample code for readability -->
   </Rules>
 </RuleSet>

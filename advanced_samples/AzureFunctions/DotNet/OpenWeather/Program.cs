@@ -17,24 +17,24 @@ namespace OpenWeatherFunction
 {
     public static class Program
     {
-        private static readonly string _openWeatherUrl = Environment.GetEnvironmentVariable("OPEN_WEATHER_URL");
-        private static readonly string _openWeatherApiKey = Environment.GetEnvironmentVariable("OPEN_WEATHER_API_KEY");
-        private static readonly string _openWeatherQueries = Environment.GetEnvironmentVariable("OPEN_WEATHER_QUERIES");
-        private static readonly string _ocsUrl = Environment.GetEnvironmentVariable("OCS_URL");
-        private static readonly string _ocsTenantId = Environment.GetEnvironmentVariable("OCS_TENANT_ID");
-        private static readonly string _ocsNamespaceId = Environment.GetEnvironmentVariable("OCS_NAMESPACE_ID");
-        private static readonly string _ocsClientId = Environment.GetEnvironmentVariable("OCS_CLIENT_ID");
-        private static readonly string _ocsClientSecret = Environment.GetEnvironmentVariable("OCS_CLIENT_SECRET");
-
         private static IOmfIngressService _omfIngressService;
+
+        public static AppSettings Settings { get; set; }
 
         [FunctionName("CurrentWeather")]
         public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
+            LoadConfiguration();
+
+            if (string.IsNullOrEmpty(Settings.OpenWeatherKey))
+            {
+                log.LogInformation("No OpenWeather API Key provided, function will generate random data");
+            }
+
             // Set up OMF Ingress Service
-            _omfIngressService = ConfigureOcsOmf(_ocsUrl, _ocsTenantId, _ocsNamespaceId, _ocsClientId, _ocsClientSecret);
+            _omfIngressService = ConfigureOcsOmf(Settings.OcsUri, Settings.OcsTenantId, Settings.OcsNamespaceId, Settings.OcsClientId, Settings.OcsClientSecret);
 
             // Send OMF Type message
             SendOmfMessage(_omfIngressService, OmfMessageCreator.CreateTypeMessage(typeof(CurrentWeather)));
@@ -44,18 +44,29 @@ namespace OpenWeatherFunction
             var containers = new List<OmfContainer>();
             var data = new List<OmfDataContainer>();
 
-            var queries = _openWeatherQueries.Split('|');
+            var queries = Settings.OpenWeatherQueries.Split('|');
             foreach (var query in queries)
             {
-                // Get Current Weather Data
-                var response = JsonConvert.DeserializeObject<JObject>(HttpGet($"{_openWeatherUrl}?q={query}&appid={_openWeatherApiKey}"));
+                if (!string.IsNullOrEmpty(Settings.OpenWeatherKey))
+                {
+                    // Get Current Weather Data
+                    var response = JsonConvert.DeserializeObject<JObject>(HttpGet($"{Settings.OpenWeatherUri}?q={query}&appid={Settings.OpenWeatherKey}"));
 
-                // Parse data into OMF messages
-                var value = new CurrentWeather(response);
-                var streamId = $"OpenWeather_Current_{value.Name}";
-                containers.Add(new OmfContainer(streamId, typeId));
-                var omfValue = (OmfObjectValue)ClrToOmfValueConverter.Convert(value);
-                data.Add(new OmfDataContainer(streamId, new List<OmfObjectValue>() { omfValue }));
+                    // Parse data into OMF messages
+                    var value = new CurrentWeather(response);
+                    var streamId = $"OpenWeather_Current_{value.Name}";
+                    containers.Add(new OmfContainer(streamId, typeId));
+                    var omfValue = (OmfObjectValue)ClrToOmfValueConverter.Convert(value);
+                    data.Add(new OmfDataContainer(streamId, new List<OmfObjectValue>() { omfValue }));
+                }
+                else
+                {
+                    // No key provided, generate random data
+                    containers.Add(new OmfContainer(query, typeId));
+                    var value = new CurrentWeather(query);
+                    var omfValue = (OmfObjectValue)ClrToOmfValueConverter.Convert(value);
+                    data.Add(new OmfDataContainer(query, new List<OmfObjectValue>() { omfValue }));
+                }
             }
 
             SendOmfMessage(_omfIngressService, new OmfContainerMessage(containers));
@@ -64,13 +75,37 @@ namespace OpenWeatherFunction
             log.LogInformation($"Sent {data.Count} data messages");
         }
 
+        private static void LoadConfiguration()
+        {
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\appsettings.json"))
+            {
+                // Running locally, read configuration from file
+                Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(Directory.GetCurrentDirectory() + "\\appsettings.json"));
+            }
+            else
+            {
+                // Running in Azure Function, read configuration from Environment
+                Settings = new AppSettings()
+                {
+                    OpenWeatherUri = new Uri(Environment.GetEnvironmentVariable("OPEN_WEATHER_URI")),
+                    OpenWeatherKey = Environment.GetEnvironmentVariable("OPEN_WEATHER_KEY"),
+                    OpenWeatherQueries = Environment.GetEnvironmentVariable("OPEN_WEATHER_QUERIES"),
+                    OcsUri = new Uri(Environment.GetEnvironmentVariable("OCS_URI")),
+                    OcsTenantId = Environment.GetEnvironmentVariable("OCS_TENANT_ID"),
+                    OcsNamespaceId = Environment.GetEnvironmentVariable("OCS_NAMESPACE_ID"),
+                    OcsClientId = Environment.GetEnvironmentVariable("OCS_CLIENT_ID"),
+                    OcsClientSecret = Environment.GetEnvironmentVariable("OCS_CLIENT_SECRET"),
+                };
+            }
+        }
+
         /// <summary>
         /// Configure OCS/OMF Services
         /// </summary>
-        private static IOmfIngressService ConfigureOcsOmf(string address, string tenantId, string namespaceId, string clientId, string clientSecret)
+        private static IOmfIngressService ConfigureOcsOmf(Uri address, string tenantId, string namespaceId, string clientId, string clientSecret)
         {
-            var deviceAuthenticationHandler = new AuthenticationHandler(new Uri(address), clientId, clientSecret);
-            var deviceBaseOmfIngressService = new OmfIngressService(new Uri(address), null, HttpCompressionMethod.None, deviceAuthenticationHandler);
+            var deviceAuthenticationHandler = new AuthenticationHandler(address, clientId, clientSecret);
+            var deviceBaseOmfIngressService = new OmfIngressService(address, null, HttpCompressionMethod.None, deviceAuthenticationHandler);
             return deviceBaseOmfIngressService.GetOmfIngressService(tenantId, namespaceId);
         }
 
