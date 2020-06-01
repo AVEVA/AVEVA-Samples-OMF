@@ -53,7 +53,7 @@ jobs:
           deleteOriginal: false
 
       - bash: 'dir'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/OpenWeather
 
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'
