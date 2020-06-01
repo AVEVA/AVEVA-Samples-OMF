@@ -6,31 +6,32 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using OpenWeather;
 using OSIsoft.Data.Http;
 using OSIsoft.Identity;
 using OSIsoft.Omf;
 using OSIsoft.Omf.Converters;
 using OSIsoft.OmfIngress;
 
-namespace OpenWeatherFunction
+namespace OpenWeather
 {
     public static class Program
     {
         private static IOmfIngressService _omfIngressService;
+        private static ILogger _log;
 
         public static AppSettings Settings { get; set; }
 
         [FunctionName("CurrentWeather")]
         public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
         {
-            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            _log = log;
+            LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
             LoadConfiguration();
 
             if (string.IsNullOrEmpty(Settings.OpenWeatherKey))
             {
-                log.LogInformation("No OpenWeather API Key provided, function will generate random data");
+                LogInformation("No OpenWeather API Key provided, function will generate random data");
             }
 
             // Set up OMF Ingress Service
@@ -70,9 +71,17 @@ namespace OpenWeatherFunction
             }
 
             SendOmfMessage(_omfIngressService, new OmfContainerMessage(containers));
-            log.LogInformation($"Sent {containers.Count} containers");
+            LogInformation($"Sent {containers.Count} containers");
             SendOmfMessage(_omfIngressService, new OmfDataMessage(data));
-            log.LogInformation($"Sent {data.Count} data messages");
+            LogInformation($"Sent {data.Count} data messages");
+        }
+
+        private static void LogInformation(string message)
+        {
+            if (_log != null)
+            {
+                _log.LogInformation(message);
+            }
         }
 
         private static void LoadConfiguration()

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Threading;
 using Microsoft.Extensions.Logging;
 using OpenWeather;
-using OpenWeatherFunction;
 using OSIsoft.Data;
 using OSIsoft.Data.Http;
 using OSIsoft.Identity;
