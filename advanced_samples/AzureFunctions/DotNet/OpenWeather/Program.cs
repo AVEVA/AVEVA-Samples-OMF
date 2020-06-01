@@ -84,6 +84,11 @@ namespace OpenWeatherFunction
             }
             else
             {
+                foreach (string file in Directory.EnumerateFiles(Directory.GetCurrentDirectory()))
+                {
+                    Console.WriteLine(file);
+                }
+
                 // Running in Azure Function, read configuration from Environment
                 Settings = new AppSettings()
                 {
