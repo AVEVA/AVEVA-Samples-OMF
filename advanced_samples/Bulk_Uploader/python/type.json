@@ -1,0 +1,25 @@
+[
+  {
+    "id": "TankMeasurement",
+    "version": "1.0.0.0",
+    "type": "object",
+    "classification": "dynamic",
+    "properties": {
+      "Time": {
+        "format": "date-time",
+        "type": "string",
+        "isindex": true
+      },
+      "Pressure": {
+        "type": "number",
+        "name": "Tank Pressure",
+        "description": "Tank Pressure in Pa"
+      },
+      "Temperature": {
+        "type": "number",
+        "name": "Tank Temperature",
+        "description": "Tank Temperature in K"
+      }
+    }
+  }
+]
