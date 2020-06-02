@@ -14,7 +14,7 @@ namespace OpenWeatherTests
         public void OpenWeatherTest()
         {
             // Verify timestamp is within last minute
-            var verifyTimestamp = DateTime.UtcNow.AddMinutes(-6);
+            var verifyTimestamp = DateTime.UtcNow.AddMinutes(-10);
 
             Program.Run(null, new TestLogger());
 
