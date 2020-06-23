@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - "/basic_samples/Complex_Dynamic/Python"
+      - '/basic_samples/Complex_Dynamic/Python'
 
 pr:
   branches:
@@ -13,10 +13,10 @@ pr:
       - master
   paths:
     include:
-      - "/basic_samples/Complex_Dynamic/Python"
+      - '/basic_samples/Complex_Dynamic/Python'
 
 schedules:
-  - cron: "0 0 * * 0"
+  - cron: '0 0 * * 0'
     displayName: Weekly build
     branches:
       include:
@@ -24,9 +24,9 @@ schedules:
     always: true
 
 variables:
-  - template: "/miscellaneous/build_templates/variables.yml"
+  - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: "/basic_samples/Complex_Dynamic/Python"
+    value: '/basic_samples/Complex_Dynamic/Python'
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
@@ -43,9 +43,9 @@ variables:
 jobs:
   - job: Tests_OCS
     pool:
-      vmImage: "ubuntu-16.04"
+      vmImage: 'ubuntu-16.04'
     steps:
-      - template: "/miscellaneous/build_templates/config.yml"
+      - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
@@ -53,8 +53,8 @@ jobs:
 
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: "3.6"
-          architecture: "x64"
+          versionSpec: '3.6'
+          architecture: 'x64'
 
       - script: |
           echo Install tools
@@ -68,22 +68,22 @@ jobs:
           python -m pytest ./test_sample.py --junitxml=junit/test-results.xml 
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: "Run tests"
+        displayName: 'Run tests'
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
-          testResultsFiles: "**/test-*.xml"
+          testResultsFiles: '**/test-*.xml'
           failTaskOnFailedTests: true
-          testRunTitle: "$(Agent.JobName) on ubuntu-16.04"
-        displayName: "Publish test results"
+          testRunTitle: '$(Agent.JobName) on ubuntu-16.04'
+        displayName: 'Publish test results'
 
   - job: Tests_OnPrem
     pool:
       name: 00-OSIManaged-Test
       demands: COMPUTERNAME -equals $(buildAgent)
     steps:
-      - template: "/miscellaneous/build_templates/config.yml"
+      - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibraryOP)
@@ -91,28 +91,28 @@ jobs:
 
       - script: |
           "pip.exe" install -r requirements.txt
-        workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
-        displayName: "Install requirements"
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Install requirements'
 
       - script: |
           "pytest.exe" --junitxml=junit/test-results.xml ./test_sample.py
-        workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
-        displayName: "Run tests"
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Run tests'
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
-          testResultsFiles: "**/test-*.xml"
+          testResultsFiles: '**/test-*.xml'
           failTaskOnFailedTests: true
-          testRunTitle: "$(Agent.JobName) on $(buildAgent)"
-        displayName: "Publish test results"
+          testRunTitle: '$(Agent.JobName) on $(buildAgent)'
+        displayName: 'Publish test results'
 
   - job: Tests_EDS
     pool:
       name: 00-OSIManaged-Test
       demands: COMPUTERNAME -equals $(buildAgent)
     steps:
-      - template: "/miscellaneous/build_templates/config.yml"
+      - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibraryEDS)
@@ -120,22 +120,22 @@ jobs:
 
       - script: |
           "pip.exe" install -r requirements.txt
-        workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
-        displayName: "Install requirements"
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Install requirements'
 
       - script: |
           "pytest.exe"  --junitxml=junit/test-results.xml ./test_sample.py
-        workingDirectory: "$(Build.SourcesDirectory)$(projPath)"
-        displayName: "Run tests"
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Run tests'
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
-          testResultsFiles: "**/test-*.xml"
+          testResultsFiles: '**/test-*.xml'
           failTaskOnFailedTests: true
-          testRunTitle: "$(Agent.JobName) on $(buildAgent)"
-        displayName: "Publish test results"
+          testRunTitle: '$(Agent.JobName) on $(buildAgent)'
+        displayName: 'Publish test results'
 
-  - template: "/miscellaneous/build_templates/analysis.yml"
+  - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
       language: python
