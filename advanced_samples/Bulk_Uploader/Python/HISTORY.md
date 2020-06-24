@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.2 / 2020-06-24
+
+- Bump requests to 2.24.0
+
 ## 1.0.1 / 2020-06-10
 
 - Updated folder casing to be consistent with other samples
