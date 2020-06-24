@@ -1,3 +1,5 @@
+# Version History
+
 ## 1.0.1 / 2020-05-14
 
 - Bump "Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0"

@@ -2,6 +2,7 @@ parameters:
   language: ''
   web: false
   skipBinSkim: false
+  deleteBinSkim: ''
 
 jobs:
   - job: Analysis
@@ -80,6 +81,15 @@ jobs:
         condition: eq('${{ parameters.language }}', 'nodejs')
 
       # BinSkim
+      # BinSkim errors if it encounters badly signed Microsoft files
+      # To avoid this issue, delete the files before running BinSkim
+      - task: DeleteFiles@1
+        displayName: 'BinSkim (DotNet): Delete Files'
+        inputs:
+          SourceFolder: $(Build.SourcesDirectory)$(projPath)
+          Contents: '${{ parameters.deleteBinSkim }}'
+        condition: and(eq('${{ parameters.language }}', 'dotnet'), eq(${{ parameters.skipBinSkim }}, false), ne('${{ parameters.deleteBinSkim }}', ''))
+
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
         displayName: 'BinSkim (DotNet): Analyze'
         inputs:
