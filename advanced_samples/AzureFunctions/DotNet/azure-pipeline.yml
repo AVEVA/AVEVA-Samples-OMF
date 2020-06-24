@@ -31,9 +31,7 @@ variables:
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.azurefunctions_dotnet.json
-  - name: covStream
-    value: AzureFunctions_DotNet
-  - name: bdProject
+  - name: analysisProject
     value: AzureFunctions_DotNet
 
 jobs:
