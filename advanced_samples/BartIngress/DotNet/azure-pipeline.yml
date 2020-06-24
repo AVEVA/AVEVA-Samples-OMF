@@ -26,9 +26,7 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/advanced_samples/BartIngress/DotNet/BartIngress'
-  - name: testPath
-    value: '/advanced_samples/BartIngress/DotNet/BartIngressTests'
+    value: '/advanced_samples/BartIngress/DotNet'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
@@ -46,7 +44,7 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/BartIngress
 
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'
