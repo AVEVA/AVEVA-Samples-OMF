@@ -35,9 +35,7 @@ variables:
     value: product-readiness.omf_api_java.ocs.properties
   - name: CredFileLibraryOP
     value: product-readiness.omf_api_java.onprem.properties
-  - name: covStream
-    value: OMF_APIJava
-  - name: bdProject
+  - name: analysisProject
     value: OMF_API_Java
 
 jobs:

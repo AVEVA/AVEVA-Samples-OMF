@@ -35,9 +35,7 @@ variables:
     value: product-readiness.omf_api_dotnet.ocs.json
   - name: CredFileLibraryOP
     value: product-readiness.omf_api_dotnet.onprem.json
-  - name: covStream
-    value: OMF_APIDotNet
-  - name: bdProject
+  - name: analysisProject
     value: OMF_API_DotNet
 
 jobs:
