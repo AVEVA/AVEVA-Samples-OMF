@@ -2,7 +2,7 @@
 
 ## 1.0.3 / 2020-06-24
 
-- Update to use Polaris in place of Coverity
+- Updated to use Polaris in place of Coverity
 
 ## 1.0.2 / 2020-06-24
 
