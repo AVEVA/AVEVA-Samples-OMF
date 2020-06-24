@@ -11,10 +11,10 @@ project:
     name: ${scm.git.commit}
     date: ${scm.git.commit.date}
 capture:
-  fileSystem:
-    python:
-      extensions: [py]
-      files:
-        - directory: .
+  build:
+    cleanCommands:
+      - shell: [dotnet, 'clean']
+    buildCommands:
+      - shell: [dotnet, 'build']
 analyze:
   mode: central
