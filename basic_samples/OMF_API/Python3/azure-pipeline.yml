@@ -33,9 +33,7 @@ variables:
     value: product-readiness.omf_api_python.ocs.ini
   - name: CredFileLibraryOP
     value: product-readiness.omf_api_python.onprem.ini
-  - name: covStream
-    value: OMF_APIPy
-  - name: bdProject
+  - name: analysisProject
     value: OMF_API_Python
 
 jobs:

@@ -26,16 +26,12 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/advanced_samples/BartIngress/DotNet/BartIngress'
-  - name: testPath
-    value: '/advanced_samples/BartIngress/DotNet/BartIngressTests'
+    value: '/advanced_samples/BartIngress/DotNet'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.bartingress_dotnet.json
-  - name: covStream
-    value: BartIngress_DotNet
-  - name: bdProject
+  - name: analysisProject
     value: BartIngress_DotNet
 
 jobs:
@@ -48,29 +44,15 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/BartIngress
 
-      - script: |
-          echo Clean
-          call dotnet clean
-          echo Restore
-          call dotnet restore --ignore-failed-sources
-          echo Build
-          call dotnet msbuild
-          echo Delete Old Test Results
-          del TestResults\*.trx
-          echo Test
-          call dotnet test --logger trx
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+      - task: DotNetCoreCLI@2
         displayName: 'Run tests'
-
-      - task: PublishTestResults@2
         inputs:
-          testResultsFormat: VSTest
-          testResultsFiles: '*.trx'
-          searchFolder: $(Build.SourcesDirectory)$(testPath)/TestResults
-        condition: always()
-        displayName: 'Publish test results'
+          command: test
+          publishTestResults: true
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+          workingDirectory: $(Build.SourcesDirectory)$(projPath)/
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

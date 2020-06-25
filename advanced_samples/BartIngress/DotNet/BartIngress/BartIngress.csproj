@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <NeutralLanguage>en</NeutralLanguage>
     <HighEntropyVA>true</HighEntropyVA>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Company>OSIsoft</Company>
     <Authors>OSIsoft</Authors>
   </PropertyGroup>

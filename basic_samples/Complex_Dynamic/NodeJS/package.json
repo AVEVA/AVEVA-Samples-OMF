@@ -1,6 +1,6 @@
 {
   "name": "complex_dynamic_nodejs",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A sample showing how to send complex dynamic OMF types, containers and data",
   "main": "Sample.js",
   "scripts": {
