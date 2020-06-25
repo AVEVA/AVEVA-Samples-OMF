@@ -42,9 +42,9 @@ module.exports = {
   PI: false,
   EDS: false,
   omfURL:
-    'https://dat-b.osisoft.com/api/v1/Tenants/d7847614-2e4a-4c1e-812b-e8de5fd06a0f/Namespaces/SampleTesting/omf',
-  id: '95b9d45f-372b-416e-9f16-11d2ccb5cd96',
-  password: '3OO423AZtSA4gke9iqMgttJ2yS0eDMUT7SW5mduxg34=',
+    'https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/Namespaces/{namespace}/omf',
+  id: '{id}',
+  password: '{password}',
   omfversion: '1.1',
   compression: '',
   WEB_REQUEST_TIMEOUT_SECONDS: '',
