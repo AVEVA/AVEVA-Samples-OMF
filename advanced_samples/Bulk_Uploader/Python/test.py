@@ -98,21 +98,21 @@ def checkLastOCSVal():
     if response.status_code < 200 or response.status_code >= 300:
         print(msg_headers)
         response.close()
-        print('Response from was bad.  "{0}" message: {1} {2}.  Message holdings: {3}'.format(
-            message_type, response.status_code, response.text, message_omf_json))
+        print('Response from was bad.  message: {0} {1} {2}.'.format(
+            response.status_code, url, response.text)
         print()
-        raise Exception("OMF message was unsuccessful, {message_type}. {status}:{reason}".format(
-            message_type=message_type, status=response.status_code, reason=response.text))
+        raise Exception("Get value was unsuccessful, {url}. {status}:{reason}".format(
+            url=url, status=response.status_code, reason=response.text))
 
 
-def test_main(onlyDelete: bool = False):
+def test_main(onlyDelete: bool=False):
     global app_config
     # Tests to make sure the sample runs as expected
 
     try:
 
         program.main(onlyDelete)
-        app_config = program.app_config
+        app_config=program.app_config
 
         if(not onlyDelete):
             checkData()
@@ -133,7 +133,7 @@ def test_main(onlyDelete: bool = False):
 
 
 if len(sys.argv) >= 1:
-    onlyDelete = sys.argv[1]
+    onlyDelete=sys.argv[1]
 
 if __name__ == "__main__":
     test_main(onlyDelete)
