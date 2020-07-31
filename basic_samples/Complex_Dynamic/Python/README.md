@@ -1,6 +1,6 @@
 # Complex Dynamic OMF Python Sample
 
-**Version:** 1.0.3
+**Version:** 1.0.4
 
 ---
 
@@ -22,7 +22,9 @@ See [ReadMe](../)
 
 ### Configuration
 
-Configure desired OMF endpoints to receive the data in [config.ini](.\config.ini).
+The sample is configured using the file [config.placeholder.ini](config.placeholder.ini). Before editing, rename this file to `config.ini`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+
+Configure desired OMF endpoints to receive the data in `config.ini`.
 The following fields are all of the default expected fields:
 
 ```ini
