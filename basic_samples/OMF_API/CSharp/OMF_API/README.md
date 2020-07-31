@@ -1,7 +1,7 @@
 # Building a .NET sample to send OMF to PI or OCS
 
-| OCS Test Status                                                                                                                                                                                                                                                      | PI Test Status                                                                                                                                                                                                                                                             |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OCS Test Status                                                                                                                                                                                                                                               | PI Test Status                                                                                                                                                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_API_DotNet?branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build?definitionId=943&branchName=master&jobName=Tests_OCS) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_API_DotNet?branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build?definitionId=943&branchName=master&jobName=Tests_OnPrem) |
 
 Developed against DotNet 2.2.300.
@@ -23,21 +23,23 @@ In this example we assume that you have the dotnet core CLI.
 
 To run this example from the commandline run
 
-```
+```shell
 dotnet restore
 dotnet run
 ```
 
 to test this program change directories to the test and run
 
-```
+```shell
 dotnet restore
 dotnet test
 ```
 
 ## Configure constants for connecting and authentication
 
-The SDS Service is secured by obtaining tokens from Azure Active Directory. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the directory. The sample includes an appsettings.json configuration file to hold configuration strings, including the authentication strings. You must replace the placeholders with the authentication-related values you received from OSIsoft.
+The sample is configured using the file [appsettings.placeholder.json](appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+
+The SDS Service is secured by obtaining tokens from Azure Active Directory. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the directory. You must replace the placeholders in your `appsettings.json` file with the authentication-related values you received from OSIsoft.
 
 ```json
 {
@@ -49,7 +51,7 @@ The SDS Service is secured by obtaining tokens from Azure Active Directory. Such
 }
 ```
 
-The PIServer uses the PI Web API as its OMF accepting endpoint. To configure the sample to work against PI update the appsettings.json to have only these parameters and update that parameter values to what is being used.
+The PIServer uses the PI Web API as its OMF accepting endpoint. To configure the sample to work against PI update the `appsettings.json` to have only these parameters and update that parameter values to what is being used.
 
 Note: In this sample the tenantId is used to autodetect if you are going against OCS or PI, so make sure that is removed if going against PI.
 
@@ -69,7 +71,7 @@ See the general readme for information on setting up your endpoint.
 
 If your client computer does not trust the PI Web API certificate you will see an error like:
 
-```
+```shell
 System.Net.WebException: The SSL connection could not be established, see inner exception. The remote certificate is invalid according to the validation procedure. ---> System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception. ---> System.Security.Authentication.AuthenticationException: The remote certificate is invalid according to the validation procedure.
 ```
 

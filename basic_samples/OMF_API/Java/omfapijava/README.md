@@ -1,7 +1,7 @@
 # Building a Java client to send OMF to PI or OCS
 
-| OCS Test Status                                                                                                                                                                                                                                                    | PI Test Status                                                                                                                                                                                                                                                           |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| OCS Test Status                                                                                                                                                                                                                                             | PI Test Status                                                                                                                                                                                                                                                    |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_API_Java?branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build?definitionId=945&branchName=master&jobName=Tests_OCS) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_API_Java?branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build?definitionId=945&branchName=master&jobName=Tests_OnPrem) |
 
 The sample code in this topic demonstrates how to send OMF messages using Java.
@@ -20,13 +20,15 @@ Using Eclipse or any IDE:
    `Maven`> `Existing maven project` and then select the local
    copy.
 
-4. Replace the configuration strings in `config.properties`
+4. Rename the placeholder config file [config.placeholder.properties](config.placeholder.properties) to `config.properties`
+
+5. Replace the configuration strings in `config.properties`
 
 Using a command line:
 
 1. Clone a local copy of the GitHub repository.
 
-2. Download apache-maven-x.x.x.zip from http://maven.apache.org and extract it.
+2. Download apache-maven-x.x.x.zip from [maven.apache.org](https://maven.apache.org) and extract it.
 
 3. Setting environment variables.
    a) For Java JDK
@@ -42,7 +44,7 @@ Using a command line:
 
    and, also add ~\apache-maven-x.x.x\bin path to the Path variable in System variables.
 
-4) Building and running the project.
+4. Building and running the project.
    a) cd to your project location.
    b) run `mvn package exec:java` on cmd.
 
@@ -52,11 +54,13 @@ These are also tested using VS Code.
 
 ## Configure constants for connecting and authentication
 
-The SDS Service is secured by obtaining tokens from Azure Active Directory. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the directory. The sample includes an config.properties configuration file to hold configuration strings, including the authentication strings. You must replace the placeholders with the authentication-related values you received from OSIsoft.
+The sample is configured using the file [config.placeholder.properties](config.placeholder.properties). Before editing, rename this file to `config.properties`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+
+The SDS Service is secured by obtaining tokens from Azure Active Directory. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the directory. You must replace the placeholders your `config.properties` file with the authentication-related values you received from OSIsoft.
 
 The values to be replaced are in `config.properties`:
 
-```
+```ini
 [Configurations]
 Namespace = Samples
 
@@ -77,7 +81,7 @@ To configure the sample to work against PI update the config.properties to have 
 
 Note: the tenantId is used to autodetect if you are going against OCS or PI, so make sure that is removed if going against PI.
 
-```
+```ini
 [Configurations]
 DataServerName = REPLACE_WITH_PI_DATA_ARCHIVE_NAME
 
@@ -89,7 +93,7 @@ See the general readme for information on setting up your endpoint.
 
 If your client computer Java does not trust the PI Web API certificate you will see an error like:
 
-```
+```shell
 javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
 ```
 

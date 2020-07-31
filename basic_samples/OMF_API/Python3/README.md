@@ -1,7 +1,7 @@
 # Building a Python client to send OMF to PI or OCS
 
-| OCS Test Status                                                                                                                                                                                                                                                      | PI Test Status                                                                                                                                                                                                                                                             |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OCS Test Status                                                                                                                                                                                                                                               | PI Test Status                                                                                                                                                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_API_Python?branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build?definitionId=949&branchName=master&jobName=Tests_OCS) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_API_Python?branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build?definitionId=949&branchName=master&jobName=Tests_OnPrem) |
 
 The sample code in this topic demonstrates how to send OMF messages using Python.
@@ -15,6 +15,7 @@ To Run this Sample:
 1. Clone the GitHub repository
 1. Install required modules: `pip install -r requirements.txt`
 1. Open the folder with your favorite IDE
+1. Rename the placeholder config file [config.placeholder.ini](config.placeholder.ini) to `config.ini`
 1. Update `config.ini` with tour credentials
 1. Check and update the program to ensure you are sending to OCS or PI.
 1. Run `program.py` from commandline run `python program.py`
@@ -30,7 +31,9 @@ or
 
 ## Configure constants for connecting and authentication
 
-The SDS Service is secured by obtaining tokens from Azure Active Directory. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the directory. The sample includes an config.ini configuration file to hold configuration strings, including the authentication strings. You must replace the placeholders with the authentication-related values you received from OSIsoft.
+The sample is configured using the file [config.placeholder.ini](config.placeholder.ini). Before editing, rename this file to `config.ini`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+
+The SDS Service is secured by obtaining tokens from Azure Active Directory. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the directory. You must replace the placeholders in your `config.ini` file with the authentication-related values you received from OSIsoft.
 
 The values to be replaced are in `config.ini`:
 
@@ -51,7 +54,7 @@ ClientSecret = REPLACE_WITH_APPLICATION_SECRET
 
 The PIServer will use the PI Web API as its OMF accepting endpoint. This is what the sample is tested against. Currently the only OMF supported endpoint for PI is the Connector Relay. These samples have not been tested against this.
 
-To configure the sample to work against PI update the config.ini to have only these parameters and update that parameter values to what is being used.
+To configure the sample to work against PI update the `config.ini` to have only these parameters and update that parameter values to what is being used.
 
 Note: the tenantId is used to autodetect if you are going against OCS or PI, so make sure that is removed if going against PI.
 
@@ -67,7 +70,7 @@ See the general readme for information on setting up your endpoint.
 
 If your client computer Python does not trust the PI Web API certificate you will see an error like:
 
-```
+```shell
 requests.exceptions.SSLError: HTTPSConnectionPool(host='...', port=443): Max retries exceeded with url: /piwebapi/omf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self signed certificate (_ssl.c:1051)')))
 ```
 
