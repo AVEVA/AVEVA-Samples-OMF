@@ -2,7 +2,7 @@ parameters:
   fileOriginal: ''
   fileLibrary: ''
   filePath: ''
-  deleteOriginal: true
+  delete: false
 
 steps:
   # Download Secure File
@@ -27,7 +27,7 @@ steps:
   - bash: rm ${{ parameters.fileOriginal }}
     workingDirectory: $(Build.SourcesDirectory)${{ parameters.filePath }}/
     displayName: 'Delete original config file'
-    condition: eq(${{parameters.deleteOriginal}}, true)
+    condition: eq(${{ parameters.delete }}, true)
 
   - bash: mv ${{ parameters.fileLibrary }} ${{ parameters.fileOriginal }}
     workingDirectory: $(Build.SourcesDirectory)${{ parameters.filePath }}/
