@@ -320,3 +320,5 @@ cov-int/
 
 # Credential Config Files
 product-readiness.*
+config.ini
+config.js
