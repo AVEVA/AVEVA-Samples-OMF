@@ -48,7 +48,6 @@ jobs:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)/OpenWeather
-          deleteOriginal: false
 
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'

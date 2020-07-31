@@ -1,6 +1,6 @@
 ﻿# BART API OMF Ingress DotNet Sample
 
-**Version:** 1.0.2
+**Version:** 1.0.3
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/BartIngress_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=1425&branchName=master)
 
@@ -13,7 +13,8 @@ The [.NET Core CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) is refe
 ### Bay Area Rapid Transit
 
 1. Review the BART [Developer License Agreement](https://www.bart.gov/schedules/developers/developer-license-agreement) and get an API validation key from the [BART API website](https://www.bart.gov/schedules/developers/api), or use their public API key
-1. Enter the API key into the `BartApiKey` field of [appsettings.json](.\BartIngress\appsettings.json)
+1. The sample is configured using the file [appsettings.placeholder.json](BartIngress\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+1. Enter the API key into the `BartApiKey` field of `appsettings.json`
 1. (Optional) Update the `BartApiOri` and/or `BartApiDest` fields
    1. These fields specify the origin and destination stations to collect route data for
    1. These should either be a station abbreviation or the special value `"ALL"`, to use all origins and/or destinations
@@ -22,7 +23,7 @@ The [.NET Core CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) is refe
 
 ### OSIsoft Message Format Endpoints
 
-Configure desired OMF endpoints to receive the data in [appsettings.json](.\BartIngress\appsettings.json).
+Configure desired OMF endpoints to receive the data in `appsettings.json`.
 
 #### OSIsoft Cloud Services
 
@@ -56,7 +57,7 @@ dotnet restore
 dotnet run
 ```
 
-If the [appsettings.json](./BartIngress/appsettings.json) file has been set up, the sample will first send an OMF type message for BART estimated time of departure (ETD) data ([BartStationEtd.cs](./BartIngress/BartStationEtd.cs)) and an OMF container message for the desired routes. Then, every 10 seconds, the sample will collect real time data and send data messages to the configured OMF endpoints, until the sample is stopped.
+If the `appsettings.json` file has been set up, the sample will first send an OMF type message for BART estimated time of departure (ETD) data ([BartStationEtd.cs](./BartIngress/BartStationEtd.cs)) and an OMF container message for the desired routes. Then, every 10 seconds, the sample will collect real time data and send data messages to the configured OMF endpoints, until the sample is stopped.
 
 ## Running the Automated Test
 
