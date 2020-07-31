@@ -1,6 +1,6 @@
 # Bulk Uploader Python Sample
 
-**Version:** 1.0.3
+**Version:** 1.0.4
 
 ---
 
@@ -16,7 +16,9 @@ It does only basic error checking to make sure the message was accepted by the e
 
 ## OSIsoft Message Format Endpoints
 
-Configure desired OMF endpoints to receive the data in [config.ini](.\config.ini). Only one of PI, EDS, or OCS can be configured at a time. This script was designed against OMF version 1.1.
+The sample is configured using the file [config.placeholder.ini](config.placeholder.ini). Before editing, rename this file to `config.ini`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+
+Configure desired OMF endpoints to receive the data in `config.ini`. Only one of PI, EDS, or OCS can be configured at a time. This script was designed against OMF version 1.1.
 
 ### OSIsoft Cloud Services
 

@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.2 / 2020-07-31
+
+- Minor update to use consistent pattern with placeholder settings files
+
 ## 1.0.1 / 2020-06-24
 
 - Updated to use Polaris in place of Coverity
