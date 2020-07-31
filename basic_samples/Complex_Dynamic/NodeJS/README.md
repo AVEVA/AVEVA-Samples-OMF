@@ -1,6 +1,6 @@
 # Complex Dynamic OMF NodeJS Sample
 
-**Version:** 1.0.2
+**Version:** 1.0.3
 
 | OCS Test Status                                                                                                                                                                                         | EDS Test Status                                                                                                                                                                                         | PI Test Status                                                                                                                                                                                             |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -33,7 +33,9 @@ See [ReadMe](../)
 
 ### Configuration
 
-Configure desired OMF endpoints to receive the data in [config.js](.\config.js]).
+The sample is configured using the file [config.placeholder.js](config.placeholder.js). Before editing, rename this file to `config.js`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+
+Configure desired OMF endpoints to receive the data in `config.js`.
 The following fields are all of the default expected fields:
 
 ```js
@@ -92,7 +94,7 @@ An OMF endpoint must be properly set up and configured.
 
 1. Open Command Prompt in Windows
 1. Go to the folder where js files are located
-1. Configure desired OMF endpoints to receive the data in [config.js](.\config.js])
+1. Configure desired OMF endpoints to receive the data in `config.js`
 1. Type the following command to run the test file in the local server
 
    ```bash
@@ -111,7 +113,7 @@ An OMF endpoint must be properly set up and configured.
 
 1. Open Command Prompt in Windows
 1. Go to the folder where js files are located
-1. Configure desired OMF endpoints to receive the data in [config.js](.\config.js])
+1. Configure desired OMF endpoints to receive the data in `config.js`
 1. Type the following command to run the test file in the local server
 
    ```bash
