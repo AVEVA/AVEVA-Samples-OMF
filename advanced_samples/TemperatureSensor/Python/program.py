@@ -205,7 +205,45 @@ def getToken():
     return __token
 
 
-def oneTimeSendMessages(containerId, action='create'):
+def oneTimeSendCreates(containerId):
+    global omfVersion
+
+    action = 'create'
+    oneTimeSendType(containerId, action)
+    oneTimeSendContainer(containerId, action)
+    oneTimeSendData(containerId, action)
+
+
+def oneTimeSendDeletes(containerId):
+    global omfVersion
+
+    action = 'delete'
+    try:
+        oneTimeSendData(containerId, action)
+    except Exception as ex:
+        print()
+        # Ignore errors in deletes to ensure we clean up as much as possible
+        print(("Error in deletes: {error}".format(error=ex)))
+        print()
+
+    try:
+        oneTimeSendContainer(containerId, action)
+    except Exception as ex:
+        print()
+        # Ignore errors in deletes to ensure we clean up as much as possible
+        print(("Error in deletes: {error}".format(error=ex)))
+        print()
+
+    try:
+        oneTimeSendType(containerId, action)
+    except Exception as ex:
+        print()
+        # Ignore errors in deletes to ensure we clean up as much as possible
+        print(("Error in deletes: {error}".format(error=ex)))
+        print()
+
+
+def oneTimeSendType(containerId, action):
     global omfVersion
 
     # OMF Type messages
@@ -270,6 +308,8 @@ def oneTimeSendMessages(containerId, action='create'):
         }
     ], action)
 
+
+def oneTimeSendContainer(containerId, action):
     # OMF Container message to create a container for our measurement
     sendOmfMessageToEndpoint("container", [
         {
@@ -280,6 +320,8 @@ def oneTimeSendMessages(containerId, action='create'):
         }
     ], action)
 
+
+def oneTimeSendData(containerId, action):
     # OMF Data message to create static elements and create links in AF
     sendOmfMessageToEndpoint("data", [
         {
@@ -436,7 +478,7 @@ def main(test=False):
                 print('You are not verifying the certificate of the PI Web API endpoint. This is insecure and should not be done in production, please properly handle your certificates. ')
             PiOmfUrl = PiWebApiUrl + '/omf'
 
-        oneTimeSendMessages(containerId)
+        oneTimeSendCreates(containerId)
 
         count = 0
         time.sleep(1)
@@ -460,7 +502,7 @@ def main(test=False):
             count = count + 1
 
         if (test):
-            oneTimeSendMessages(containerId, "delete")
+            oneTimeSendDeletes(containerId)
 
         print('Complete!')
         return True
