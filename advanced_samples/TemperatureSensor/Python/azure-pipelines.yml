@@ -46,7 +46,7 @@ jobs:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFile)
-          fileLibrary: $(CredFileLibrary)
+          fileLibrary: $(CredFileLibraryOCS)
           filePath: $(projPath)
 
       - task: UsePythonVersion@0
@@ -76,35 +76,6 @@ jobs:
           testRunTitle: '$(Agent.JobName) on ubuntu-16.04'
         displayName: 'Publish test results'
 
-  - job: Tests_OnPrem
-    pool:
-      name: 00-OSIManaged-Test
-      demands: COMPUTERNAME -equals $(buildAgent)
-    steps:
-      - template: '/miscellaneous/build_templates/config.yml'
-        parameters:
-          fileOriginal: $(CredFile)
-          fileLibrary: $(CredFileLibraryOP)
-          filePath: $(projPath)
-
-      - script: |
-          "pip.exe" install -r requirements.txt
-        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
-        displayName: 'Install requirements'
-
-      - script: |
-          "pytest.exe" --junitxml=junit/test-results.xml ./test.py
-        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
-        displayName: 'Run tests'
-
-      - task: PublishTestResults@2
-        condition: succeededOrFailed()
-        inputs:
-          testResultsFiles: '**/test-*.xml'
-          failTaskOnFailedTests: true
-          testRunTitle: '$(Agent.JobName) on $(buildAgent)'
-        displayName: 'Publish test results'
-
   - job: Tests_EDS
     pool:
       name: 00-OSIManaged-Test
@@ -123,6 +94,35 @@ jobs:
 
       - script: |
           "pytest.exe"  --junitxml=junit/test-results.xml ./test.py
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          failTaskOnFailedTests: true
+          testRunTitle: '$(Agent.JobName) on $(buildAgent)'
+        displayName: 'Publish test results'
+
+  - job: Tests_PI
+    pool:
+      name: 00-OSIManaged-Test
+      demands: COMPUTERNAME -equals $(buildAgent)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibraryPI)
+          filePath: $(projPath)
+
+      - script: |
+          "pip.exe" install -r requirements.txt
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Install requirements'
+
+      - script: |
+          "pytest.exe" --junitxml=junit/test-results.xml ./test.py
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Run tests'
 
