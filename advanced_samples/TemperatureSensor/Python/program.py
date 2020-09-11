@@ -430,6 +430,10 @@ def main(test=False):
             PiWebApiUrl = getConfig('Configurations', 'PiWebApiUrl')
             userName = getConfig('Configurations', 'UserName')
             password = getConfig('Configurations', 'Password')
+            VERIFY_SSL = (bool)(distutils.util.strtobool(
+                getConfig('Configurations', 'VerifySSL')))
+            if not VERIFY_SSL:
+                print('You are not verifying the certificate of the PI Web API endpoint. This is insecure and should not be done in production, please properly handle your certificates. ')
             PiOmfUrl = PiWebApiUrl + '/omf'
 
         oneTimeSendMessages(containerId)
@@ -454,6 +458,9 @@ def main(test=False):
 
             time.sleep(delayBetweenRequests)
             count = count + 1
+
+        if (test):
+            oneTimeSendMessages(containerId, "delete")
 
         print('Complete!')
         return True
