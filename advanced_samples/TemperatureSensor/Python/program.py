@@ -210,6 +210,9 @@ def oneTimeSendCreates():
 
 
 def oneTimeSendDeletes():
+    print()
+    print("Deleting sample data...")
+    print()
     action = 'delete'
     try:
         oneTimeSendData(action)
@@ -503,6 +506,8 @@ def main(test=False):
         print()
         traceback.print_exc()
         print()
+        if (test):
+            oneTimeSendDeletes()
         assert False, msg
         return False
 
