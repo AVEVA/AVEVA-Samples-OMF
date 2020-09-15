@@ -43,6 +43,8 @@ If sending to PI Web API, set `SendToPi` to true.
 1. Rename `config.placeholder.ini` to `config.ini` and enter the required configuration as described above
 1. From the command line, run `python program.py`
 
+Note: The type and container ID, name, and description are hard coded in the sample. The type and container ID can be modified using the `TYPE_ID` and `CONTAINER_ID` variables, and other information can be modified by directly changing the OMF strings in the Python code.
+
 ## Running the Automated Test
 
 Complete steps 1-5 above. Then:

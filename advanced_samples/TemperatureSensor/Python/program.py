@@ -32,7 +32,7 @@ PiOmfUrl = None
 
 # Set this to True if your cert is trusted by the Python certify.
 # Set to False if you do not want to check the certificate (NOT RECOMMENDED)
-VERIFY_SSL = False
+VERIFY_SSL = True
 
 # Specify the timeout, in seconds, for sending web requests
 # (if it takes longer than this to send a message, an error will be thrown)
@@ -40,6 +40,7 @@ WEB_REQUEST_TIMEOUT_SECONDS = 30
 
 ERROR_STRING = "Error"
 TYPE_ID = "Temperature.Float"
+CONTAINER_ID = "Sample.Script.SL6658.Temperature"
 
 # Holder for user name and password combination
 userName = ""
@@ -107,10 +108,6 @@ def sendOmfMessageToEndpoint(message_type, message_omf_json, action='create'):
 
 
 def checkResponse(response, msg_headers, message_type, message_omf_json):
-    # Send the request, and collect the response
-    if response.status_code == 409:
-        return
-
     # Response code in 200s if the request was successful!
     if response.status_code < 200 or response.status_code >= 300:
         print(msg_headers)
@@ -171,7 +168,7 @@ def getPiHeaders(compression="", message_type="", action=""):
 
 
 def getToken():
-    # Gets the oken for the omfsendpoint
+    # Gets the token for the omf endpoint
     global __expiration, __token, resourceBase, clientId, clientSecret
 
     if ((__expiration - time.time()) > 5 * 60):
@@ -205,21 +202,17 @@ def getToken():
     return __token
 
 
-def oneTimeSendCreates(containerId):
-    global omfVersion
-
+def oneTimeSendCreates():
     action = 'create'
-    oneTimeSendType(containerId, action)
-    oneTimeSendContainer(containerId, action)
-    oneTimeSendData(containerId, action)
+    oneTimeSendType(action)
+    oneTimeSendContainer(action)
+    oneTimeSendData(action)
 
 
-def oneTimeSendDeletes(containerId):
-    global omfVersion
-
+def oneTimeSendDeletes():
     action = 'delete'
     try:
-        oneTimeSendData(containerId, action)
+        oneTimeSendData(action)
     except Exception as ex:
         print()
         # Ignore errors in deletes to ensure we clean up as much as possible
@@ -227,7 +220,7 @@ def oneTimeSendDeletes(containerId):
         print()
 
     try:
-        oneTimeSendContainer(containerId, action)
+        oneTimeSendContainer(action)
     except Exception as ex:
         print()
         # Ignore errors in deletes to ensure we clean up as much as possible
@@ -235,7 +228,7 @@ def oneTimeSendDeletes(containerId):
         print()
 
     try:
-        oneTimeSendType(containerId, action)
+        oneTimeSendType(action)
     except Exception as ex:
         print()
         # Ignore errors in deletes to ensure we clean up as much as possible
@@ -243,9 +236,7 @@ def oneTimeSendDeletes(containerId):
         print()
 
 
-def oneTimeSendType(containerId, action):
-    global omfVersion
-
+def oneTimeSendType(action):
     # OMF Type messages
     sendOmfMessageToEndpoint("type", [
         {
@@ -290,7 +281,7 @@ def oneTimeSendType(containerId, action):
         },
         {
             "id": TYPE_ID,
-            "name": "Temperature float type",
+            "name": "Temperature Float Type",
             "classification": "dynamic",
             "type": "object",
             "properties": {
@@ -309,11 +300,11 @@ def oneTimeSendType(containerId, action):
     ], action)
 
 
-def oneTimeSendContainer(containerId, action):
+def oneTimeSendContainer(action):
     # OMF Container message to create a container for our measurement
     sendOmfMessageToEndpoint("container", [
         {
-            "id": containerId,
+            "id": "PIWorld2020.Script.SL6658.Temperature",
             "name": "Temperature",
             "typeid": TYPE_ID,
             "description": "Container holds temperature measurements"
@@ -321,7 +312,7 @@ def oneTimeSendContainer(containerId, action):
     ], action)
 
 
-def oneTimeSendData(containerId, action):
+def oneTimeSendData(action):
     # OMF Data message to create static elements and create links in AF
     sendOmfMessageToEndpoint("data", [
         {
@@ -363,7 +354,7 @@ def oneTimeSendData(containerId, action):
                         "index": "RemoteAssets.Pump.SL6658"
                     },
                     "target": {
-                        "containerid": containerId
+                        "containerid": CONTAINER_ID
                     }
                 }
             ]
@@ -371,11 +362,11 @@ def oneTimeSendData(containerId, action):
     ], action)
 
 
-def createDataValue(containerid, value):
+def createDataValue(value):
     """Creates a JSON packet containing data value for the container"""
     return [
         {
-            "containerid": containerid,
+            "containerid": CONTAINER_ID,
             "values": [
                 {
                     "Timestamp": getCurrentTime(),
@@ -439,7 +430,6 @@ def main(test=False):
         # Sensor configuration
         useRandom = getConfig('Configurations', 'UseRandom')
         sensorUrl = getConfig('Configurations', 'SensorUrl')
-        containerId = getConfig('Configurations', 'ContainerId')
 
         # Scanning configuration
         iterationCount = (int)(
@@ -478,7 +468,7 @@ def main(test=False):
                 print('You are not verifying the certificate of the PI Web API endpoint. This is insecure and should not be done in production, please properly handle your certificates. ')
             PiOmfUrl = PiWebApiUrl + '/omf'
 
-        oneTimeSendCreates(containerId)
+        oneTimeSendCreates()
 
         count = 0
         time.sleep(1)
@@ -495,14 +485,14 @@ def main(test=False):
             else:
                 value = int(measurement)/10
                 print("Sending value: ", value)
-                message = createDataValue(containerId, value)
+                message = createDataValue(value)
                 sendOmfMessageToEndpoint('data', message)
 
             time.sleep(delayBetweenRequests)
             count = count + 1
 
         if (test):
-            oneTimeSendDeletes(containerId)
+            oneTimeSendDeletes()
 
         print('Complete!')
         return True
