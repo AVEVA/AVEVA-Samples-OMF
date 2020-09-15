@@ -1,0 +1,139 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/advanced_samples/TemperatureSensor/Python'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/advanced_samples/TemperatureSensor/Python'
+
+schedules:
+  - cron: '0 0 * * 0'
+    displayName: Weekly build
+    branches:
+      include:
+        - master
+    always: true
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/advanced_samples/TemperatureSensor/Python'
+  - name: CredFile
+    value: config.ini
+  - name: CredFileLibraryOCS
+    value: product-readiness.omf_temp_python.ocs.ini
+  - name: CredFileLibraryEDS
+    value: product-readiness.omf_temp_python.eds.ini
+  - name: CredFileLibraryPI
+    value: product-readiness.omf_temp_python.pi.ini
+  - name: analysisProject
+    value: OMF_Temp_Python
+
+jobs:
+  - job: Tests_OCS
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibraryOCS)
+          filePath: $(projPath)
+
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.8'
+          architecture: 'x64'
+
+      - script: |
+          echo Install tools
+          pip install setuptools wheel
+          pip install unittest-xml-reporting    
+          pip install pytest
+          pip install pytest-cov
+          echo Install requirements
+          pip install -r requirements.txt
+          echo Run tests
+          python -m pytest ./test.py --junitxml=junit/test-results.xml 
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          failTaskOnFailedTests: true
+          testRunTitle: '$(Agent.JobName) on ubuntu-16.04'
+        displayName: 'Publish test results'
+
+  - job: Tests_EDS
+    pool:
+      name: 00-OSIManaged-Test
+      demands: COMPUTERNAME -equals $(buildAgent)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibraryEDS)
+          filePath: $(projPath)
+
+      - script: |
+          "pip.exe" install -r requirements.txt
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Install requirements'
+
+      - script: |
+          "pytest.exe"  --junitxml=junit/test-results.xml ./test.py
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          failTaskOnFailedTests: true
+          testRunTitle: '$(Agent.JobName) on $(buildAgent)'
+        displayName: 'Publish test results'
+
+  - job: Tests_PI
+    pool:
+      name: 00-OSIManaged-Test
+      demands: COMPUTERNAME -equals $(buildAgent)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibraryPI)
+          filePath: $(projPath)
+
+      - script: |
+          "pip.exe" install -r requirements.txt
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Install requirements'
+
+      - script: |
+          "pytest.exe" --junitxml=junit/test-results.xml ./test.py
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          failTaskOnFailedTests: true
+          testRunTitle: '$(Agent.JobName) on $(buildAgent)'
+        displayName: 'Publish test results'
+
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: python
