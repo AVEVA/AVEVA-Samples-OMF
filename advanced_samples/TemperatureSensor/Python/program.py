@@ -304,7 +304,7 @@ def oneTimeSendContainer(action):
     # OMF Container message to create a container for our measurement
     sendOmfMessageToEndpoint("container", [
         {
-            "id": "PIWorld2020.Script.SL6658.Temperature",
+            "id": CONTAINER_ID,
             "name": "Temperature",
             "typeid": TYPE_ID,
             "description": "Container holds temperature measurements"
