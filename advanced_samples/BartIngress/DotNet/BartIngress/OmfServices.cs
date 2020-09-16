@@ -129,7 +129,7 @@ namespace BartIngress
         /// </summary>
         /// <typeparam name="T">OMF type of the OMF data to be sent</typeparam>
         /// <param name="data">Dictionary of OMF data keyed by the stream ID</param>
-        internal void SendOmfData<T>(Dictionary<string, T> data)
+        internal void SendOmfData<T>(Dictionary<string, IEnumerable<T>> data)
         {
             SendOmfMessage(OmfMessageCreator.CreateDataMessage(data));
         }
