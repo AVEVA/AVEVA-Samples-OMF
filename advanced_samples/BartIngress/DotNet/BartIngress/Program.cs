@@ -20,7 +20,7 @@ namespace BartIngress
         {
             LoadConfiguration();
             _timer = new Timer(new TimerCallback(TimerTask), null, 0, TimerInterval);
-            Console.WriteLine(Resources.MSG_STARTED);
+            Console.WriteLine("Started, press Enter to quit");
             Console.ReadLine();
         }
         

@@ -76,7 +76,7 @@ namespace BartIngress
             }
             else
             {
-                Console.WriteLine(Resources.WARNING_CERT_VALIDATE_DISABLED);
+                Console.WriteLine("Warning: You have disabled validation of destination certificates. This should only be done for testing with a self-signed PI Web API certificate as it is insecure.");
 
                 PiHttpClientHandler = new HttpClientHandler
                 {
@@ -129,16 +129,9 @@ namespace BartIngress
         /// </summary>
         /// <typeparam name="T">OMF type of the OMF data to be sent</typeparam>
         /// <param name="data">Dictionary of OMF data keyed by the stream ID</param>
-        internal void SendOmfData<T>(Dictionary<string, T> data)
+        internal void SendOmfData<T>(Dictionary<string, IEnumerable<T>> data)
         {
-            var dataContainers = new List<OmfDataContainer>();
-            foreach (var streamId in data.Keys)
-            {
-                var omfValue = (OmfObjectValue)ClrToOmfValueConverter.Convert(data[streamId]);
-                dataContainers.Add(new OmfDataContainer(streamId, new List<OmfObjectValue>() { omfValue }));
-            }
-
-            SendOmfMessage(new OmfDataMessage(dataContainers));
+            SendOmfMessage(OmfMessageCreator.CreateDataMessage(data));
         }
 
         /// <summary>

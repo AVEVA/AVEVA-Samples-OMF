@@ -17,9 +17,9 @@ namespace BartIngress
         /// <param name="orig">Specifies the origin station abbreviation. The default value, "all", will get all current ETDs.</param>
         /// <param name="dest">Specifies the destination station abbreviation. The default value, "all", will parse all current destination ETDs.</param>
         /// <returns>A dictionary of ETD data keyed by the stream ID</returns>
-        internal static Dictionary<string, BartStationEtd> GetRealTimeEstimates(string key, string orig = "all", string dest = "all")
+        internal static Dictionary<string, IEnumerable<BartStationEtd>> GetRealTimeEstimates(string key, string orig = "all", string dest = "all")
         {
-            var data = new Dictionary<string, BartStationEtd>();
+            var data = new Dictionary<string, IEnumerable<BartStationEtd>>();
             var etdJson = HttpGet(key, orig);
             var etdRoot = JsonConvert.DeserializeObject<JObject>(etdJson)["root"];
             var date = (string)etdRoot["date"];
@@ -39,7 +39,7 @@ namespace BartIngress
                         var estimate = (JObject)destination["estimate"][0];
                         var stationEtd = new BartStationEtd(dateTime, estimate);
                         var streamId = $"BART_{origAbbr}_{destAbbr}";
-                        data.Add(streamId, stationEtd);
+                        data.Add(streamId, new BartStationEtd[] { stationEtd });
                     }
                 }
             }
