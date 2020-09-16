@@ -43,7 +43,7 @@ namespace OpenWeather
             // Prepare OMF containers
             var typeId = ClrToOmfTypeConverter.Convert(typeof(CurrentWeather)).Id;
             var containers = new List<OmfContainer>();
-            var data = new List<OmfDataContainer>();
+            var data = new Dictionary<string, IEnumerable<CurrentWeather>>();
 
             var queries = Settings.OpenWeatherQueries.Split('|');
             foreach (var query in queries)
@@ -57,22 +57,20 @@ namespace OpenWeather
                     var value = new CurrentWeather(response);
                     var streamId = $"OpenWeather_Current_{value.Name}";
                     containers.Add(new OmfContainer(streamId, typeId));
-                    var omfValue = (OmfObjectValue)ClrToOmfValueConverter.Convert(value);
-                    data.Add(new OmfDataContainer(streamId, new List<OmfObjectValue>() { omfValue }));
+                    data.Add(streamId, new CurrentWeather[] { value });
                 }
                 else
                 {
                     // No key provided, generate random data
                     containers.Add(new OmfContainer(query, typeId));
                     var value = new CurrentWeather(query);
-                    var omfValue = (OmfObjectValue)ClrToOmfValueConverter.Convert(value);
-                    data.Add(new OmfDataContainer(query, new List<OmfObjectValue>() { omfValue }));
+                    data.Add(query, new CurrentWeather[] { value });
                 }
             }
 
             SendOmfMessage(_omfIngressService, new OmfContainerMessage(containers));
             LogInformation($"Sent {containers.Count} containers");
-            SendOmfMessage(_omfIngressService, new OmfDataMessage(data));
+            SendOmfMessage(_omfIngressService, OmfMessageCreator.CreateDataMessage(data));
             LogInformation($"Sent {data.Count} data messages");
         }
 
