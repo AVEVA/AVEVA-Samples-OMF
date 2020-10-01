@@ -1,6 +1,6 @@
 # NOTE: this script was designed using the v1.1
 # version of the OMF specification, as outlined here:
-# http://osisoft.github.io/OMF-Docs/documentation_v11/Whats_New.html
+# https://omf-docs.osisoft.com/documentation_v11/Whats_New.html
 # *************************************************************************************
 
 # ************************************************************************

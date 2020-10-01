@@ -14,7 +14,7 @@ The sample also does not use any libraries for connecting to PI. Generally a lib
 
 This sample also doesn't use any help to build the JSON strings for the OMF messages. This works for simple examples, and for set demos, but if building something more it may be easier to not form the JSON messages by hand.
 
-[OMF documentation](https://omf-docs.readthedocs.io/en/latest/)
+[OMF documentation](https://omf-docs.osisoft.com/)
 
 ## Getting Started
 
