@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using OSIsoft.Identity;
 using OSIsoft.Omf;
-using OSIsoft.Omf.Converters;
 
 namespace BartIngress
 {
@@ -89,7 +90,8 @@ namespace BartIngress
 
             PiHttpClient.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
             PiHttpClient.BaseAddress = new Uri(piUri.AbsoluteUri + $"/omf");
-            PiHttpClient.SetBasicAuthentication(username, password);
+            var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+            PiHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         }
 
         /// <summary>
