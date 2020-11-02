@@ -1,6 +1,6 @@
 # Azure Functions OpenWeather Sample
 
-**Version:** 1.0.5
+**Version:** 1.0.6
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/AzureFunctions_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1743&branchName=master)
 
