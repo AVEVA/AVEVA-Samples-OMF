@@ -1,6 +1,6 @@
 {
   "name": "complex_dynamic_nodejs",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A sample showing how to send complex dynamic OMF types, containers and data",
   "main": "Sample.js",
   "scripts": {
@@ -14,6 +14,6 @@
   },
   "devDependencies": {
     "jasmine-reporters": "2.3.2",
-    "jasmine": "3.6.1"
+    "jasmine": "3.6.3"
   }
 }
