@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.6 / 2020-11-02
+
+- Updated dependencies
+
 ## 1.0.5 / 2020-09-15
 
 - Updated to use bulk data container create method
