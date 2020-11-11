@@ -123,8 +123,8 @@ jobs:
             --detect.project.name="product-readiness.$(analysisProject)"
             --detect.project.version.name="$(Build.SourceBranchName)"
             --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
-            --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
-            --detect.bom.aggregate.name="bom_$(bdProject)_$(Build.SourceBranchName)"
+            --detect.code.location.name="code_location_$(analysisProject)_$(Build.SourceBranchName)"
+            --detect.bom.aggregate.name="bom_$(analysisProject)_$(Build.SourceBranchName)"
         condition: and(succeeded(), ne('${{ parameters.language }}', 'python'))
         displayName: 'Synopsys Detect: BlackDuck'
 
@@ -136,8 +136,8 @@ jobs:
             --detect.project.name="product-readiness.$(analysisProject)"
             --detect.project.version.name="$(Build.SourceBranchName)"
             --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
-            --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
-            --detect.bom.aggregate.name="bom_$(bdProject)_$(Build.SourceBranchName)"
+            --detect.code.location.name="code_location_$(analysisProject)_$(Build.SourceBranchName)"
+            --detect.bom.aggregate.name="bom_$(analysisProject)_$(Build.SourceBranchName)"
             --detect.pip.requirements.path=$(Build.SourcesDirectory)$(projPath)/requirements.txt
         condition: and(succeeded(), eq('${{ parameters.language }}', 'python'))
         displayName: 'Synopsys Detect: BlackDuck (Python Requirements.txt)'
