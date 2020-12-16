@@ -1,6 +1,6 @@
 # Temperature Sensor OMF Python Sample
 
-**Version:** 1.0.0
+**Version:** 1.0.1
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/OMF_Temp_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2164&branchName=master)
 
