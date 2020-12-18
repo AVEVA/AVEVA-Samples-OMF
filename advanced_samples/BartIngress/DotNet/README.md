@@ -1,6 +1,6 @@
 ﻿# BART API OMF Ingress DotNet Sample
 
-**Version:** 1.0.7
+**Version:** 1.0.8
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/BartIngress_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=1425&branchName=master)
 
