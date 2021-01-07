@@ -1,3 +1,6 @@
+| :loudspeaker: **Notice**: samples have transitioned to being hosted in individual repositories |
+| -----------------------------------------------------------------------------------------------|
+
 # OMF Samples
 
 The OSIsoft Message Format ([OMF](https://omf-docs.osisoft.com/)) defines a set of message headers and bodies that can be used to generate messages for ingestion into a compliant back-end system. The PI System and OCS both have a compliant OMF receiving endpoint.
