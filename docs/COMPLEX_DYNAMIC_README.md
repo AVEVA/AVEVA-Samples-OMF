@@ -17,5 +17,5 @@ The test checks to make sure that the OMF messages were properly handled by the 
 
 ---
 
-For the OMF landing page [ReadMe](../)  
+For the OMF landing page [ReadMe](https://github.com/osisoft/OSI-Samples-OMF)  
 For the OSIsoft Samples landing page [ReadMe](https://github.com/osisoft/OSI-Samples)
