@@ -14,7 +14,7 @@ The official OMF samples are divided in multiple categories depending on the sce
 <table align="middle" width="100%">
   <tr>
     <th align="middle" colspan="2">
-      <h2>Samples</h2>
+      <h2>Tasks</h2>
     </th>
   </tr>
   <tr>
