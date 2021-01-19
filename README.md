@@ -415,7 +415,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master&jobName=Tests_OCS"
                 alt="Build Status"
               />
             </a>
@@ -425,7 +425,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master&jobName=Tests_EDS"
                 alt="Build Status"
               />
             </a>
@@ -435,7 +435,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master&jobName=Tests_PI"
                 alt="Build Status"
               />
             </a>
