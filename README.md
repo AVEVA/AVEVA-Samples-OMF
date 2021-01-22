@@ -11,14 +11,440 @@ Some tasks and individual language examples have labels as follows:
 
 The official OMF samples are divided in multiple categories depending on the scenario and problem/task, accessible through the following table:
 
-| Task                                                                                      | Description                                                                                                                                                                                                         | Languages                                                                                                                                                                                            | &nbsp;&nbsp;&nbsp;OCS&nbsp;Test&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | &nbsp;&nbsp;&nbsp;EDS&nbsp;Test&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | &nbsp;&nbsp;&nbsp;&nbsp;PI&nbsp;Test&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **[Basic API](docs/OMF_BASIC_README.md)**                                                 | These samples demonstrate sending some typical OMF messages. The applications are configurable to both PI and OCS. [Details](docs/OMF_BASIC_README.md)                                                              | [.NET](https://github.com/osisoft/sample-omf-basic_api-dotnet)</br>[Python](https://github.com/osisoft/sample-omf-basic_api-python)</br>[Java](https://github.com/osisoft/sample-omf-basic_api-java) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-dotnet?repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2634&repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2637&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-java?repoName=osisoft%2Fsample-omf-basic_api-java&branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2636&repoName=osisoft%2Fsample-omf-basic_api-java&branchName=master) | Not Run </br>Not Run </br>Not Run                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-dotnet?repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2634&repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2637&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-java?repoName=osisoft%2Fsample-omf-basic_api-java&branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2636&repoName=osisoft%2Fsample-omf-basic_api-java&branchName=master) |
-| **[Complex Dynamic](docs/COMPLEX_DYNAMIC_README.md)**                                     | This sample demonstrates sending time series data to the OSIsoft Cloud Services, Edge Data Store, and PI Web API OMF endpoints. It sends 2 values at 1 timestamp. [Details](docs/COMPLEX_DYNAMIC_README.md)         | [Python](https://github.com/osisoft/sample-omf-complex_dynamic-python) </br> [NodeJS](https://github.com/osisoft/sample-omf-complex_dynamic-nodejs)                                                  | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2640&repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2639&repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master)                                                                                                                                                                                                                                                                                                                                    | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master&jobName=Tests_EDS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2640&repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master&jobName=Tests_EDS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2639&repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2640&repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2639&repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master)                                                                                                                                                                                                                                                                                                                                       |
-| **[BART Ingress](https://github.com/osisoft/sample-omf-bart_ingress-dotnet)**             | This sample demonstrates sending time series data to the OSIsoft Cloud Services, Edge Data Store, and PI Web API OMF endpoints. [Details](https://github.com/osisoft/sample-omf-bart_ingress-dotnet)                | [.NET](https://github.com/osisoft/sample-omf-bart_ingress-dotnet)                                                                                                                                    | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bart_ingress-dotnet?repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2633&repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bart_ingress-dotnet?repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2633&repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                           | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bart_ingress-dotnet?repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2633&repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| **[Bulk Upload](https://github.com/osisoft/sample-omf-bulk_upload-python)**               | This sample demonstrates sending pre-made OMF files to the OSIsoft Cloud Services, Edge Data Store, and PI Web API OMF endpoints. [Details](https://github.com/osisoft/sample-omf-bulk_upload-python)               | [Python](https://github.com/osisoft/sample-omf-bulk_upload-python)                                                                                                                                   | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master&jobName=Tests_OCS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2638&repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master&jobName=Tests_EDS)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2638&repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                            | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master&jobName=Tests_OnPrem)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2638&repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| **[Azure Functions](https://github.com/osisoft/sample-omf-azure_functions-dotnet)**       | This sample demonstrates sending time series data to OSIsoft Cloud Services using an Azure Function App Service. [Details](https://github.com/osisoft/sample-omf-azure_functions-dotnet)                            | [.NET](https://github.com/osisoft/sample-omf-azure_functions-dotnet)                                                                                                                                 | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-azure_functions-dotnet?repoName=osisoft%2Fsample-omf-azure_functions-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2632&repoName=osisoft%2Fsample-omf-azure_functions-dotnet&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | N/A                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | N/A                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| **[Temperature Sensor](https://github.com/osisoft/sample-omf-temperature_sensor-python)** | This sample demonstrates sending periodic temperature data to the OSIsoft Cloud Services, Edge Data Store, and PI Web API OMF endpoints. [Details](https://github.com/osisoft/sample-omf-temperature_sensor-python) | [Python](https://github.com/osisoft/sample-omf-temperature_sensor-python)                                                                                                                            | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                         | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+<table align="middle" width="100%">
+  <tr>
+    <th align="middle" colspan="2">
+      <h2>Tasks</h2>
+    </th>
+  </tr>
+  <tr>
+    <td align="middle" valign="top" width="50%">
+      <h3>
+        <a href="docs/OMF_BASIC_README.md"> Basic API </a>
+      </h3>
+      These samples demonstrate sending some typical OMF messages. The
+      applications are configurable to both PI and OCS.
+      <a href="docs/OMF_BASIC_README.md"> Details </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <th align="middle">Language</th>
+          <th align="middle">OCS Test Status</th>
+          <th align="middle">PI Test Status</th>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-omf-basic_api-dotnet">
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2634&repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-dotnet?repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=master&jobName=Tests_OCS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2634&repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-dotnet?repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=master&jobName=Tests_OnPrem"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-omf-basic_api-python">
+              Python
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2637&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=master&jobName=Tests_OCS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2637&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=master&jobName=Tests_OnPrem"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-omf-basic_api-java">
+              Java
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2636&repoName=osisoft%2Fsample-omf-basic_api-java&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-java?repoName=osisoft%2Fsample-omf-basic_api-java&branchName=master&jobName=Tests_OCS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2636&repoName=osisoft%2Fsample-omf-basic_api-java&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-java?repoName=osisoft%2Fsample-omf-basic_api-java&branchName=master&jobName=Tests_OnPrem"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top" width="50%">
+      <h3>
+        <a href="docs/COMPLEX_DYNAMIC_README.md"> Complex Dynamic </a>
+      </h3>
+      This sample demonstrates sending time series data to the OSIsoft Cloud
+      Services, Edge Data Store, and PI Web API OMF endpoints. It sends 2 values
+      at 1 timestamp.
+      <a href="docs/COMPLEX_DYNAMIC_README.md"> Details </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <th align="middle">Language</th>
+          <th align="middle">OCS Test Status</th>
+          <th align="middle">EDS Test Status</th>
+          <th align="middle">PI Test Status</th>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-omf-complex_dynamic-python"
+            >
+              Python
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2640&repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master&jobName=Tests_OCS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2640&repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master&jobName=Tests_EDS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2640&repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=master&jobName=Tests_OnPrem"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-omf-complex_dynamic-nodejs"
+            >
+              NodeJS
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2639&repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master&jobName=Tests_OCS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2639&repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master&jobName=Tests_EDS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2639&repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=master&jobName=Tests_OnPrem"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top" width="50%">
+      <h3>
+        <a href="https://github.com/osisoft/sample-omf-bart_ingress-dotnet">
+          Bart Ingress
+        </a>
+      </h3>
+      This sample demonstrates sending time series data to the OSIsoft Cloud
+      Services, Edge Data Store, and PI Web API OMF endpoints.
+      <a href="https://github.com/osisoft/sample-omf-bart_ingress-dotnet">
+        Details
+      </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <th align="middle">Language</th>
+          <th align="middle">OCS Test Status</th>
+          <th align="middle">EDS Test Status</th>
+          <th align="middle">PI Test Status</th>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-omf-bart_ingress-dotnet">
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2633&repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bart_ingress-dotnet?repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2633&repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bart_ingress-dotnet?repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2633&repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bart_ingress-dotnet?repoName=osisoft%2Fsample-omf-bart_ingress-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top" width="50%">
+      <h3>
+        <a href="https://github.com/osisoft/sample-omf-bulk_upload-python">
+          Bulk Upload
+        </a>
+      </h3>
+      This sample demonstrates sending pre-made OMF files to the OSIsoft Cloud
+      Services, Edge Data Store, and PI Web API OMF endpoints.
+      <a href="https://github.com/osisoft/sample-omf-bulk_upload-python">
+        Details
+      </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <th align="middle">Language</th>
+          <th align="middle">OCS Test Status</th>
+          <th align="middle">EDS Test Status</th>
+          <th align="middle">PI Test Status</th>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-omf-bulk_upload-python">
+              Python
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2638&repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master&jobName=Tests_OCS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2638&repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master&jobName=Tests_EDS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2638&repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=master&jobName=Tests_OnPrem"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top" width="50%">
+      <h3>
+        <a href="https://github.com/osisoft/sample-omf-azure_functions-dotnet">
+          Azure Functions
+        </a>
+      </h3>
+      This sample demonstrates sending time series data to OSIsoft Cloud
+      Services using an Azure Function App Service.
+      <a href="https://github.com/osisoft/sample-omf-azure_functions-dotnet">
+        Details
+      </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <th align="middle">Language</th>
+          <th align="middle">OCS Test Status</th>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-omf-azure_functions-dotnet"
+            >
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2632&repoName=osisoft%2Fsample-omf-azure_functions-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-azure_functions-dotnet?repoName=osisoft%2Fsample-omf-azure_functions-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top" width="50%">
+      <h3>
+        <a
+          href="https://github.com/osisoft/sample-omf-temperature_sensor-python"
+        >
+          Temperature Sensor
+        </a>
+      </h3>
+      This sample demonstrates sending periodic temperature data to the OSIsoft
+      Cloud Services, Edge Data Store, and PI Web API OMF endpoints.
+      <a href="https://github.com/osisoft/sample-omf-temperature_sensor-python">
+        Details
+      </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <th align="middle">Language</th>
+          <th align="middle">OCS Test Status</th>
+          <th align="middle">EDS Test Status</th>
+          <th align="middle">PI Test Status</th>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-omf-temperature_sensor-python"
+            >
+              Python
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master&jobName=Tests_OCS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master&jobName=Tests_EDS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=master&jobName=Tests_PI"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
 ## Configuring OCS or the PI system to accept OMF messages
 
