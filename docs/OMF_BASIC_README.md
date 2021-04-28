@@ -7,7 +7,7 @@ These OMF API based samples are introductory, language-specific examples of send
 All OMF API samples are console applications that follow the same sequence of events, allowing you to select the language with which you are most comfortable without missing any instructional features. The pattern followed is:
 
 1. Read endpoint configurations from config.json
-1. Get OMF yypes from OMF-Types.json
+1. Get OMF types from OMF-Types.json
 1. Get OMF containers from OMF-Containers.json
 1. Get OMF data structure from OMF-Data.json
 1. Create OMF types 
