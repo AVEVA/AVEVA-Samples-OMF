@@ -108,6 +108,43 @@ The official OMF samples are divided in multiple categories depending on the sce
             </a>
           </td>
         </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-omf-basic_api-cpp">
+              C++
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3580&repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-cpp?repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main&jobName=Tests_OCS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3580&repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-cpp?repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main&jobName=Tests_EDS"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3580&repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-cpp?repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main&jobName=Tests_PI"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
       </table>
     </td>
   </tr>
