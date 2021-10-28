@@ -20,11 +20,11 @@ The official OMF samples are divided in multiple categories depending on the sce
   <tr>
     <td align="middle" valign="top" width="50%">
       <h3>
-        <a href="docs/OMF_BASIC_README.md"> Basic API </a>
+        <a href="docs/OMF_BASIC.md"> Basic API </a>
       </h3>
       These samples demonstrate sending some typical OMF messages. The
       applications are configurable to both PI and OCS.
-      <a href="docs/OMF_BASIC_README.md"> Details </a>
+      <a href="docs/OMF_BASIC.md"> Details </a>
       <br />
       <br />
       <table align="middle">
@@ -151,12 +151,12 @@ The official OMF samples are divided in multiple categories depending on the sce
   <tr>
     <td align="middle" valign="top" width="50%">
       <h3>
-        <a href="docs/COMPLEX_DYNAMIC_README.md"> Complex Dynamic </a>
+        <a href="docs/COMPLEX_DYNAMIC.md"> Complex Dynamic </a>
       </h3>
       This sample demonstrates sending time series data to the OSIsoft Cloud
       Services, Edge Data Store, and PI Web API OMF endpoints. It sends 2 values
       at 1 timestamp.
-      <a href="docs/COMPLEX_DYNAMIC_README.md"> Details </a>
+      <a href="docs/COMPLEX_DYNAMIC.md"> Details </a>
       <br />
       <br />
       <table align="middle">
