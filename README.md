@@ -45,7 +45,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2634&repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-dotnet?repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-dotnet?repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -82,7 +82,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2637&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -119,7 +119,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3580&repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-cpp?repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-cpp?repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -179,7 +179,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2640&repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -218,7 +218,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2639&repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -340,7 +340,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2638&repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -446,7 +446,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
