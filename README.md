@@ -3,7 +3,7 @@
 
 # OMF Samples
 
-The OSIsoft Message Format ([OMF](https://omf-docs.osisoft.com/)) defines a set of message headers and bodies that can be used to generate messages for ingestion into a compliant back-end system. The PI System and OCS both have a compliant OMF receiving endpoint.
+The OSIsoft Message Format ([OMF](https://omf-docs.osisoft.com/)) defines a set of message headers and bodies that can be used to generate messages for ingestion into a compliant back-end system. The PI System and AVEVA Data Hub both have a compliant OMF receiving endpoint.
 
 OMF can be used to develop data acquisition applications on platforms and in languages for which there are no supported OSIsoft libraries. Official documentation can be found [here](https://omf-docs.osisoft.com/). The PI Square OMF developer community can be found [here](https://pisquare.osisoft.com/community/developers-club/omf).
 
@@ -23,14 +23,14 @@ The official OMF samples are divided in multiple categories depending on the sce
         <a href="docs/OMF_BASIC.md"> Basic API </a>
       </h3>
       These samples demonstrate sending some typical OMF messages. The
-      applications are configurable to both PI and OCS.
+      applications are configurable to both PI and AVEVA Data Hub.
       <a href="docs/OMF_BASIC.md"> Details </a>
       <br />
       <br />
       <table align="middle">
         <tr>
           <th align="middle">Language</th>
-          <th align="middle">OCS Test Status</th>
+          <th align="middle">ADH Test Status</th>
           <th align="middle">EDS Test Status</th>
           <th align="middle">PI Test Status</th>
         </tr>
@@ -45,7 +45,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2634&repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-dotnet?repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-dotnet?repoName=osisoft%2Fsample-omf-basic_api-dotnet&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -82,7 +82,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2637&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -119,7 +119,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3580&repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-cpp?repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-cpp?repoName=osisoft%2Fsample-omf-basic_api-cpp&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -153,8 +153,7 @@ The official OMF samples are divided in multiple categories depending on the sce
       <h3>
         <a href="docs/COMPLEX_DYNAMIC.md"> Complex Dynamic </a>
       </h3>
-      This sample demonstrates sending time series data to the OSIsoft Cloud
-      Services, Edge Data Store, and PI Web API OMF endpoints. It sends 2 values
+      This sample demonstrates sending time series data to the AVEVA Data Hub, Edge Data Store, and PI Web API OMF endpoints. It sends 2 values
       at 1 timestamp.
       <a href="docs/COMPLEX_DYNAMIC.md"> Details </a>
       <br />
@@ -162,7 +161,7 @@ The official OMF samples are divided in multiple categories depending on the sce
       <table align="middle">
         <tr>
           <th align="middle">Language</th>
-          <th align="middle">OCS Test Status</th>
+          <th align="middle">ADH Test Status</th>
           <th align="middle">EDS Test Status</th>
           <th align="middle">PI Test Status</th>
         </tr>
@@ -179,7 +178,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2640&repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-python?repoName=osisoft%2Fsample-omf-complex_dynamic-python&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -218,7 +217,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2639&repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-complex_dynamic-nodejs?repoName=osisoft%2Fsample-omf-complex_dynamic-nodejs&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -254,8 +253,7 @@ The official OMF samples are divided in multiple categories depending on the sce
           Bart Ingress
         </a>
       </h3>
-      This sample demonstrates sending time series data to the OSIsoft Cloud
-      Services, Edge Data Store, and PI Web API OMF endpoints.
+      This sample demonstrates sending time series data to the AVEVA Data Hub, Edge Data Store, and PI Web API OMF endpoints.
       <a href="https://github.com/osisoft/sample-omf-bart_ingress-dotnet">
         Details
       </a>
@@ -264,7 +262,7 @@ The official OMF samples are divided in multiple categories depending on the sce
       <table align="middle">
         <tr>
           <th align="middle">Language</th>
-          <th align="middle">OCS Test Status</th>
+          <th align="middle">ADH Test Status</th>
           <th align="middle">EDS Test Status</th>
           <th align="middle">PI Test Status</th>
         </tr>
@@ -315,8 +313,7 @@ The official OMF samples are divided in multiple categories depending on the sce
           Bulk Upload
         </a>
       </h3>
-      This sample demonstrates sending pre-made OMF files to the OSIsoft Cloud
-      Services, Edge Data Store, and PI Web API OMF endpoints.
+      This sample demonstrates sending pre-made OMF files to the AVEVA Data Hub, Edge Data Store, and PI Web API OMF endpoints.
       <a href="https://github.com/osisoft/sample-omf-bulk_upload-python">
         Details
       </a>
@@ -325,7 +322,7 @@ The official OMF samples are divided in multiple categories depending on the sce
       <table align="middle">
         <tr>
           <th align="middle">Language</th>
-          <th align="middle">OCS Test Status</th>
+          <th align="middle">ADH Test Status</th>
           <th align="middle">EDS Test Status</th>
           <th align="middle">PI Test Status</th>
         </tr>
@@ -340,7 +337,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2638&repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-bulk_upload-python?repoName=osisoft%2Fsample-omf-bulk_upload-python&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -376,8 +373,7 @@ The official OMF samples are divided in multiple categories depending on the sce
           Azure Functions
         </a>
       </h3>
-      This sample demonstrates sending time series data to OSIsoft Cloud
-      Services using an Azure Function App Service.
+      This sample demonstrates sending time series data to AVEVA Data Hub using an Azure Function App Service.
       <a href="https://github.com/osisoft/sample-omf-azure_functions-dotnet">
         Details
       </a>
@@ -386,7 +382,7 @@ The official OMF samples are divided in multiple categories depending on the sce
       <table align="middle">
         <tr>
           <th align="middle">Language</th>
-          <th align="middle">OCS Test Status</th>
+          <th align="middle">ADH Test Status</th>
         </tr>
         <tr>
           <td align="middle">
@@ -429,7 +425,7 @@ The official OMF samples are divided in multiple categories depending on the sce
       <table align="middle">
         <tr>
           <th align="middle">Language</th>
-          <th align="middle">OCS Test Status</th>
+          <th align="middle">ADH Test Status</th>
           <th align="middle">EDS Test Status</th>
           <th align="middle">PI Test Status</th>
         </tr>
@@ -446,7 +442,7 @@ The official OMF samples are divided in multiple categories depending on the sce
               href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2641&repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=main&jobName=Tests_OCS"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-temperature_sensor-python?repoName=osisoft%2Fsample-omf-temperature_sensor-python&branchName=main&jobName=Tests_ADH"
                 alt="Build Status"
               />
             </a>
@@ -477,15 +473,15 @@ The official OMF samples are divided in multiple categories depending on the sce
   </tr>
 </table>
 
-## Configuring OCS or the PI system to accept OMF messages
+## Configuring AVEVA Data Hub or the PI system to accept OMF messages
 
-### Sending to OCS
+### Sending to AVEVA Data Hub
 
-Configure OMF Connection. This can be done programmatically, but here are the general steps to do it via the OCS portal:
+Configure OMF Connection. This can be done programmatically, but here are the general steps to do it via the AVEVA Data Hub portal:
 
 If you do not already have a Client-Credentials Client set up to use:
 
-1. After logging in to OCS, open [Clients](https://cloud.osisoft.com/clients), or follow the link under the section "Security"
+1. After logging in to AVEVA Data Hub, open [Clients](https://datahub.connect.aveva.com/clients), or follow the link under the section "Security"
 1. Under "Client Type", select "Client-Credentials"
 1. Click "Add Client" and either grant the "Account Administrator" role or whatever custom roles are required to create and write data to Streams
 1. Click "Continue," then optionally enter a description and/or update the expiration date for the Client Secret
@@ -493,7 +489,7 @@ If you do not already have a Client-Credentials Client set up to use:
 
 Once you have a Client-Credentials Client for use with OMF:
 
-1. After logging in to OCS, open [Connections](https://cloud.osisoft.com/connections), or follow the link under the section "Data Management"
+1. After logging in to AVEVA Data Hub, open [Connections](https://datahub.connect.aveva.com/omf-connections), or follow the link under the section "Data Management"
 1. Under "Type", select "OMF"
 1. Click "Add Connection" and fill in a name for your OMF Connection
 1. Click "Next," and choose the Client-Credentials Client you intend your OMF application to use (or the one you just created above)
@@ -506,14 +502,14 @@ Once you have a Client-Credentials Client for use with OMF:
 Use the PI Web API OMF endpoint.  
 PI Connector Relay is currently not tested for and would require some changes to the code to get to work.
 
-## OMF limitations on OCS and PI
+## OMF limitations on AVEVA Data Hub and PI
 
 This list is not exhuastive, but rather a few key details to know.
 
 1. PI only accepts DateTime timestamp as the property index
 1. PI can only have 1 index
-1. OCS only accepts Dynamic OMFType classification
-1. OCS does not accept Link type data
+1. ADH only accepts Dynamic OMFType classification
+1. ADH does not accept Link type data
 
 ## Credentials
 
@@ -525,7 +521,7 @@ You will need to modify these files locally when you run the samples.
 
 ## About this repo
 
-The [style guide](https://github.com/osisoft/.github/blob/main/STYLE_GUIDE.md) describes the organization of the repo and the code samples provided. The [test guide](https://github.com/osisoft/.github/blob/main/TEST_GUIDE.md) goes into detail about the included automated tests. The [on prem testing](https://github.com/osisoft/.github/blob/main/ON_PREM_TESTING.md) document describes the software installed on our internal OSIsoft build agent.
+The [style guide](https://github.com/osisoft/.github/blob/main/STYLE_GUIDE.md) describes the organization of the repo and the code samples provided. The [test guide](https://github.com/osisoft/.github/blob/main/TEST_GUIDE.md) goes into detail about the included automated tests. The [on prem testing](https://github.com/osisoft/.github/blob/main/ON_PREM_TESTING.md) document describes the software installed on our internal build agent.
 
 ## Feedback
 
@@ -533,7 +529,7 @@ If you have a need for a new sample; if there is a feature or capability that sh
 
 ## Support
 
-If your support question or issue is related to something with an OSIsoft product (an error message, a problem with product configuration, etc...), please open a case with OSIsoft Tech Support through myOSIsoft Customer Portal ([https://my.osisoft.com](https://my.osisoft.com)).
+If your support question or issue is related to something with an AVEVA product (an error message, a problem with product configuration, etc...), please open a case with AVEVA Tech Support through myOSIsoft Customer Portal ([https://my.osisoft.com](https://my.osisoft.com)).
 
 If your support question or issue is related to a non-modified sample (or test) or documentation for the sample; please email Samples@osisoft.com.
 
