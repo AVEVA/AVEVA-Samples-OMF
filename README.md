@@ -79,7 +79,7 @@ The official OMF samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2637&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3728&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main"
             >
               <img
                 src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main&jobName=Tests_ADH"
@@ -89,7 +89,7 @@ The official OMF samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2637&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3728&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main"
             >
               <img
                 src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main&jobName=Tests_EDS"
@@ -99,7 +99,7 @@ The official OMF samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2637&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3728&repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main"
             >
               <img
                 src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OMF/osisoft.sample-omf-basic_api-python?repoName=osisoft%2Fsample-omf-basic_api-python&branchName=main&jobName=Tests_OnPrem"
