@@ -3,7 +3,7 @@
 
 # OMF Samples
 
-The OSIsoft Message Format ([OMF](https://omf-docs.osisoft.com/)) defines a set of message headers and bodies that can be used to generate messages for ingestion into a compliant back-end system. The PI System and AVEVA Data Hub both have a compliant OMF receiving endpoint.
+The Open Message Format ([OMF](https://omf-docs.osisoft.com/)) defines a set of message headers and bodies that can be used to generate messages for ingestion into a compliant back-end system. The PI System and AVEVA Data Hub both have a compliant OMF receiving endpoint.
 
 OMF can be used to develop data acquisition applications on platforms and in languages for which there are no supported OSIsoft libraries. Official documentation can be found [here](https://omf-docs.osisoft.com/). The PI Square OMF developer community can be found [here](https://pisquare.osisoft.com/community/developers-club/omf).
 
