@@ -3,7 +3,7 @@
 
 # OMF Samples
 
-The Open Message Format ([OMF](https://omf-docs.osisoft.com/)) defines a set of message headers and bodies that can be used to generate messages for ingestion into a compliant back-end system. The PI System and AVEVA Data Hub both have a compliant OMF receiving endpoint.
+The Open Message Format ([OMF](https://omf-docs.osisoft.com/)) defines a set of message headers and bodies that can be used to generate messages for ingestion into a compliant back-end system. The PI System and CONNECT data services both have a compliant OMF receiving endpoint.
 
 OMF can be used to develop data acquisition applications on platforms and in languages for which there are no supported OSIsoft libraries. Official documentation can be found [here](https://omf-docs.osisoft.com/). The PI Square OMF developer community can be found [here](https://pisquare.osisoft.com/community/developers-club/omf).
 
@@ -23,7 +23,7 @@ The official OMF samples are divided in multiple categories depending on the sce
         <a href="docs/OMF_BASIC.md"> Basic API </a>
       </h3>
       These samples demonstrate sending some typical OMF messages. The
-      applications are configurable to both PI and AVEVA Data Hub.
+      applications are configurable to both PI and CONNECT data services.
       <a href="docs/OMF_BASIC.md"> Details </a>
       <br />
       <br />
@@ -153,7 +153,7 @@ The official OMF samples are divided in multiple categories depending on the sce
       <h3>
         <a href="docs/COMPLEX_DYNAMIC.md"> Complex Dynamic </a>
       </h3>
-      This sample demonstrates sending time series data to the AVEVA Data Hub, Edge Data Store, and PI Web API OMF endpoints. It sends 2 values
+      This sample demonstrates sending time series data to the CONNECT data services, Edge Data Store, and PI Web API OMF endpoints. It sends 2 values
       at 1 timestamp.
       <a href="docs/COMPLEX_DYNAMIC.md"> Details </a>
       <br />
@@ -253,7 +253,7 @@ The official OMF samples are divided in multiple categories depending on the sce
           Bart Ingress
         </a>
       </h3>
-      This sample demonstrates sending time series data to the AVEVA Data Hub, Edge Data Store, and PI Web API OMF endpoints.
+      This sample demonstrates sending time series data to the CONNECT data services, Edge Data Store, and PI Web API OMF endpoints.
       <a href="https://github.com/osisoft/sample-omf-bart_ingress-dotnet">
         Details
       </a>
@@ -313,7 +313,7 @@ The official OMF samples are divided in multiple categories depending on the sce
           Bulk Upload
         </a>
       </h3>
-      This sample demonstrates sending pre-made OMF files to the AVEVA Data Hub, Edge Data Store, and PI Web API OMF endpoints.
+      This sample demonstrates sending pre-made OMF files to the CONNECT data services, Edge Data Store, and PI Web API OMF endpoints.
       <a href="https://github.com/osisoft/sample-omf-bulk_upload-python">
         Details
       </a>
@@ -373,7 +373,7 @@ The official OMF samples are divided in multiple categories depending on the sce
           Azure Functions
         </a>
       </h3>
-      This sample demonstrates sending time series data to AVEVA Data Hub using an Azure Function App Service.
+      This sample demonstrates sending time series data to CONNECT data services using an Azure Function App Service.
       <a href="https://github.com/osisoft/sample-omf-azure_functions-dotnet">
         Details
       </a>
@@ -473,15 +473,15 @@ The official OMF samples are divided in multiple categories depending on the sce
   </tr>
 </table>
 
-## Configuring AVEVA Data Hub or the PI system to accept OMF messages
+## Configuring CONNECT data services or the PI system to accept OMF messages
 
-### Sending to AVEVA Data Hub
+### Sending to CONNECT data services
 
-Configure OMF Connection. This can be done programmatically, but here are the general steps to do it via the AVEVA Data Hub portal:
+Configure OMF Connection. This can be done programmatically, but here are the general steps to do it via the CONNECT data services portal:
 
 If you do not already have a Client-Credentials Client set up to use:
 
-1. After logging in to AVEVA Data Hub, open [Clients](https://datahub.connect.aveva.com/clients), or follow the link under the section "Security"
+1. After logging in to CONNECT data services, open [Clients](https://datahub.connect.aveva.com/clients), or follow the link under the section "Security"
 1. Under "Client Type", select "Client-Credentials"
 1. Click "Add Client" and either grant the "Account Administrator" role or whatever custom roles are required to create and write data to Streams
 1. Click "Continue," then optionally enter a description and/or update the expiration date for the Client Secret
@@ -489,7 +489,7 @@ If you do not already have a Client-Credentials Client set up to use:
 
 Once you have a Client-Credentials Client for use with OMF:
 
-1. After logging in to AVEVA Data Hub, open [Connections](https://datahub.connect.aveva.com/omf-connections), or follow the link under the section "Data Management"
+1. After logging in to CONNECT data services, open [Connections](https://datahub.connect.aveva.com/omf-connections), or follow the link under the section "Data Management"
 1. Under "Type", select "OMF"
 1. Click "Add Connection" and fill in a name for your OMF Connection
 1. Click "Next," and choose the Client-Credentials Client you intend your OMF application to use (or the one you just created above)
@@ -502,7 +502,7 @@ Once you have a Client-Credentials Client for use with OMF:
 Use the PI Web API OMF endpoint.  
 PI Connector Relay is currently not tested for and would require some changes to the code to get to work.
 
-## OMF limitations on AVEVA Data Hub and PI
+## OMF limitations on CONNECT data services and PI
 
 This list is not exhuastive, but rather a few key details to know.
 
