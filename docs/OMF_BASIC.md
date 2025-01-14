@@ -20,7 +20,7 @@ These steps illustrate common OMF messages to send. Most OMF sending application
 
 The samples are based on OMF v1.1.
 
-The samples are written in a way that the same sample can send to PI, EDS, and AVEVA Data Hub. This is controlled by either the crendential file passed in or by an override variable in the program.
+The samples are written in a way that the same sample can send to PI, EDS, and CONNECT data services. This is controlled by either the crendential file passed in or by an override variable in the program.
 
 The examples for PI are tested against the PI Web API OMF accepting endpoint.
 
